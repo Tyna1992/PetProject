@@ -4,6 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>2f05acbd-b9d3-4092-a304-9da1553d7f32</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,10 +19,6 @@
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Service\Repositories\" />
     </ItemGroup>
 
 </Project>
