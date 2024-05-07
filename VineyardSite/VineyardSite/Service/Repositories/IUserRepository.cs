@@ -9,5 +9,6 @@ public interface IUserRepository
     Task<User> GetByEmail(string email);
     Task UpdateUser(string id, User user);
     Task DeleteUser(string id);
+    Task<User> GetByUsername(string username);
     
 }
