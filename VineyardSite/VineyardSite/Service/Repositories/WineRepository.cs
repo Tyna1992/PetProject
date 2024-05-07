@@ -19,8 +19,12 @@ public class WineRepository : IWineRepository
         
     }
 
-    public async Task<Wine> GetWineById(int id)
+    public async Task<Wine?> GetWineById(int? id)
     {
+        if (id == null)
+        {
+            return null;
+        }
         var wine = await _context.Wines.FindAsync(id);
         return wine;
     }
