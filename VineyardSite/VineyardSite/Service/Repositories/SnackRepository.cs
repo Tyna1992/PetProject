@@ -18,8 +18,12 @@ public class SnackRepository : ISnackRepository
         return await _context.Snacks.ToListAsync();
     }
 
-    public async Task<Snack> GetSnackById(int id)
+    public async Task<Snack?> GetSnackById(int? id)
     {
+        if (id == null)
+        {
+           return null;
+        }
         var snack = await _context.Snacks.FindAsync(id);
         return snack;
     }
