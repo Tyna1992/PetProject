@@ -12,6 +12,13 @@ public class AuthService : IAuthService
     private readonly ITokenService _tokenService;
     private readonly IConfiguration _configuration;
     
+    
+    public AuthService(UserManager<User> userManager, ITokenService tokenService, IConfiguration configuration)
+    {
+        _userManager = userManager;
+        _tokenService = tokenService;
+        _configuration = configuration;
+    }
     public async Task<AuthResult> RegisterAsync(string email, string username, string password, string address, string role)
     {
         var user = new User {UserName = username, Email = email, Address = address};
