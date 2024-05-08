@@ -32,7 +32,7 @@ function Home() {
                 <div className="home">
                     <div className="container">
                         <Link to="/">
-                            <img src="/logo.jpg" alt="logo" className="image"/>
+                            <img src="../public/Images/logo.jpg" alt="logo" className="image"/>
                         </Link>
                         
                     </div>
