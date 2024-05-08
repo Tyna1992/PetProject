@@ -44,7 +44,7 @@ public class AppointmentController : ControllerBase
         return Ok(appointment);
     }
     
-    [HttpDelete("/delete/{id"), Authorize(Roles = "Admin")]
+    [HttpDelete("/delete/{id}"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteAppointment(int id)
     {
         await _appointmentRepository.DeleteAppointment(id);
