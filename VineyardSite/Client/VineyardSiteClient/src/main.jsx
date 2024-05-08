@@ -27,6 +27,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <RouterProvider router={router}/>
-        <ToastContainer/>
+        <ToastContainer autoClose={3000} pauseOnFocusLoss={false} pauseOnHover={false} />
     </React.StrictMode>
 )
