@@ -31,16 +31,20 @@ function RegisterUser() {
             }
             notify("Registration successful!", "success");
            
-            // const loginResponse = await fetch("/api/Auth/Login",{
-            //     method: "POST",
-            //     headers:{
-            //         "Content-Type": "application/json"
-            //     },
-            //     body: JSON.stringify({username, password})
-            // });
-            // if(!loginResponse.ok){
-            //     throw new Error("Login failed!");
-            // }
+            const loginResponse = await fetch("/api/Auth/Login",{
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({username, password})
+            });
+            if(!loginResponse.ok){
+                throw new Error("Login failed!");
+            }
+            notify("Login successful!", "success");
+            setTimeout(() => {
+                navigate("/");
+            }, 3100);
             
         }
         catch(error){
