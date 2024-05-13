@@ -16,11 +16,20 @@ public class WineController : ControllerBase
         _wineRepository = wineRepository;
     }
 
-    [HttpPost("/wine/AddWine"), Authorize(Roles = "Admin")]
+    [HttpPost("AddWine"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddWine([FromBody] Wine wine)
     {
-        await _wineRepository.AddWine(wine);
-        return Ok(wine);
+        
+        try
+        {
+            await _wineRepository.AddWine(wine);
+            return Ok(wine);
+
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     
