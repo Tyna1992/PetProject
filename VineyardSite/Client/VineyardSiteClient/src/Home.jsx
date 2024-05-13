@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import {Link, Outlet, useLocation} from 'react-router-dom'
 import './index.css'
+import LogoutButton from './Components/LogoutButton.jsx'
 
 function Home() {
     const [user, setUser] = useState(null);
@@ -24,57 +25,29 @@ function Home() {
                 console.error(error);
             }
         }
+
         fetchData();
     }, [location.pathname]);
 
-        return (
-            
-                <div className="home">
-                    <div className="container">
-                        <Link to="/">
-                            <img src="../public/Images/logo.jpg" alt="logo" className="image"/>
-                        </Link>
-                        
-                    </div>
-                    <div className="Layout">
-                        <nav>
-                            {user === null ? (
-                                <>
-                                    <Link to="/register">
-                                        <button type="button">Register</button>
-                                    </Link>
-                                    <Link to="/login">
-                                        <button type="button">Login</button>
-                                    </Link>
-                                </>
-                            ) : user !== "admin" ? (
-                                <>
-                                    <Link to="/profile">
-                                        <button type="button">Profile</button>
-                                    </Link>
-                                    
-                                    <Link to="/webshop">
-                                        <button type="button"> Webshop </button>
-                                    </Link>
-                                    <Link to="/winetasting">
-                                        <button type="button">Wine tasting</button>
-                                    </Link>
-                                    <Link to="/about">
-                                        <button type="button">About us</button>
-                                    </Link>
-                                    <Link to="/contact">
-                                        <button type="button">Contact</button>
-                                    </Link>
-                                    
-                                </>
-                            ) : (
-                                <>
-                                    <Link to="/admin">
-                                        <button type="button">Admin site</button>
-                                    </Link>
-                                    
-                                </>
-                            )}
+    return (
+
+        <div className="home">
+            <div className="container">
+                <Link to="/">
+                    <img src="/Images/logo.jpg" alt="logo" className="image"/>
+                </Link>
+
+            </div>
+            <div className="Layout">
+                <nav>
+                    {user === null ? (
+                        <>
+                            <Link to="/register">
+                                <button type="button">Register</button>
+                            </Link>
+                            <Link to="/login">
+                                <button type="button">Login</button>
+                            </Link>
                             <Link to="/webshop">
                                 <button type="button">Webshop</button>
                             </Link>
@@ -87,14 +60,57 @@ function Home() {
                             <Link to="/contact">
                                 <button type="button">Contact</button>
                             </Link>
-                        </nav>
-                        <Outlet />
-                    </div>
+                        </>
+                    ) : user !== "admin" ? (
+                        <>
+                            <Link to="/profile">
+                                <button type="button">Profile</button>
+                            </Link>
 
-                    <div/>
-</div>
-                    
-                )
-                }
+                            <Link to="/webshop">
+                                <button type="button"> Webshop</button>
+                            </Link>
+                            <Link to="/winetasting">
+                                <button type="button">Wine tasting</button>
+                            </Link>
+                            <Link to="/about">
+                                <button type="button">About us</button>
+                            </Link>
+                            <Link to="/contact">
+                                <button type="button">Contact</button>
+                            </Link>
+                            <LogoutButton/>
 
-                export default Home
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/admin">
+                                <button type="button">Admin site</button>
+                            </Link>
+                            <Link to="/webshop">
+                                <button type="button">Webshop</button>
+                            </Link>
+                            <Link to="/winetasting">
+                                <button type="button">Wine tasting</button>
+                            </Link>
+                            <Link to="/about">
+                                <button type="button">About us</button>
+                            </Link>
+                            <Link to="/contact">
+                                <button type="button">Contact</button>
+                            </Link>
+                            <LogoutButton/>
+                        </>
+                    )}
+
+                </nav>
+                <Outlet/>
+            </div>
+
+            <div/>
+        </div>
+
+    )
+}
+
+export default Home
