@@ -6,6 +6,8 @@ namespace VineyardSite.Data;
 public class DataContext : DbContext
 {
     public DbSet<Wine> Wines { get; set; }
+    public DbSet<InventoryItem> Inventory { get; set; }
+    public DbSet<WineVariant>   WineVariants { get; set; }
     
     public DbSet<Snack> Snacks  { get; set; }
     
@@ -28,6 +30,11 @@ public class DataContext : DbContext
         modelBuilder.Entity<WineTastingPackage>().HasIndex(wtp => wtp.Name).IsUnique();
         modelBuilder.Entity<Order>().HasIndex(o => o.Id).IsUnique();
         modelBuilder.Entity<Appointment>().HasIndex(a => a.Id).IsUnique();
+        modelBuilder.Entity<InventoryItem>()
+            .HasIndex(i =>  i.WineVariantId)
+            .IsUnique(false);
+        modelBuilder.Entity<WineVariant>()
+            .HasKey(wv => wv.Id);
         
         modelBuilder.Entity<WineTastingPackage>()
             .HasOne(wtp => wtp.Wine1)
