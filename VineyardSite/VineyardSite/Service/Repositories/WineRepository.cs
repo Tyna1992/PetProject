@@ -19,15 +19,13 @@ public class WineRepository : IWineRepository
         
     }
 
-    public async Task<Wine?> GetWineById(int? id)
+    public async Task<Wine?> GetWineByName(string name)
     {
-        if (id == null)
-        {
-            return null;
-        }
-        var wine = await _context.Wines.FindAsync(id);
+        
+        var wine = await _context.Wines.FirstOrDefaultAsync(wine => wine.Name == name);
         return wine;
     }
+    
 
     public async Task AddWine(Wine wine)
     {
@@ -41,10 +39,9 @@ public class WineRepository : IWineRepository
         if (wineToUpdate != null)
         {
             wineToUpdate.Name = wine.Name;
-            wineToUpdate.Price = wine.Price;
             wineToUpdate.Description = wine.Description;
-            wineToUpdate.AlcoholContent = wine.AlcoholContent;
             wineToUpdate.Type = wine.Type;
+            wineToUpdate.Sweetness = wine.Sweetness;
             
             _context.Wines.Update(wineToUpdate);
             await _context.SaveChangesAsync();
