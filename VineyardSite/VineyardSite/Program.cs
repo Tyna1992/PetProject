@@ -54,6 +54,9 @@ void AddServices()
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<AuthSeeder>();
+    builder.Services.AddScoped<IWineVariantRepository, WineVariantRepository>();
+    builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+    
 
 }
 
