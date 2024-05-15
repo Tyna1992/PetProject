@@ -2,7 +2,6 @@ import {useState, useEffect} from 'react'
 import {Link, Outlet, useLocation} from 'react-router-dom'
 import './index.css'
 import LogoutButton from './Components/LogoutButton.jsx'
-
 function Home() {
     const [user, setUser] = useState(null);
     const location = useLocation();
@@ -32,14 +31,11 @@ function Home() {
     return (
 
         <div className="home">
-            <div className="container">
-                <Link to="/">
-                    <img src="/Images/logo.jpg" alt="logo" className="image"/>
-                </Link>
-
-            </div>
             <div className="Layout">
                 <nav>
+                    <Link to="/">
+                    <img src="/Images/logo.jpg" alt="logo" className="image"/>
+                </Link>
                     {user === null ? (
                         <>
                             <Link to="/register">
@@ -106,9 +102,7 @@ function Home() {
                 </nav>
                 <Outlet/>
             </div>
-
-            <div/>
-        </div>
+            </div>
 
     )
 }
