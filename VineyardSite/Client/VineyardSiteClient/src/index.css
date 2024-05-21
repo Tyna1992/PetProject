@@ -24,7 +24,7 @@
 .Layout{
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content:flex-start ;
     align-items: center;
     height: 100dvh;
     width: 100dvw;
@@ -33,16 +33,17 @@
 .links{
   display:flex;
   gap: 1rem;
-    justify-content: space-evenly;
+  justify-content: space-evenly;
   align-items: center;
   height: 100%;
-  width: 90%;
+  width: 50%;
 }
 
 .image {
   width: 10%;
   height: 100%;
   overflow-y: hidden;
+  
   
 }
 
@@ -77,8 +78,8 @@
   background-color: transparent;
   cursor: pointer;
   transition: border-color 0.25s;
-  padding-right: 50px;
-  padding-left: 80px;
+  padding-right: 3.125rem;
+  padding-left: 3.125rem;
   width: auto;
   
 }
@@ -142,14 +143,22 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 3.5em;
+  line-height: 1.5;
+  
 }
 
-
+button{
+  background-color: white;
+  color: black;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
+}
 
 
 button:hover {
