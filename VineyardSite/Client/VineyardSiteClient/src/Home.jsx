@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import {Link, Outlet, useLocation} from 'react-router-dom'
 import './index.css'
 import LogoutButton from './Components/LogoutButton.jsx';
+import CustomSlider from './Components/CustomSlider.jsx';
 function Home() {
     const [user, setUser] = useState(null);
     const location = useLocation();
@@ -101,6 +102,7 @@ function Home() {
 
                 </nav>
                 <Outlet/>
+                <CustomSlider></CustomSlider>
             </div>
             
 
