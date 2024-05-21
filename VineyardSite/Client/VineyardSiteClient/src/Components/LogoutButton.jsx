@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import notify from "../Utils/Notify";
+import "../index.css";
 
 function LogoutButton() {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ function LogoutButton() {
             console.error("Logout failed", error);
         }
     }
-    return <button onClick={handleLogout}>Logout</button>;
+    return <button className="homeButton" onClick={handleLogout}>Logout</button>;
 }
 
 export default LogoutButton;
