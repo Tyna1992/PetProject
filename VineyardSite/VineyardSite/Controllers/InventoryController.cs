@@ -22,7 +22,7 @@ public class InventoryController : ControllerBase
         _wineRepository = wineRepository;
     }
     
-    [HttpPost("AddInventory")]
+    [HttpPost("AddInventory/{name}/{year}/{quantity}"), Authorize(Roles="Admin")]
     public async Task<IActionResult> AddInventory(string name, int year,int quantity =1 )
     {
         var wine = await _wineRepository.GetWineByName(name);
