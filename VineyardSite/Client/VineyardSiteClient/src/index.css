@@ -98,7 +98,33 @@ nav{
   z-index: 101;
   height: 18%;
   
- 
+
+}
+
+input{
+  border: 1px solid #B7AF74;;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+
+}
+select{
+  border: 1px solid #B7AF74;;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+}
+.textarea{
+  border: 1px solid #B7AF74;;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
 }
 
 @media screen and (max-width: 1485px) {
@@ -143,7 +169,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  
+
 }
 
 h1 {
