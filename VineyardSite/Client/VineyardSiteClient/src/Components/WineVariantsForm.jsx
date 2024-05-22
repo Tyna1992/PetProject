@@ -4,11 +4,12 @@ import "../index.css";
 
 function WineVariantsForm({addVinatge}) {
 
+    const [hideForm, setHideForm] = useState(true);
     return(
         <div className="admin">
-            <button type="button">Add vintage </button>
+            <button type="button" onClick={()=> setHideForm(false)}>Add vintage </button>
             <div className="vintageForm">
-                <form onSubmit={addVinatge}>
+                <form hidden={hideForm} onSubmit={addVinatge}>
                     <label>
                         Name:
                     </label>
@@ -34,7 +35,7 @@ function WineVariantsForm({addVinatge}) {
                     <input type="number" name="year"></input>
                     <br/>
                     <button type="submit">Add</button>
-                    <button type="button">Cancel</button>
+                    <button type="button" onClick={() => setHideForm(true)}>Cancel</button>
                 </form>
             </div>
         </div>
