@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VineyardSite.Model;
 using VineyardSite.Service.Repositories;
+using System.Text.Json;
 
 namespace VineyardSite.Controllers;
 [ApiController]
@@ -16,24 +18,26 @@ public class VariantController : ControllerBase
     {
         _wineVariantRepository = wineVariantRepository;
         _logger = logger;
-        _wineVariantRepository = wineVariantRepository;
+        _wineRepository = wineRepository;
     }
 
-    [HttpPost("AddWineVariant"), Authorize(Roles = "Admin")]
-    public async Task<IActionResult> AddVariant(string wineName, double price, 
-        double alcoholContent, int year)
+    [HttpPost("AddWineVariant/{name}/{price}/{alcohol}/{year}"), Authorize(Roles = "Admin")]
+    public async Task<IActionResult> AddVariant(string name, double price,  double alcohol ,int year)
     {
-        var wine = await _wineRepository.GetWineByName(wineName);
+        
+        var wine = await _wineRepository.GetWineByName(name);
         if (wine == null)
         {
             return NotFound("No wine found with that name in catalog");
         }
+        
+        
         var variant = new WineVariant
         {
             Wine = wine,
             WineId = wine.Id,
             Price = price,
-            AlcoholContent = alcoholContent,
+            AlcoholContent = alcohol ,
             Year = year
         };
         try
