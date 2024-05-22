@@ -9,98 +9,85 @@ function Admin()
 {
     const navigate = useNavigate();
     const [hideWineForm, setHideWineForm] = useState(true);
-    const [hideSnackForm, setHideSnackForm] = useState(true);
-    const [hidePackageForm, setHidePackageForm] = useState(true);
+
     
     
     async function addWines(event)
     {
         event.preventDefault();
-        const wineName = event.target.wineName.value;
+        const name = event.target.wineName.value;
         const type = event.target.type.value;
-        const price = parseFloat(event.target.price.value);
-        const alcoholPercentage = parseFloat(event.target.alcoholPercentage.value);
+        const sweetness = event.target.sweetness.value;
         const description = event.target.description.value;
-        const year = parseInt(event.target.year.value);
-        
+
         try {
-            const response = await fetch("/api/Wine/AddWine", {
+            const response = await fetch("/api/Wine/addWine", {
                 method: "POST",
                 credentials: "include",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    "Name": wineName,
-                    "Type": type,
-                    "AlcoholContent": alcoholPercentage,
-                    "Price": price,
-                    "Description": description,
-                    "Year": year
-
-                })
-
+                body: JSON.stringify({name, type, sweetness, description})
+            
             })
-            console.log(response);
-            if (!response.ok) {
-                notify("Failed to add wine to the inventory!", "error");
-                throw new Error("Failed to add wine to the inventory!");
+            if(!response.ok)
+            {
+                notify("Failed to add drink to the catalog", "error");
+
             }
-            notify("Wine added to the inventory!", "success");
+            notify("Drink added to the catalog", "success");
             event.target.wineName.value = "";
             event.target.type.value = "";
-            event.target.price.value = "";
-            event.target.alcoholPercentage.value = "";
+            event.target.sweetness.value = "";
             event.target.description.value = "";
+
+            
+        } catch (error) {
+            notify("Failed to add drink to the catalog", "error");
+            console.error(error);
         }
         
-        catch (error) {
-            notify("Failed to add wine to the inventory!", "error");
-            console.error(error);
-        }        
     }
     
     return(
         <div className="admin">
-            <button type="button" onClick={()=> setHideWineForm(false)}>Add wines to the inventory</button>
-            <button type="button">Add snacks to the inventory</button>
-            <button type="button">Create wine tasting package</button>
+            <button type="button" onClick={()=> setHideWineForm(false)}>Add drink to the catalog</button>
+            
             <div hidden={hideWineForm} className="wineForm">
                 <form onSubmit={addWines}>
                     <label>
-                        Wine name:
+                        Name:
                     </label>
                     <br/>
                     <input type="text" name="wineName"  />
                     <br/>
                     <label>
-                        Wine type:
+                        Type:
                     </label>
                     <br/>
-                    <select name="type">
-                        <option disabled selected >Select please</option>
-                        <option value="red">Red</option>
-                        <option value="white">White</option>
-                        <option value="rose">Rose</option>
+                    <select defaultValue={"DEFAULT"} name="type">
+                        <option value="DEFAULT" disabled  >Select please</option>
+                        <option value="Red">Red</option>
+                        <option value="White">White</option>
+                        <option value="Rose">Rose</option>
+                        <option value="Petnat">Pét-Nat</option>
+                        <option value="Non-alcohol">Non-Alcoholic</option>
+                        
                     </select>
                     <br/>
                     <label>
-                        Price:
+                        Sweetness:
                     </label>
                     <br/>
-                    <input type="number" name="price" />
-                    <br/>
-                    <label>
-                        Year:
-                    </label>
-                    <br/>
-                    <input type="number" name="year" />
-                    <br/>
-                    <label>
-                        Alcohol percentage:
-                    </label>
-                    <br/>
-                    <input type="number" name="alcoholPercentage" />
+                    <select defaultValue={"DEFAULT"}  name="sweetness">
+                        <option value="DEFAULT" disabled  >Select please</option>
+                        <option value="Dry">Dry</option>
+                        <option value="Semi-dry">Semi-Dry</option>
+                        <option value="Sweet">Sweet</option>
+                        <option value="Semi-sweet">Semi-Sweet</option>
+                        <option value="Non-alcohol">Non-Alcoholic</option>
+                        
+                    </select>
                     <br/>
                     <label>
                         Description:
