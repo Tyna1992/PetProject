@@ -93,7 +93,7 @@ function Admin()
                         Description:
                     </label>
                     <br/>
-                    <TextareaAutosize name="description" />
+                    <TextareaAutosize className="textarea" name="description" />
                     <br/>
                     <button type="submit">Add</button>
                     <button type="button" onClick={()=> setHideWineForm(true)}>Cancel</button>
