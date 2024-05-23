@@ -63,15 +63,58 @@
     position: relative;
     
 }
-
-.admin-container{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 2rem; 
+.admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.admin-container-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Ensures the wrapper takes full width of the parent */
+}
+
+
+.admin-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.admin-buttons{
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  
+
+}
+
+.table{
+  margin-top: 2rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  
+}
+
+th,td{
+  border: 1px solid black;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  text-align: center;
+  background-color: #B7AF74;
+}
+
+
+
 .homeButton {
- 
+
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
