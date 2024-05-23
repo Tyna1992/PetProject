@@ -9,10 +9,24 @@ import InventoryForm from "../Components/InventoryForm";
 
 function Admin() {
     const [showInventory, setShowInventory] = useState(false);
-
-
+    const [hideWineForm, setHideWineForm] = useState(false);
+    const  [hideVintageForm, setHideVintageForm] = useState(false);
+    const [hideInventoryForm, setHideInventoryForm] = useState(false);
+    
     const handleClick = () => {
         setShowInventory(!showInventory);
+    }
+
+    const handleClickWineForm = () => {
+        setHideWineForm(!hideWineForm);
+    }
+
+    const handleClickVintageForm = () => {
+        setHideVintageForm(!hideVintageForm);
+    }
+
+    const handleClickInventoryForm = () => {
+        setHideInventoryForm(!hideInventoryForm);
     }
 
     async function addWines(event) {
@@ -134,18 +148,25 @@ function Admin() {
     }
 
     return (
-        <div className="admin-container">
-            <WineForm addWines={addWines} />
-            <WineVariantsForm addVinatge={addWineVariants} />
-            <InventoryForm addStock={addStock} />
-            <div className="button-container">
-                <button onClick={handleClick}>
-                    {showInventory ? 'Hide' : 'Show'} Inventory
+        <div className="admin">
+            <div className="admin-buttons">
+            <button type="button" onClick={handleClickWineForm}>{hideWineForm ? "Close wine-cataloge form" : "Add drink to the catalog"} </button>
+            <button type="button" onClick={handleClickVintageForm}>{hideVintageForm ? "Close vintage-form" : "Add vintage to the catalog"} </button>
+            <button type="button" onClick={handleClickInventoryForm}>{hideInventoryForm ? "Close inventory-form" : "Add vintage to the inventory"}</button>
+            <button onClick={handleClick}>{showInventory ? 'Hide' : 'Show'} Inventory
                 </button>
             </div>
-
+            <div className="admin-container-wrapper">
+            <div className="admin-container">
+            {hideWineForm && <WineForm addWines={addWines} />}
+            {hideVintageForm && <WineVariantsForm addVinatge={addWineVariants} />}
+            {hideInventoryForm && <InventoryForm addStock={addStock} />}
+            </div>
+            </div>
+            <div className="table">
             {showInventory && <InventoryTable />}
-
+            </div>
+            
         </div>
     )
 }
