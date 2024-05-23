@@ -31,7 +31,6 @@ function Home() {
 
     return (
 
-       
             <div className="Layout">
                 <nav>
                     <Link to="/">
@@ -60,8 +59,8 @@ function Home() {
                         </>
                     ) : user !== "admin" ? (
                         <>
-                            <Link className="homeButton" to="/profile">
-                                <button type="button">Profile</button>
+                            <Link  to="/profile">
+                                <button className="homeButton" type="button">Profile</button>
                             </Link>
 
                             <Link to="/webshop">
@@ -99,10 +98,9 @@ function Home() {
                             <LogoutButton/>
                         </>
                     )}
-
                 </nav>
                 <Outlet/>
-                <CustomSlider></CustomSlider>
+                
             </div>
             
 
