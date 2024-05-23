@@ -54,5 +54,24 @@ public class InventoryController : ControllerBase
         }
     }
     
+    [HttpGet("GetInventory")]
+    public async Task<IActionResult> GetInventory()
+    {
+        try
+        {
+            var inventory = await _inventoryRepository.GetStock();
+            if(!inventory.Any())
+            {
+                return NotFound("Inventory is empty!");
+            }
+
+            return Ok(inventory);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting inventory");
+            return StatusCode(500);
+        }
+    }
     
 }
