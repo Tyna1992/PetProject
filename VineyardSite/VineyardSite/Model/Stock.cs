@@ -1,3 +1,4 @@
+namespace VineyardSite.Model;
 
 public class Stock
 {
