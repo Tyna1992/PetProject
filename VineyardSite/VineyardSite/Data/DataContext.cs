@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 using VineyardSite.Model;
 
 namespace VineyardSite.Data;
@@ -35,6 +36,10 @@ public class DataContext : DbContext
             .IsUnique(false);
         modelBuilder.Entity<WineVariant>()
             .HasKey(wv => wv.Id);
+
+        modelBuilder.Entity<WineVariant>()
+        .HasIndex(wv => new {wv.WineId, wv.Year, wv.Price, wv.AlcoholContent})
+        .IsUnique();
         
         modelBuilder.Entity<WineTastingPackage>()
             .HasOne(wtp => wtp.Wine1)
