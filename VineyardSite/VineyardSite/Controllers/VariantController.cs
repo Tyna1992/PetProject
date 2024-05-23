@@ -31,7 +31,11 @@ public class VariantController : ControllerBase
             return NotFound("No wine found with that name in catalog");
         }
         
-        
+        if(year < 0 || year > DateTime.Now.Year)
+        {
+            return StatusCode(406, "Invalid year");
+        }
+
         var variant = new WineVariant
         {
             Wine = wine,
