@@ -10,9 +10,6 @@ import InventoryForm from "../Components/InventoryForm";
 function Admin()
 {
 
-
-    
-    
     async function addWines(event)
     {
         event.preventDefault();
@@ -33,14 +30,18 @@ function Admin()
             })
             if(!response.ok)
             {
-                notify("Failed to add drink to the catalog", "error");
+                notify(`The drink, ${name} is already in the catalog`, "error");
+                
+            }
+            else
+            {
+                notify(`${name} added to the catalog`, "success");
+                event.target.wineName.value = "";
+                event.target.type.value = "";
+                event.target.sweetness.value = "";
+                event.target.description.value = "";
 
             }
-            notify("Drink added to the catalog", "success");
-            event.target.wineName.value = "";
-            event.target.type.value = "";
-            event.target.sweetness.value = "";
-            event.target.description.value = "";
 
             
         } catch (error) {
@@ -73,21 +74,27 @@ function Admin()
                 }),
                 
             })
-            console.log(response.body);
-            console.log(response);
+
             if(response.status === 404) {
                 notify("Failed to add vintage to the catalog, please check the name!", "error");
+                
+            }
+            else if(response.status === 500)
+            {
+                notify(`Vintage ${name} - ${year} with ${alcohol}% and ${price} HUF already in the catalog`, "error");
+            }
+            else if(response.status === 406)
+            {
+                notify("Invalid year", "error");
+            }
+            else{
+
+                notify(`Vintage, ${name} - ${year} with ${alcohol}% and ${price} HUF added to the catalog`, "success");
                 event.target.name.value = "";
                 event.target.price.value = "";
                 event.target.alcohol.value = "";
                 event.target.year.value = "";
-                throw new Error("Failed to add vintage to the catalog");
             }
-            notify("Vintage added to the catalog", "success");
-            event.target.name.value = "";
-            event.target.price.value = "";
-            event.target.alcohol.value = "";
-            event.target.year.value = "";
     }
 
     async function addStock(event)
@@ -109,15 +116,18 @@ function Admin()
                     quantity: quantity
                 })
             })
-            if(!response.ok)
+            if(response.status === 404)
             {
-                notify("Failed to add stock", "error");
-                throw new Error("Failed to add stock");
+                notify(`${wineName} or ${wineName} - ${year} not in the catalog`, "error");
+                
             }
-            notify("Stock added", "success");
-            event.target.wineName.value = "";
-            event.target.year.value = "";
-            event.target.quantity.value = "";
+            else{
+                notify(`${wineName}-${year} added ${quantity} bottles to the inventory `, "success");
+                event.target.wineName.value = "";
+                event.target.year.value = "";
+                event.target.quantity.value = "";
+
+            }
 
         } catch (error) {
             notify("An error occured adding stock", "error");
