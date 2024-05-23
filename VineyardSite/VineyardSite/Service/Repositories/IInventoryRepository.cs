@@ -10,4 +10,5 @@ public interface IInventoryRepository
     Task AddStock(int id, int quantity);
     Task RemoveStock(int id, int quantity);
     Task DeleteInventoryItem(int id);
+    Task<IEnumerable<Stock>> GetStock();
 }
