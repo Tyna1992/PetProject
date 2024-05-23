@@ -6,6 +6,7 @@ import Home from './Home.jsx'
 import Register from './Pages/Registration.jsx'
 import Login from './Pages/Login.jsx'
 import Admin from './Pages/Admin.jsx'
+import Welcome from './Pages/Welcome.jsx'
 import './index.css'
 
 
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
         path:"/",
         element:<Home/>,
         children:[
+            {
+                path:"/",
+                element:<Welcome/>
+            },
             {
                 path:"/register",
                 element:<Register/>
