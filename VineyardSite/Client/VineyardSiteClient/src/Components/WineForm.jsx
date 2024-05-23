@@ -17,13 +17,13 @@ function WineForm({addWines}){
                         Name:
                     </label>
                     <br/>
-                    <input type="text" name="wineName"  />
+                    <input type="text" name="wineName" required />
                     <br/>
                     <label>
                         Type:
                     </label>
                     <br/>
-                    <select defaultValue={"DEFAULT"} name="type">
+                    <select required defaultValue={"DEFAULT"} name="type">
                         <option value="DEFAULT" disabled  >Select please</option>
                         <option value="Red">Red</option>
                         <option value="White">White</option>
@@ -37,7 +37,7 @@ function WineForm({addWines}){
                         Sweetness:
                     </label>
                     <br/>
-                    <select defaultValue={"DEFAULT"}  name="sweetness">
+                    <select required defaultValue={"DEFAULT"}  name="sweetness">
                         <option value="DEFAULT" disabled  >Select please</option>
                         <option value="Dry">Dry</option>
                         <option value="Semi-dry">Semi-Dry</option>
@@ -51,7 +51,7 @@ function WineForm({addWines}){
                         Description:
                     </label>
                     <br/>
-                    <TextareaAutosize className="textarea" name="description" />
+                    <TextareaAutosize required className="textarea" name="description" />
                     <br/>
                     <button type="submit">Add</button>
                     <button type="button" onClick={()=> setHideWineForm(true)}>Cancel</button>

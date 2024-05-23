@@ -8,26 +8,26 @@ function InventoryForm({addStock}) {
 
   return (
     <div className="admin">
-      <button type="button" onClick={() => setHideForm(false)}>Add stock</button>
+      <button type="button" onClick={() => setHideForm(false)}>Add drink to the inventory</button>
       <div>
         <form hidden={hideForm} onSubmit={addStock}>
         <label>
             Name:
         </label>
         <br/>
-        <input type="text" name="wineName"  />
+        <input required type="text" name="wineName"  />
         <br/>
         <label>
             Year:
         </label>
         <br/>
-        <input type="number" name="year"  />
+        <input required type="number" name="year"  />
         <br/>
         <label>
             Quantity:
         </label>
         <br/>
-        <input type="number" name="quantity"  />
+        <input required type="number" name="quantity"  />
         <br/>
         <button type="submit">Add</button>
         <button type="button" onClick={() => setHideForm(true)}>Cancel</button>
