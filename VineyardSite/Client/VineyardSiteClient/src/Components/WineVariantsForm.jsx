@@ -6,10 +6,10 @@ function WineVariantsForm({addVinatge}) {
 
     const [hideForm, setHideForm] = useState(true);
     return(
-        <div className="admin">
-            <button type="button" onClick={()=> setHideForm(false)}>Add vintage to the catalog </button>
+        <div>
+            
             <div className="vintageForm">
-                <form hidden={hideForm} onSubmit={addVinatge}>
+                <form  onSubmit={addVinatge}>
                     <label>
                         Name:
                     </label>

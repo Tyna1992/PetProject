@@ -5,13 +5,13 @@ import "../index.css";
 
 function WineForm({addWines}){
 
-    const [hideWineForm, setHideWineForm] = useState(true);
+    
 
     return(
-        <div className="admin">
-            <button type="button" onClick={()=> setHideWineForm(false)}>Add drink to the catalog</button>
+        <div>
             
-            <div hidden={hideWineForm} className="wineForm">
+            
+            <div className="wineForm">
                 <form onSubmit={addWines}>
                     <label>
                         Name:
