@@ -9,6 +9,8 @@ public class DataContext : DbContext
     public DbSet<Wine> Wines { get; set; }
     public DbSet<InventoryItem> Inventory { get; set; }
     public DbSet<WineVariant>   WineVariants { get; set; }
+    public DbSet<Cart> Carts { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
     
     public DbSet<Snack> Snacks  { get; set; }
     
@@ -40,6 +42,17 @@ public class DataContext : DbContext
         modelBuilder.Entity<WineVariant>()
         .HasIndex(wv => new {wv.WineId, wv.Year, wv.Price, wv.AlcoholContent})
         .IsUnique();
+
+        modelBuilder.Entity<Cart>()
+            .HasMany(c => c.CartItems)
+            .WithOne(ci => ci.Cart)
+            .HasForeignKey(ci => ci.CartId);
+        
+        modelBuilder.Entity<CartItem>()
+            .HasOne(ci => ci.WineVersion)
+            .WithMany()
+            .HasForeignKey(ci => ci.WineVariantId)
+            .IsRequired();
         
         modelBuilder.Entity<WineTastingPackage>()
             .HasOne(wtp => wtp.Wine1)
@@ -86,9 +99,9 @@ public class DataContext : DbContext
             .IsRequired();
         
         modelBuilder.Entity<Order>()
-            .HasOne(wine => wine.Wine)
+            .HasOne(wine => wine.WineVariant)
             .WithMany()
-            .HasForeignKey(wine => wine.WineId)
+            .HasForeignKey(wine => wine.WineVariantId)
             .IsRequired();
         
         

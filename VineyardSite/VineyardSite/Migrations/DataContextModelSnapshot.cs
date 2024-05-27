@@ -66,6 +66,49 @@ namespace VineyardSite.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("VineyardSite.Model.Cart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("VineyardSite.Model.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WineVariantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("WineVariantId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("VineyardSite.Model.InventoryItem", b =>
                 {
                     b.Property<int>("Id")
@@ -130,7 +173,7 @@ namespace VineyardSite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("WineId")
+                    b.Property<int>("WineVariantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -140,7 +183,7 @@ namespace VineyardSite.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("WineId");
+                    b.HasIndex("WineVariantId");
 
                     b.ToTable("Orders");
                 });
@@ -359,6 +402,25 @@ namespace VineyardSite.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("VineyardSite.Model.CartItem", b =>
+                {
+                    b.HasOne("VineyardSite.Model.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VineyardSite.Model.WineVariant", "WineVersion")
+                        .WithMany()
+                        .HasForeignKey("WineVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("WineVersion");
+                });
+
             modelBuilder.Entity("VineyardSite.Model.InventoryItem", b =>
                 {
                     b.HasOne("VineyardSite.Model.WineVariant", "WineVersion")
@@ -378,15 +440,15 @@ namespace VineyardSite.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VineyardSite.Model.Wine", "Wine")
+                    b.HasOne("VineyardSite.Model.WineVariant", "WineVariant")
                         .WithMany()
-                        .HasForeignKey("WineId")
+                        .HasForeignKey("WineVariantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
 
-                    b.Navigation("Wine");
+                    b.Navigation("WineVariant");
                 });
 
             modelBuilder.Entity("VineyardSite.Model.WineTastingPackage", b =>
@@ -433,6 +495,11 @@ namespace VineyardSite.Migrations
                         .IsRequired();
 
                     b.Navigation("Wine");
+                });
+
+            modelBuilder.Entity("VineyardSite.Model.Cart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }
