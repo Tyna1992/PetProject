@@ -1,7 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using VineyardSite.Data;
 using VineyardSite.Model;
 
 namespace VineyardSite.Service.Authentication;
@@ -11,13 +13,15 @@ public class AuthService : IAuthService
     private readonly UserManager<User> _userManager;
     private readonly ITokenService _tokenService;
     private readonly IConfiguration _configuration;
+    private readonly DataContext _context;
     
     
-    public AuthService(UserManager<User> userManager, ITokenService tokenService, IConfiguration configuration)
+    public AuthService(UserManager<User> userManager, ITokenService tokenService, IConfiguration configuration, DataContext context)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _configuration = configuration;
+        _context = context;
     }
     public async Task<AuthResult> RegisterAsync(string email, string username, string password, string address, string role)
     {
@@ -41,16 +45,24 @@ public class AuthService : IAuthService
         {
             return InvalidUsername(userName);
         }
-
+        
+        
         var isPasswordValid = await _userManager.CheckPasswordAsync(managedUser, password);
         if (!isPasswordValid)
         {
             return InvalidPassword(userName, managedUser.UserName);
         }
+        var userCart = await _context.Carts.FirstOrDefaultAsync(cart => cart.UserId == managedUser.Id);
+        if (userCart == null)
+        {
+            var cart = new Cart {UserId = managedUser.Id};
+            await _context.Carts.AddAsync(cart);
+            await _context.SaveChangesAsync();
+        }
 
         var roles = await _userManager.GetRolesAsync(managedUser);
         var accessToken = _tokenService.CreateToken(managedUser, roles[0]);
-
+        Console.WriteLine(accessToken);
         return new AuthResult(true, managedUser.Email, managedUser.UserName, accessToken);
     }
 
