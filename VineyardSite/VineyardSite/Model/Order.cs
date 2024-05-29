@@ -3,8 +3,8 @@
 public class Order
 {
     public Guid Id { get; set; }
-    public Wine Wine { get; set; }
-    public int WineId { get; set; }
+    public WineVariant WineVariant { get; set; }
+    public int WineVariantId { get; set; }
     public int Quantity { get; set; }
     public double TotalPrice { get; set; }
     public DateTime Date { get; set; }
