@@ -1,19 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VineyardSite.Service.Repositories;
 
 namespace VineyardSite.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-public class CartItemController : ControllerBase
+public class CartController : ControllerBase
 {
     private readonly ICartItemRepository _cartItemRepository;
     
-    public CartItemController(ICartItemRepository cartItemRepository)
+    
+    public CartController(ICartItemRepository cartItemRepository)
     {
         _cartItemRepository = cartItemRepository;
     }
 
-    [HttpPost("AddCartItem/{drinkId}/{quantity}/{cartId}")]
+    [HttpPost("AddCartItem/{drinkId}/{quantity}/{cartId}"), Authorize(Roles = "User, Admin")]
     public async Task<IActionResult> AddCartItem(int drinkId, int quantity, int cartId)
     {
         try
