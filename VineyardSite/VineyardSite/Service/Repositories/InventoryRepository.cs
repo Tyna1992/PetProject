@@ -20,6 +20,12 @@ public class InventoryRepository : IInventoryRepository
     
     }
 
+    public async Task<InventoryItem> IsItemInInventory(int wineVariantId)
+    {
+        return await _context.Inventory.FirstOrDefaultAsync(inventoryItem => inventoryItem.WineVariantId == wineVariantId);
+    }
+    
+    
     public async Task<IEnumerable<InventoryItem>> GetAllInventoryItems()
     {
         return await _context.Inventory.ToListAsync();
