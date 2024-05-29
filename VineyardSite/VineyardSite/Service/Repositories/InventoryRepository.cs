@@ -6,9 +6,9 @@ namespace VineyardSite.Service.Repositories;
 
 public class InventoryRepository : IInventoryRepository
 {
-    private readonly DataContext _context;
+    private readonly ApplicationDbContext _context;
     
-    public InventoryRepository(DataContext context)
+    public InventoryRepository(ApplicationDbContext context)
     {
         _context = context;
     }

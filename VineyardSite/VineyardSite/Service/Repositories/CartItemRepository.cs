@@ -6,10 +6,10 @@ namespace VineyardSite.Service.Repositories;
 
 public class CartItemRepository : ICartItemRepository
 {
-    private readonly DataContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly IWineVariantRepository _wineVariantRepository;
     
-    public CartItemRepository(DataContext context, IWineVariantRepository wineVariantRepository)
+    public CartItemRepository(ApplicationDbContext context, IWineVariantRepository wineVariantRepository)
     {
         _context = context;
         _wineVariantRepository = wineVariantRepository;

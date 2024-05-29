@@ -6,9 +6,9 @@ namespace VineyardSite.Service.Repositories;
 
 public class OrderRepository : IOrderRepository
 {
-    private readonly DataContext _context;
+    private readonly ApplicationDbContext _context;
     
-    public OrderRepository(DataContext context)
+    public OrderRepository(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -38,7 +38,7 @@ public class OrderRepository : IOrderRepository
             orderToUpdate.Date = order.Date;
             orderToUpdate.TotalPrice = order.TotalPrice;
             orderToUpdate.User = order.User;
-            orderToUpdate.Wine = order.Wine;
+            orderToUpdate.WineVariant = order.WineVariant;
             orderToUpdate.Address = order.Address;
             orderToUpdate.Quantity = order.Quantity;
             orderToUpdate.DeliveryType = order.DeliveryType;
