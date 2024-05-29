@@ -13,10 +13,10 @@ public class AuthService : IAuthService
     private readonly UserManager<User> _userManager;
     private readonly ITokenService _tokenService;
     private readonly IConfiguration _configuration;
-    private readonly DataContext _context;
+    private readonly ApplicationDbContext _context;
     
     
-    public AuthService(UserManager<User> userManager, ITokenService tokenService, IConfiguration configuration, DataContext context)
+    public AuthService(UserManager<User> userManager, ITokenService tokenService, IConfiguration configuration, ApplicationDbContext context)
     {
         _userManager = userManager;
         _tokenService = tokenService;
@@ -25,13 +25,28 @@ public class AuthService : IAuthService
     }
     public async Task<AuthResult> RegisterAsync(string email, string username, string password, string address, string role)
     {
+        var existingUser = await _userManager.FindByEmailAsync(email);
+        
+        if (existingUser != null)
+        {
+            return FailedRegistration(IdentityResult.Failed(new IdentityError { Code = "EmailExists", Description = "Email already exists" }), email, username);
+
+        }
         var user = new User {UserName = username, Email = email, Address = address};
+        
+        
         var result = await _userManager.CreateAsync(user, password);
         
         if (!result.Succeeded)
         {
             return FailedRegistration(result, email, username);
         }
+        
+        var cart = new Cart { User = user, UserId = user.Id };
+        _context.Carts.Add(cart);
+        await _context.SaveChangesAsync();
+        user.Cart = cart;
+        user.CartId = cart.CartId;
         
         await _userManager.AddToRoleAsync(user, role);
         return new AuthResult(true, email, username, "");
@@ -51,13 +66,6 @@ public class AuthService : IAuthService
         if (!isPasswordValid)
         {
             return InvalidPassword(userName, managedUser.UserName);
-        }
-        var userCart = await _context.Carts.FirstOrDefaultAsync(cart => cart.UserId == managedUser.Id);
-        if (userCart == null)
-        {
-            var cart = new Cart {UserId = managedUser.Id};
-            await _context.Carts.AddAsync(cart);
-            await _context.SaveChangesAsync();
         }
 
         var roles = await _userManager.GetRolesAsync(managedUser);
