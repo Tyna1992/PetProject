@@ -17,10 +17,12 @@ public class WineVariantRepository : IWineVariantRepository
         return await _context.WineVariants.ToListAsync();
     }
 
-    public async Task<WineVariant> GetVariantByYear(int year)
+    public async Task<WineVariant> GetVariantByYear(int year,string name, double alcoholContent)
     {
-        return await _context.WineVariants.FirstOrDefaultAsync(wineVariant => wineVariant.Year == year);
+        return await _context.WineVariants.FirstOrDefaultAsync(wineVariant =>
+            wineVariant.Year == year && wineVariant.Wine.Name == name && wineVariant.AlcoholContent == alcoholContent);
     }
+    
     public async Task<WineVariant> GetWineVariant(int id)
     {
         return await _context.WineVariants.FirstOrDefaultAsync(wineVariant => wineVariant.Id == id);
