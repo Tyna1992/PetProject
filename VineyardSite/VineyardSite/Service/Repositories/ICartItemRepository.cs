@@ -4,7 +4,7 @@ namespace VineyardSite.Service.Repositories;
 
 public interface ICartItemRepository
 {
-    Task AddCartItemAsync(int drinkId, int quantity, int cartId);
+    Task AddCartItemAsync(int drinkId, int quantity, string userId);
     Task<CartItem> GetCartItemAsync(int cartItemId);
     Task<IEnumerable<CartItem>> GetCartItemsAsync(int cartId);
     Task RemoveCartItemAsync(int cartItemId);

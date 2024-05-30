@@ -22,21 +22,32 @@ public class CartRepository : ICartRepository
 
     public async Task<Cart> GetCart(int id)
     {
-        throw new NotImplementedException();
+        return await _dataContext.Carts.FirstOrDefaultAsync(cart => cart.CartId == id);
     }
 
     public async Task AddCart(Cart cart)
     {
-        throw new NotImplementedException();
+        _dataContext.Carts.Add(cart);
+        await _dataContext.SaveChangesAsync();
     }
 
     public async Task RemoveCart(int id)
     {
-        throw new NotImplementedException();
+        var cart = await _dataContext.Carts.FirstOrDefaultAsync(cart => cart.CartId == id);
+        if (cart != null)
+        {
+            _dataContext.Carts.Remove(cart);
+            await _dataContext.SaveChangesAsync();
+        }
     }
 
     public async Task UpdateCart(int id, Cart cart)
     {
-        throw new NotImplementedException();
+        var cartToUpdate = await _dataContext.Carts.FirstOrDefaultAsync(cart => cart.CartId == id);
+        if (cartToUpdate != null)
+        {
+            cartToUpdate.CartItems = cart.CartItems;
+            await _dataContext.SaveChangesAsync();
+        }
     }
 }
