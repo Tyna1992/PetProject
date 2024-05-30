@@ -16,8 +16,9 @@ public class CartItemRepository : ICartItemRepository
     }
    
     
-    public async Task AddCartItemAsync(int drinkId, int quantity, int cartId)
+    public async Task AddCartItemAsync(int drinkId, int quantity, string userId)
     {
+        var cartId = (await _context.Carts.FirstOrDefaultAsync(cart => cart.UserId == userId)).CartId;
         var wineVariant = await _wineVariantRepository.GetWineVariant(drinkId);
         _context.CartItems.Add(new CartItem
         {
@@ -27,6 +28,7 @@ public class CartItemRepository : ICartItemRepository
             Quantity = quantity
         });
         await _context.SaveChangesAsync();
+        
     }
     
 
