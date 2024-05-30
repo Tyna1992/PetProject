@@ -54,6 +54,7 @@ void AddServices()
     builder.Services.AddScoped<IWineVariantRepository, WineVariantRepository>();
     builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
     builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+    builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 
 }
