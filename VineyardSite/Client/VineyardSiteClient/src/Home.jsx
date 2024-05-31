@@ -56,9 +56,6 @@ function Home() {
                             <Link to="/contact">
                                 <button className="homeButton" type="button">Contact</button>
                             </Link>
-                            <Link to="/checkout">
-                                <button className="homeButton" type="button">Cart</button>
-                            </Link>
                         </>
                     ) : user !== "admin" ? (
                         <>
@@ -67,7 +64,7 @@ function Home() {
                             </Link>
 
                             <Link to="/webshop">
-                                <button className="homeButton" type="button">Webshop</button>
+                                <button className="homeButton" type="button"> Webshop</button>
                             </Link>
                             <Link to="/winetasting">
                                 <button className="homeButton" type="button">Wine tasting</button>
@@ -77,9 +74,6 @@ function Home() {
                             </Link>
                             <Link to="/contact">
                                 <button className="homeButton" type="button">Contact</button>
-                            </Link>
-                            <Link to="/checkout">
-                                <button className="homeButton" type="button">Cart</button>
                             </Link>
                             <LogoutButton/>
 
@@ -100,9 +94,6 @@ function Home() {
                             </Link>
                             <Link to="/contact">
                                 <button className="homeButton" type="button">Contact</button>
-                            </Link>
-                            <Link to="/checkout">
-                                <button className="homeButton" type="button">Cart</button>
                             </Link>
                             <LogoutButton/>
                         </>

@@ -11,4 +11,5 @@ public interface IInventoryRepository
     Task RemoveStock(int id, int quantity);
     Task DeleteInventoryItem(int id);
     Task<IEnumerable<Stock>> GetStock();
+    Task<InventoryItem> IsItemInInventory(int wineVariantId);
 }

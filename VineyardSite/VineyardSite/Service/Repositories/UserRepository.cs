@@ -6,9 +6,9 @@ namespace VineyardSite.Service.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly UserContext _context;
+    private readonly ApplicationDbContext _context;
     
-    public UserRepository(UserContext context)
+    public UserRepository(ApplicationDbContext context)
     {
         _context = context;
     }

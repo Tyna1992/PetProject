@@ -9,6 +9,6 @@ public interface IWineVariantRepository
     Task AddWineVariant(WineVariant wineVariant);
     Task DeleteWineVariant(int id);
     Task UpdateWineVariant(int id,WineVariant wineVariant);
-    Task<WineVariant> GetVariantByYear(int year);
+    Task<WineVariant> GetVariantByYear(int year,string name, double alcoholContent);
 
 }
