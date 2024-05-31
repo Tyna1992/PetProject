@@ -6,9 +6,9 @@ namespace VineyardSite.Service.Repositories;
 
 public class WineVariantRepository : IWineVariantRepository
 {
-    private readonly ApplicationDbContext _context;
+    private readonly DataContext _context;
     
-    public WineVariantRepository(ApplicationDbContext context)
+    public WineVariantRepository(DataContext context)
     {
         _context = context;
     }
@@ -17,12 +17,10 @@ public class WineVariantRepository : IWineVariantRepository
         return await _context.WineVariants.ToListAsync();
     }
 
-    public async Task<WineVariant> GetVariantByYear(int year,string name, double alcoholContent)
+    public async Task<WineVariant> GetVariantByYear(int year)
     {
-        return await _context.WineVariants.FirstOrDefaultAsync(wineVariant =>
-            wineVariant.Year == year && wineVariant.Wine.Name == name && wineVariant.AlcoholContent == alcoholContent);
+        return await _context.WineVariants.FirstOrDefaultAsync(wineVariant => wineVariant.Year == year);
     }
-    
     public async Task<WineVariant> GetWineVariant(int id)
     {
         return await _context.WineVariants.FirstOrDefaultAsync(wineVariant => wineVariant.Id == id);
