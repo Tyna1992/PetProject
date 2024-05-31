@@ -31,9 +31,8 @@ function Webshop() {
         <div className="webshop">
             <div className="webshop-container-wrapper">
                 <div className="webshop-container">
-                    {inventory.map((item) => (
-                        <WebshopWineCard data={item}/>
-                    ))}
+                    {inventory.map((item, index) => (
+                        <WebshopWineCard key={`${item.name}-${index}`} data={item}/>
                 </div>
             </div>
         </div>
