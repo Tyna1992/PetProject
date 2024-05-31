@@ -8,7 +8,7 @@ import Login from './Pages/Login.jsx'
 import Admin from './Pages/Admin.jsx'
 import Welcome from './Pages/Welcome.jsx'
 import './index.css'
-
+import Webshop from './Pages/Webshop.jsx'
 
 const router = createBrowserRouter([
     {
@@ -30,6 +30,10 @@ const router = createBrowserRouter([
             {
                 path: "/admin",
                 element: <Admin/>
+            },
+            {
+                path: "/webshop",
+                element: <Webshop/>
             }
             
         ]
