@@ -13,6 +13,7 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
     public DbSet<Cart> Carts { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
     
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -54,10 +55,16 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
             .HasForeignKey(user => user.UserId)
             .IsRequired();
         
-        modelBuilder.Entity<Order>()
-            .HasOne(wine => wine.WineVariant)
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(oi => oi.WineVariant)
             .WithMany()
-            .HasForeignKey(wine => wine.WineVariantId)
+            .HasForeignKey(oi => oi.WineVariantId)
+            .IsRequired();
+        
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(oi => oi.Order)
+            .WithMany(o => o.OrderItems)
+            .HasForeignKey(oi => oi.OrderId)
             .IsRequired();
         
         base.OnModelCreating(modelBuilder);
