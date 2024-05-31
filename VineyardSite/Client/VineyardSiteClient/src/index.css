@@ -91,6 +91,18 @@
   
 
 }
+.webshop-container-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.webshop-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2rem;
+}
+
 
 .table{
   margin-top: 2rem;
