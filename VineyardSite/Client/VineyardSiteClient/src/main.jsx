@@ -9,6 +9,7 @@ import Admin from './Pages/Admin.jsx'
 import Welcome from './Pages/Welcome.jsx'
 import './index.css'
 import Webshop from './Pages/Webshop.jsx'
+import Checkout from "./Pages/Checkout.jsx";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: "/webshop",
                 element: <Webshop/>
+            },
+            {
+                path: "/checkout",
+                element: <Checkout/>
             }
             
         ]
