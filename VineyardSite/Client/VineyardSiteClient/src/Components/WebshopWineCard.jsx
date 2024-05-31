@@ -1,6 +1,15 @@
-
+import WineModal from "./WineModal.jsx";
+import {useState} from "react";
 function WebshopWineCard(data) {
     const wine = data.data;
+    const [showModal, setShowModal] = useState(false);
+    function handleMoreDetails() {
+        setShowModal(true)
+    }
+    function closeModal() {
+        setShowModal(false);
+    }
+    
     return (
         <div className={`${wine.name}-${wine.year}`}>
             <img
@@ -9,7 +18,8 @@ function WebshopWineCard(data) {
             <h3>{wine.name}-{wine.year}</h3>
             <h3>{wine.price} HUF</h3>
             <button>Add to cart</button>
-            <button>More details</button>
+            <button onClick={handleMoreDetails}>More details</button>
+            {showModal && <WineModal data={data} closeModal={closeModal}/>}
         </div>
     )
 }
