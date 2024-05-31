@@ -8,18 +8,26 @@ public class CartItemRepository : ICartItemRepository
 {
     private readonly ApplicationDbContext _context;
     private readonly IWineVariantRepository _wineVariantRepository;
+    private readonly IInventoryRepository _inventoryRepository;
     
-    public CartItemRepository(ApplicationDbContext context, IWineVariantRepository wineVariantRepository)
+    public CartItemRepository(ApplicationDbContext context, IWineVariantRepository wineVariantRepository, IInventoryRepository inventoryRepository)
     {
         _context = context;
         _wineVariantRepository = wineVariantRepository;
+        _inventoryRepository = inventoryRepository;
     }
+    
    
     
     public async Task AddCartItemAsync(int drinkId, int quantity, string userId)
     {
         var cartId = (await _context.Carts.FirstOrDefaultAsync(cart => cart.UserId == userId)).CartId;
         var wineVariant = await _wineVariantRepository.GetWineVariant(drinkId);
+        var inventoryItem = await _inventoryRepository.IsItemInInventory(drinkId);
+        if (inventoryItem != null && inventoryItem.Quantity < quantity)
+        {
+            throw new Exception("Not enough stock");
+        }
         _context.CartItems.Add(new CartItem
         {
             CartId = cartId,
@@ -27,6 +35,7 @@ public class CartItemRepository : ICartItemRepository
             WineVersion = wineVariant,
             Quantity = quantity
         });
+        
         await _context.SaveChangesAsync();
         
     }
