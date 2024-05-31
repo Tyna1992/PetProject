@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using VineyardSite.Model;
 using VineyardSite.Service.Repositories;
 
@@ -19,8 +20,34 @@ public class OrderController : ControllerBase
         _userRepository = userRepository;
         _wineRepository = wineRepository;
     }
-    
-    
+
+    [HttpPost("AddOrder/{userId}"), Authorize(Roles = "User,Admin")]
+    public async Task<IActionResult> PlaceOrder(string userId, [FromBody] OrderRequest orderRequest)
+    {
+        try
+        {
+           var order = await _orderRepository.AddOrder(userId, orderRequest);
+           var response = new OrderResponse
+           {
+               Id = order.Id,
+               Date = order.Date,
+               Username = order.User.UserName,
+               TotalPrice = order.TotalPrice,
+               Address = order.Address,
+               DeliveryType = order.DeliveryType,
+               PaymentType = order.PaymentType,
+               Status = order.Status,
+               Items = order.OrderItems.Select(oi => oi.WineVariant).ToList()
+           };
+            return Ok(response);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.Message);
+            return BadRequest();
+        }
+        
+    }
     
     
        

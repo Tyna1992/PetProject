@@ -22,20 +22,42 @@ public class InventoryController : ControllerBase
         _wineRepository = wineRepository;
     }
     
-    [HttpPost("AddInventory/{name}/{year}/{quantity}"), Authorize(Roles="Admin")]
-    public async Task<IActionResult> AddInventory(string name, int year,int quantity =1 )
+    [HttpPost("AddInventory/{name}/{year}/{quantity}/{alcohol}"), Authorize(Roles="Admin")]
+    public async Task<IActionResult> AddInventory(string name, int year,double alcohol,int quantity =1 )
     {
         var wine = await _wineRepository.GetWineByName(name);
         if (wine == null)
         {
             return NotFound("No wine found with that name in catalog");
         }
-        var variant = await _wineVariantRepository.GetVariantByYear(year);
+        var variant = await _wineVariantRepository.GetVariantByYear(year, name, alcohol);
         
         if (variant == null)
         {
-            return NotFound("No variant found with that year");
+            return NotFound("No vintage found !");
         }
+        
+        if (quantity < 0)
+        {
+            return StatusCode(406, "Invalid quantity");
+        }
+        
+        var existingInventoryItem = await _inventoryRepository.IsItemInInventory(variant.Id);
+        if(existingInventoryItem != null)
+        {
+            try
+            {
+                await _inventoryRepository.AddStock(existingInventoryItem.Id, quantity);
+                return Ok(existingInventoryItem);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500);
+            }
+        }
+        
+        
         var inventoryItem = new InventoryItem
         {
             WineVersion = variant,
@@ -52,6 +74,10 @@ public class InventoryController : ControllerBase
             _logger.LogError(ex, "Error adding inventory item");
             return StatusCode(500);
         }
+        
+        
+      
+        
     }
     
     [HttpGet("GetInventory"), Authorize(Roles="Admin")]
