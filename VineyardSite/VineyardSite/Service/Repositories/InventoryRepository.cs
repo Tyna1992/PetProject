@@ -6,9 +6,9 @@ namespace VineyardSite.Service.Repositories;
 
 public class InventoryRepository : IInventoryRepository
 {
-    private readonly ApplicationDbContext _context;
+    private readonly DataContext _context;
     
-    public InventoryRepository(ApplicationDbContext context)
+    public InventoryRepository(DataContext context)
     {
         _context = context;
     }
@@ -20,12 +20,6 @@ public class InventoryRepository : IInventoryRepository
     
     }
 
-    public async Task<InventoryItem> IsItemInInventory(int wineVariantId)
-    {
-        return await _context.Inventory.FirstOrDefaultAsync(inventoryItem => inventoryItem.WineVariantId == wineVariantId);
-    }
-    
-    
     public async Task<IEnumerable<InventoryItem>> GetAllInventoryItems()
     {
         return await _context.Inventory.ToListAsync();

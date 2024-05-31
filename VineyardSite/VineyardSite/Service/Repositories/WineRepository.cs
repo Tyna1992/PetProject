@@ -6,9 +6,9 @@ namespace VineyardSite.Service.Repositories;
 
 public class WineRepository : IWineRepository
 {
-    private readonly ApplicationDbContext _context;
+    private readonly DataContext _context;
     
-    public WineRepository(ApplicationDbContext context)
+    public WineRepository(DataContext context)
     {
         _context = context;
     }

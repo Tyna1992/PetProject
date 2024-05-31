@@ -3,8 +3,9 @@
 public class Order
 {
     public Guid Id { get; set; }
-    public ICollection<OrderItem> OrderItems { get; set; }
-    
+    public Wine Wine { get; set; }
+    public int WineId { get; set; }
+    public int Quantity { get; set; }
     public double TotalPrice { get; set; }
     public DateTime Date { get; set; }
     public string Address { get; set; }

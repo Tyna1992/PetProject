@@ -6,7 +6,7 @@ public interface IOrderRepository
 {
     Task<IEnumerable<Order>> GetAllOrders();
     Task<Order> GetOrderById(string id);
-    Task<Order> AddOrder(string userId, OrderRequest orderRequest);
-    
+    Task AddOrder(Order order);
+    Task UpdateOrder(string id, Order order);
     Task DeleteOrder(string id);
 }

@@ -45,28 +45,32 @@ void AddServices()
 {
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddScoped<IWineTastingRepository, WineTastingPackageRepository>();
     builder.Services.AddScoped<IWineRepository, WineRepository>();
+    builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+    builder.Services.AddScoped<ISnackRepository, SnackRepository>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<AuthSeeder>();
     builder.Services.AddScoped<IWineVariantRepository, WineVariantRepository>();
     builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
-    builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
-    builder.Services.AddScoped<ICartRepository, CartRepository>();
-
+    
 
 }
 
 void AddDbContext()
 {
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    builder.Services.AddDbContext<UserContext>(options =>
     {
         options.UseSqlServer("Server=localhost,1433;Database=VineyardSite;User Id=sa;Password=Zakuro19920120;Encrypt=false;");
     });
 
-    
+    builder.Services.AddDbContext<DataContext>(options =>
+    {
+        options.UseSqlServer("Server=localhost,1433;Database=VineyardSite;User Id=sa;Password=Zakuro19920120;Encrypt=false;");
+    });
 }
 
 void AddIdentity()
@@ -83,7 +87,7 @@ void AddIdentity()
             options.Password.RequireLowercase = false;
         })
         .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<ApplicationDbContext>();
+        .AddEntityFrameworkStores<UserContext>();
     
 }
 
