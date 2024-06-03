@@ -34,7 +34,12 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
             .IsUnique(false);
         modelBuilder.Entity<WineVariant>()
             .HasKey(wv => wv.Id);
-
+        
+        modelBuilder.Entity<WineVariant>()
+            .HasOne(wv => wv.Wine)
+            .WithMany()
+            .HasForeignKey(wv => wv.WineId);
+        
         modelBuilder.Entity<WineVariant>()
             .HasIndex(wv => new {wv.WineId, wv.Year, wv.Price, wv.AlcoholContent})
             .IsUnique();
