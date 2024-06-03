@@ -33,11 +33,6 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
             .HasIndex(i =>  i.WineVariantId)
             .IsUnique(false);
         modelBuilder.Entity<WineVariant>()
-            .HasOne(wv => wv.Wine)
-            .WithMany()
-            .HasForeignKey(wv => wv.WineId);
-        
-        modelBuilder.Entity<WineVariant>()
             .HasKey(wv => wv.Id);
 
         modelBuilder.Entity<WineVariant>()
