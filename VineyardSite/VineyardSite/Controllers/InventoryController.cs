@@ -80,7 +80,7 @@ public class InventoryController : ControllerBase
         
     }
     
-    [HttpGet("GetInventory"), Authorize(Roles="Admin")]
+    [HttpGet("GetInventory")]
     public async Task<IActionResult> GetInventory()
     {
         try
