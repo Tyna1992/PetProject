@@ -1,6 +1,7 @@
 import WineModal from "./WineModal.jsx";
 import {useState, useContext} from "react";
-import notify from "../Utils/Notify.jsx";
+import { useNavigate } from "react-router-dom";
+import notify from "../Utils/Notify";
 import { UserContext } from "./UserContext.jsx";
 
 
@@ -8,6 +9,7 @@ function WebshopWineCard(data) {
     const wine = data.data;
     const [showModal, setShowModal] = useState(false);
     const {user, setUser} = useContext(UserContext);
+    const navigate = useNavigate();
 
     function handleMoreDetails() {
         setShowModal(true)
@@ -18,31 +20,31 @@ function WebshopWineCard(data) {
 
     async function addToCart(id)
     {
+        const userName = user.userName;
         
-        console.log(id);
         const quantity = 1;
         
         try {
-            const response = await fetch(`/api/Cart/AddCartItem/${id}/${quantity}/${user}`,
+            const response = await fetch(`/api/Cart/AddCartItem/${id}/${quantity}/${userName}`,
             {
                 method: "POST",
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({id, quantity, user})
+                body: JSON.stringify({id, quantity, userName})
             })
             if(response.ok)
             {
-                notify("success", "Item added to cart")
+                notify("Item added to cart", "success")
             }
             else
             {
-                notify("error", "Error adding item to cart")
+                notify("Error adding item to cart", "error")
             }
         } catch (error) {
             console.error(error);
-            notify("error", "Error occured adding item to cart")
+            notify("Error adding item to cart", "error")
         }
     }
 
