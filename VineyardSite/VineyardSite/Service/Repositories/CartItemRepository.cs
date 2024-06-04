@@ -46,10 +46,12 @@ public class CartItemRepository : ICartItemRepository
         return await _context.CartItems.FirstOrDefaultAsync(cartItem => cartItem.Id == cartItemId);
     }
 
-    public async Task<IEnumerable<CartItem>> GetCartItemsAsync(int cartId)
+    public async Task<IEnumerable<CartItem>> GetCartItemsAsync(string userId)
     {
+        var cartId = (await _context.Carts.FirstOrDefaultAsync(cart => cart.UserId == userId)).CartId;
         return await _context.CartItems.Where(cartItem => cartItem.CartId == cartId).ToListAsync();
     }
+    
 
     public async Task RemoveCartItemAsync(int cartItemId)
     {
