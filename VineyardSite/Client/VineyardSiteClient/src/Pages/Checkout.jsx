@@ -6,12 +6,13 @@ import { UserContext } from "../Components/UserContext.jsx";
 function Checkout() {
     const {user, setUser} = useContext(UserContext);
     const [cart, setCart] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() =>{
         async function GetCart()
         {
-            
-                const response = await fetch(`/api/Cart/GetCart/${user}`,{
+            const userName = user.userName;
+                const response = await fetch(`/api/Cart/GetCart/${userName}`,{
                     method: "GET",
                     credentials: "include",
                     headers: {
@@ -23,10 +24,11 @@ function Checkout() {
                     const data = await response.json();
                     setCart(data);
                     console.log(data);
+
+                    const total = data.reduce((sum, item) => sum + (item.wineVersion.price * item.quantity), 0);
+                    setTotalPrice(total);
                 
                 }
-
-
         }
         GetCart();
     },[])
@@ -37,11 +39,14 @@ function Checkout() {
             <div>
                 {cart.map((item, index) => (
                     <div key={`${item.drinkName}-${index}`}>
-                        <h3>{item.drinkName}</h3>
-                        <h3>{item.quantity}</h3>
+                        <h3>{item.wineVersion.wine.name} - {item.quantity} - {item.wineVersion.price * item.quantity} HUF</h3>
+                            
+                        
+                        
                         
                     </div>
                 ))}
+                <h3>Total: {totalPrice} HUF</h3>
             <h1>Check out</h1>
             <OrderForm />
         </div>
