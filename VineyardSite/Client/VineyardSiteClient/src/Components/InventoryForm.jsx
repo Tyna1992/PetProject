@@ -24,6 +24,12 @@ function InventoryForm({addStock}) {
         <input required type="number" name="year"  />
         <br/>
         <label>
+            Alcohol:
+        </label>
+        <br/>
+        <input required type="number" name="alcohol"  />
+        <br/>
+        <label>
             Quantity:
         </label>
         <br/>
