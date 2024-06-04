@@ -41,5 +41,23 @@ public class AuthControllerTest
         Assert.That(result.Result, Is.InstanceOf<CreatedAtActionResult>());
 
     }
+
+    [Test]
+    public async Task Register_RegistrationFails_ReturnsBadRequest()
+    {
+        
+        const string email = "test@test.com";
+        const string username = "testUsername";
+        const string password = "password";
+        const string address = "testAddress";
+
+        var request = new RegistrationRequest(email, username, password, address);
+        _authServiceMock.Setup(item => item.RegisterAsync(email, username, password, address, "User"))
+            .ReturnsAsync(new AuthResult(false, email, username, ""));
+
+        var result = await _authController.Register(request);
+        
+        Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+    }
     
 }
