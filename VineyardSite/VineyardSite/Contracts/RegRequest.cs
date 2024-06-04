@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HealthManagerServer.Contracts;
+namespace VineyardSite.Contracts;
 
 public record RegistrationRequest(
     [Required] string Email,
