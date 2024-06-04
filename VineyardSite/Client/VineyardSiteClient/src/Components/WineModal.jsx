@@ -9,7 +9,9 @@ function WineModal({data, closeModal}) {
                     alt="data" width="200px" height="200px"/>
 
                 <h3 className="modal-wine-name">{wine.name}-{wine.year}</h3>
+                <h3 className="modal-wine-alcohol">{wine.alcoholContent}%</h3>
                 <h3 className="modal-wine-price">{wine.price} HUF</h3>
+                <h2 className="modal-wine-description">{wine.description} </h2>
                 <button>Add to cart</button>
                 <button onClick={() => closeModal()}>Close</button>
             </div>
