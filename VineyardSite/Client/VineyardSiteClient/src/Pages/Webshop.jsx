@@ -1,15 +1,17 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import WebshopWineCard from "../Components/WebshopWineCard.jsx";
 import "../index.css";
+import { UserContext } from "../Components/UserContext.jsx";
+
 function Webshop() {
     const [inventory, setInventory] = useState([]);
+    const {user, setUser} = useContext(UserContext);
 
     useEffect(()=>{
         async function getInventory(){
             try {
                 const response = await fetch("/api/Inventory/GetInventory",{
                     method: "GET",
-                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json"
                     }
@@ -21,6 +23,7 @@ function Webshop() {
                     console.log(data);
                     setInventory(data);
                 }
+                
             } catch (error) {
                 console.error(error);
             }
