@@ -12,6 +12,11 @@ public class AuthControllerTest
     private readonly Mock<IAuthService> _authServiceMock = new();
     private AuthController _authController;
     
+    private const string email = "test@test.com";
+    private const string username = "testUsername";
+    private const string password = "password";
+    private const string address = "testAddress";
+    
     [SetUp]
     public void Setup()
     {
@@ -27,11 +32,7 @@ public class AuthControllerTest
     [Test]
     public async Task Register_RegistrationSucceeds_ReturnsCreated()
     {
-        const string email = "test@test.com";
-        const string username = "testUsername";
-        const string password = "password";
-        const string address = "testAddress";
-
+        
         var request = new RegistrationRequest(email, username, password, address);
         _authServiceMock.Setup(item => item.RegisterAsync(email, username, password, address, "User"))
             .ReturnsAsync(new AuthResult(true, email, username, ""));
@@ -45,11 +46,6 @@ public class AuthControllerTest
     [Test]
     public async Task Register_RegistrationFails_ReturnsBadRequest()
     {
-        
-        const string email = "test@test.com";
-        const string username = "testUsername";
-        const string password = "password";
-        const string address = "testAddress";
 
         var request = new RegistrationRequest(email, username, password, address);
         _authServiceMock.Setup(item => item.RegisterAsync(email, username, password, address, "User"))
