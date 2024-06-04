@@ -49,7 +49,11 @@ public class CartItemRepository : ICartItemRepository
     public async Task<IEnumerable<CartItem>> GetCartItemsAsync(string userId)
     {
         var cartId = (await _context.Carts.FirstOrDefaultAsync(cart => cart.UserId == userId)).CartId;
-        return await _context.CartItems.Where(cartItem => cartItem.CartId == cartId).ToListAsync();
+        return await _context.CartItems
+        .Where(cartItem => cartItem.CartId == cartId)
+        .Include(cartItem => cartItem.WineVersion)
+        .Include(cartitem => cartitem.WineVersion.Wine)  // Include the WineVersion in the query
+        .ToListAsync();
     }
     
 
