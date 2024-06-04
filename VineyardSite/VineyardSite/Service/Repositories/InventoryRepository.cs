@@ -35,11 +35,13 @@ public class InventoryRepository : IInventoryRepository
     {
         return await _context.Inventory.Select(inventoryItem => new Stock
         {
+            DrinkId =inventoryItem.WineVariantId,
             Name = inventoryItem.WineVersion.Wine.Name,
             Year = inventoryItem.WineVersion.Year,
             Price = inventoryItem.WineVersion.Price,
             AlcoholContent = inventoryItem.WineVersion.AlcoholContent,
-            Quantity = inventoryItem.Quantity
+            Quantity = inventoryItem.Quantity,
+            Description = inventoryItem.WineVersion.Wine.Description
         }).ToListAsync();
     }
     public async Task<InventoryItem?> GetInventoryItem(int id)
