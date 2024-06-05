@@ -19,8 +19,7 @@ function Home() {
                 });
                 const data = await response.json();
                 if (data) {
-                    setUser(data);
-                    console.log(data);
+                    setUser({ userName: data.userName, id: data.id});
                 }
             } catch (error) {
                 console.error(error);
@@ -61,7 +60,7 @@ function Home() {
                                 <button className="homeButton" type="button">Cart</button>
                             </Link>
                         </>
-                    ) : user.userName !== "admin" ? (
+                    ) : user !== "admin" ? (
                         <>
                             <Link  to="/profile">
                                 <button className="homeButton" type="button">Profile</button>
