@@ -29,7 +29,7 @@ public class OrderRepository : IOrderRepository
     
     public async Task<Order> AddOrder(string userId, OrderRequest orderRequest)
     {
-       
+    
         // Get the user's cart
         var cart = await _context.Carts
             .Include(c => c.CartItems)
@@ -47,7 +47,7 @@ public class OrderRepository : IOrderRepository
             Status = "Placed",
             OrderItems = new List<OrderItem>(),
             Email = cart.User.Email,
-            Address = cart.User.Address,
+            Address = "Address",
             DeliveryType = orderRequest.DeliveryType,
             PaymentType = orderRequest.PaymentType,
             Notes = orderRequest.Notes
@@ -65,7 +65,7 @@ public class OrderRepository : IOrderRepository
                 Order = order,
                 OrderId = order.Id
             };
-           if(orderItem.Quantity < inventory.FirstOrDefault(i => i.WineVariantId == orderItem.WineVariantId)?.Quantity)
+            if(orderItem.Quantity < inventory.FirstOrDefault(i => i.WineVariantId == orderItem.WineVariantId)?.Quantity)
             {
                 inventory.FirstOrDefault(i => i.WineVariantId == orderItem.WineVariantId).Quantity -= orderItem.Quantity;
                 _context.Inventory.Update(inventory.FirstOrDefault(i => i.WineVariantId == orderItem.WineVariantId));
