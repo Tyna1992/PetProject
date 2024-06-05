@@ -116,8 +116,9 @@ function Admin() {
         const wineName = event.target.wineName.value;
         const year = parseInt(event.target.year.value);
         const quantity = parseInt(event.target.quantity.value);
+        const alcohol = parseFloat(event.target.alcohol.value);
         try {
-            const response = await fetch(`/api/Inventory/AddInventory/${wineName}/${year}/${quantity}`, {
+            const response = await fetch(`/api/Inventory/AddInventory/${wineName}/${year}/${quantity}/${alcohol}`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -126,7 +127,8 @@ function Admin() {
                 body: JSON.stringify({
                     wineName: wineName,
                     year: year,
-                    quantity: quantity
+                    quantity: quantity,
+                    alcohol: alcohol
                 })
             })
             if (response.status === 404) {
@@ -138,6 +140,7 @@ function Admin() {
                 event.target.wineName.value = "";
                 event.target.year.value = "";
                 event.target.quantity.value = "";
+                event.target.alcohol.value = "";
 
             }
 

@@ -1,0 +1,55 @@
+.profile {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.activeLink {
+    color: #007bff;
+  }
+
+.link {
+    color: white;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.edit-icon {
+  cursor: pointer;
+}
+
+.editModal form {
+  padding: 20px;
+  border-radius: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.editModal label {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.editModal button[type="button"] {
+  background: #6c757d;
+}
+
+.edit-icon {
+  cursor: pointer;
+  color: #007bff;
+  margin-top: 20px;
+  align-self: flex-end;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 10px;
+}

@@ -10,6 +10,7 @@ import Welcome from './Pages/Welcome.jsx'
 import './index.css'
 import Webshop from './Pages/Webshop.jsx'
 import Checkout from "./Pages/Checkout.jsx";
+import Profile from "./Pages/Profile/Profile.jsx";
 
 const router = createBrowserRouter([
     {
@@ -39,7 +40,11 @@ const router = createBrowserRouter([
             {
                 path: "/checkout",
                 element: <Checkout/>
-            }
+            },
+            {
+                path: "/profile",
+                element: <Profile/>
+            },
             
         ]
     }

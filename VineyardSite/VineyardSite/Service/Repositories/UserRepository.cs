@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HealthManagerServer.Contracts;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using VineyardSite.Contracts;
 using VineyardSite.Data;
 using VineyardSite.Model;
 
@@ -29,24 +32,25 @@ public class UserRepository : IUserRepository
         var user = await _context.Users.FirstOrDefaultAsync(user => user.UserName == username);
         return user;
     }
-    
+
     public async Task<User> GetByEmail(string email)
     {
         var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == email);
         return user;
     }
     
-    public async Task UpdateUser(string id, User user)
+    public async Task<User> UpdateUser(string id, UserDetailResponse userDetailResponse)
     {
         var userToUpdate = await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
         if (userToUpdate != null)
         {
-            userToUpdate.UserName = user.UserName;
-            userToUpdate.Email = user.Email;
-            userToUpdate.Address = user.Address;
+            userToUpdate.Email = userDetailResponse.Email;
+            userToUpdate.Address = userDetailResponse.Address;
+            userToUpdate.PhoneNumber = userDetailResponse.PhoneNumber;
             _context.Users.Update(userToUpdate);
             await _context.SaveChangesAsync();
         }
+        return userToUpdate;
     }
     
     public async Task DeleteUser(string id)
@@ -57,5 +61,26 @@ public class UserRepository : IUserRepository
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
         }
+    }
+    
+    public async Task<User> ChangePassword(string id, PasswordChangeResponse passwordChangeResponse)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+        if (user != null)
+        {
+            var hasher = new PasswordHasher<User>();
+            var verificationResult = hasher.VerifyHashedPassword(user, user.PasswordHash, passwordChangeResponse.OldPassword);
+
+            if (verificationResult == PasswordVerificationResult.Success)
+            {
+                user.PasswordHash = hasher.HashPassword(user, passwordChangeResponse.NewPassword);
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+            } else
+            {
+                throw new Exception("Incorrect password");
+            }
+        }
+        return user;
     }
 }
