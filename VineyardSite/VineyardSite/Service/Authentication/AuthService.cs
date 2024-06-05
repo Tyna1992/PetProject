@@ -23,7 +23,7 @@ public class AuthService : IAuthService
         _configuration = configuration;
         _context = context;
     }
-    public async Task<AuthResult> RegisterAsync(string email, string username, string password, string address, string role)
+    public async Task<AuthResult> RegisterAsync(string email, string username, string password, string role)
     {
         var existingUser = await _userManager.FindByEmailAsync(email);
         
@@ -32,7 +32,7 @@ public class AuthService : IAuthService
             return FailedRegistration(IdentityResult.Failed(new IdentityError { Code = "EmailExists", Description = "Email already exists" }), email, username);
 
         }
-        var user = new User {UserName = username, Email = email, Address = address};
+        var user = new User {UserName = username, Email = email};
         
         
         var result = await _userManager.CreateAsync(user, password);
