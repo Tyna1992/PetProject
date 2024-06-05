@@ -103,4 +103,12 @@ public class AuthControllerTest
         
         Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
     }
+
+    [Test]
+    public void Logout_ReturnsOk()
+    {
+        var result = _authController.Logout();
+        
+        Assert.That(result, Is.InstanceOf<OkResult>());
+    }
 }
