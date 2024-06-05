@@ -91,4 +91,16 @@ public class AuthControllerTest
         
         Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
     }
+    
+    [Test]
+    public async Task Login_InvalidModelState_ReturnsBadRequest()
+    {
+        
+        _authController.ModelState.AddModelError("Error", "Invalid model state");
+        var request = new AuthRequest(username, password);
+        
+        var result = await _authController.Authenticate(request);
+        
+        Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+    }
 }
