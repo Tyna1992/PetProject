@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, request.Address,  "User");
+        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, "User");
 
         if (!result.Success)
         {
@@ -71,10 +71,8 @@ public class AuthController : ControllerBase
             var email = claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
             var username = claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
             var userId = claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
-            var address = claims.FirstOrDefault(c => c.Type == "Address")?.Value;
-           
-
-            return Ok(new UserResponse(userId, username, email,address ));
+            
+            return Ok(new UserResponse(userId, username, email ));
         }
         return BadRequest("No token found");
     }
