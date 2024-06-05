@@ -6,12 +6,11 @@ namespace VineyardSite.Model;
 
 public class User : IdentityUser
 {
-    [Required]
-    public string Address { get; set; }
+    public int AddressId { get; set; }
     [JsonIgnore]
     public Cart Cart { get; set; }
     public int? CartId { get; set; }
+    public Address Address { get; set; }
     
-    
-    
+
 }
