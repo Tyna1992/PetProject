@@ -79,4 +79,16 @@ public class AuthControllerTest
         
         Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
     }
+
+    [Test]
+    public async Task Login_LoginFails_ReturnsBadRequest()
+    {
+        var request = new AuthRequest(username, password);
+        _authServiceMock.Setup(item => item.LoginAsync(username, password))
+            .ReturnsAsync(new AuthResult(false, email, username, ""));
+
+        var result = await _authController.Authenticate(request);
+        
+        Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+    }
 }
