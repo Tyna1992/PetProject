@@ -21,12 +21,14 @@ public class OrderController : ControllerBase
         _wineRepository = wineRepository;
     }
 
-    [HttpPost("AddOrder/{userId}"), Authorize(Roles = "User,Admin")]
-    public async Task<IActionResult> PlaceOrder(string userId, [FromBody] OrderRequest orderRequest)
+    [HttpPost("AddOrder"), Authorize(Roles = "User,Admin")]
+    public async Task<IActionResult> PlaceOrder([FromBody] OrderRequest orderRequest)
     {
         try
         {
-           var order = await _orderRepository.AddOrder(userId, orderRequest);
+            var userId = orderRequest.UserId;
+            var order = await _orderRepository.AddOrder(userId, orderRequest);
+           Console.WriteLine("Order: " + order.Id, order.Date, order.TotalPrice, order.Status);
            var response = new OrderResponse
            {
                Id = order.Id,

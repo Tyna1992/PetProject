@@ -9,21 +9,25 @@ public class CartController : ControllerBase
 {
     private readonly ICartItemRepository _cartItemRepository;
     private readonly ICartRepository _cartRepository;
+
+    private readonly IUserRepository _userRepository;
     
     
-    public CartController(ICartItemRepository cartItemRepository, ICartRepository cartRepository)
+    public CartController(ICartItemRepository cartItemRepository, ICartRepository cartRepository, IUserRepository userRepository)
     {
         _cartItemRepository = cartItemRepository;
         _cartRepository = cartRepository;
+        _userRepository = userRepository;
     }
    
 
-    [HttpPost("AddCartItem/{drinkId}/{quantity}/{userId}"), Authorize(Roles = "User, Admin")]
-    public async Task<IActionResult> AddCartItem(int drinkId, int quantity, string userId)
+    [HttpPost("AddCartItem/{drinkId}/{quantity}/{userName}"), Authorize(Roles = "User, Admin")]
+    public async Task<IActionResult> AddCartItem(int drinkId, int quantity, string userName)
     {
         try
         {
-            await _cartItemRepository.AddCartItemAsync(drinkId, quantity, userId);
+            var user = await _userRepository.GetByUsername(userName);
+            await _cartItemRepository.AddCartItemAsync(drinkId, quantity, user.Id);
             return Ok("Item added to cart");
         }
         catch (Exception e)
@@ -66,12 +70,15 @@ public class CartController : ControllerBase
         }
     }
 
-    [HttpGet("GetCart/{cartId}"), Authorize(Roles = "User, Admin")]
-    public async Task<IActionResult> GetCart(int cartId)
+    [HttpGet("GetCart/{userName}"), Authorize(Roles = "User, Admin")]
+    public async Task<IActionResult> GetCart(string userName)
     {
         try
         {
-            var cartItems = await _cartItemRepository.GetCartItemsAsync(cartId);
+            var user = await _userRepository.GetByUsername(userName);
+            Console.WriteLine(user.Id);        
+            
+            var cartItems = await _cartItemRepository.GetCartItemsAsync(user.Id);
             return !cartItems.Any() ? Ok("Cart is empty") : Ok(cartItems);
         }
         catch (Exception e)

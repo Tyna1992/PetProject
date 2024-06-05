@@ -27,6 +27,9 @@ var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthSeeder>(
 authenticationSeeder.AddRoles();
 authenticationSeeder.AddAdmin();
 
+var wineSeeder = scope.ServiceProvider.GetRequiredService<IWineSeeder>();
+await wineSeeder.SeedWine();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -55,6 +58,7 @@ void AddServices()
     builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
     builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
     builder.Services.AddScoped<ICartRepository, CartRepository>();
+    builder.Services.AddScoped<IWineSeeder, WineSeeder>();
 
 
 }
@@ -63,7 +67,7 @@ void AddDbContext()
 {
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
-        options.UseSqlServer("Server=localhost,1433;Database=VineyardSite;User Id=sa;Password=Zakuro19920120;Encrypt=false;");
+        options.UseSqlServer("Server=localhost,1433;Database=VineyardSite;User Id=sa;Password=Codecool12__;Encrypt=false;");
     });
 
     
@@ -127,17 +131,18 @@ void AddAuthentication()
         {
             var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
             var issuerSigningKey = builder.Configuration.GetSection("IssuerSigningKey").Value;
-            options.TokenValidationParameters = new TokenValidationParameters()
-            {
-                ClockSkew = TimeSpan.Zero,
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtSettings.ValidIssuer,
-                ValidAudience = jwtSettings.ValidAudience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey)),
-            };
+            if (issuerSigningKey != null)
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings?.ValidIssuer,
+                    ValidAudience = jwtSettings?.ValidAudience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey)),
+                };
             options.Events = new JwtBearerEvents
             {
                 OnMessageReceived = context =>

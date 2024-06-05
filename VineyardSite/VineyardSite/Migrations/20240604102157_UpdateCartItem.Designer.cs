@@ -12,8 +12,8 @@ using VineyardSite.Data;
 namespace VineyardSite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240529112459_TotalDatabaseRefactor")]
-    partial class TotalDatabaseRefactor
+    [Migration("20240604102157_UpdateCartItem")]
+    partial class UpdateCartItem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,9 +254,6 @@ namespace VineyardSite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -268,9 +265,6 @@ namespace VineyardSite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("WineVariantId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Id")
@@ -278,9 +272,31 @@ namespace VineyardSite.Migrations
 
                     b.HasIndex("UserId");
 
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("VineyardSite.Model.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WineVariantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("WineVariantId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("VineyardSite.Model.User", b =>
@@ -515,13 +531,24 @@ namespace VineyardSite.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("VineyardSite.Model.OrderItem", b =>
+                {
+                    b.HasOne("VineyardSite.Model.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("VineyardSite.Model.WineVariant", "WineVariant")
                         .WithMany()
                         .HasForeignKey("WineVariantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Order");
 
                     b.Navigation("WineVariant");
                 });
@@ -540,6 +567,11 @@ namespace VineyardSite.Migrations
             modelBuilder.Entity("VineyardSite.Model.Cart", b =>
                 {
                     b.Navigation("CartItems");
+                });
+
+            modelBuilder.Entity("VineyardSite.Model.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("VineyardSite.Model.User", b =>
