@@ -1,6 +1,8 @@
-﻿namespace VineyardSite.Contracts;
+﻿using VineyardSite.Model;
+
+namespace VineyardSite.Contracts;
 
 public record UserDetailResponse(
     string Email,
-    string Address,
+    Address Address,
     string PhoneNumber);
