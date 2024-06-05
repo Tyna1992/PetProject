@@ -52,10 +52,8 @@ public class TokenService : ITokenService
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
-
+                new Claim("Address", user.Address.ToString())
             };
-            
-            claims.Add(new Claim("Address", user.Address.ToString()));
 
             if (role != null)
             {
