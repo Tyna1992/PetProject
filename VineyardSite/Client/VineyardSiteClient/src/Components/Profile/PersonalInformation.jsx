@@ -19,16 +19,6 @@ const PersonalInformation = ({ editMode, handleFormSubmit, formData, handleInput
                   />
                 </label>
                 <label>
-                  Address:
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    disabled
-                    onChange={handleInputChange}
-                  />
-                </label>
-                <label>
                   Email:
                   <input
                     type="email"
@@ -66,16 +56,7 @@ const PersonalInformation = ({ editMode, handleFormSubmit, formData, handleInput
                   />
                 </label>
                 <label>
-                  Address:
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                  />
-                </label>
-                <label>
-                  Email:
+                Email:
                   <input
                     type="email"
                     name="email"
