@@ -44,7 +44,6 @@ public class UserRepository : IUserRepository
         if (userToUpdate != null)
         {
             userToUpdate.Email = userDetailResponse.Email;
-            userToUpdate.Address = userDetailResponse.Address;
             userToUpdate.PhoneNumber = userDetailResponse.PhoneNumber;
             _context.Users.Update(userToUpdate);
             await _context.SaveChangesAsync();
