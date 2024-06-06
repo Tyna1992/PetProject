@@ -1,5 +1,4 @@
-﻿using HealthManagerServer.Contracts;
-using VineyardSite.Contracts;
+﻿using VineyardSite.Contracts;
 using VineyardSite.Model;
 
 namespace VineyardSite.Service.Repositories;

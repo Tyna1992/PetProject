@@ -1,6 +1,6 @@
-﻿using HealthManagerServer.Contracts;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VineyardSite.Contracts;
 using VineyardSite.Service.Authentication;
 
 namespace VineyardSite.Controllers;

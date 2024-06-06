@@ -1,5 +1,4 @@
-﻿using HealthManagerServer.Contracts;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VineyardSite.Contracts;
 using VineyardSite.Data;

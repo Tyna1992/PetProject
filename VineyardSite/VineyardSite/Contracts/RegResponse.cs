@@ -1,5 +1,5 @@
 
-namespace HealthManagerServer.Contracts;
+namespace VineyardSite.Contracts;
 
 public record RegistrationResponse(
     string Email, 
