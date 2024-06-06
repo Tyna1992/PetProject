@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using VineyardSite.Contracts;
 using VineyardSite.Model;
 using VineyardSite.Service.Repositories;
+using VineyardSite.Service.Repositories.Profile;
 
 namespace VineyardSite.Controllers;
 
@@ -11,10 +12,12 @@ namespace VineyardSite.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
+    private readonly IAddressRepository _addressRepository;
     
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserRepository userRepository, IAddressRepository addressRepository)
     {
         _userRepository = userRepository;
+        _addressRepository = addressRepository;
     }
     
     [HttpGet("GetUserDetails/{id}")]
@@ -29,7 +32,6 @@ public class UserController : ControllerBase
         {
             user.UserName,
             user.Email,
-            user.Address,
             user.PhoneNumber
         };
         return Ok(userResponse);
@@ -62,6 +64,47 @@ public class UserController : ControllerBase
         {
             Console.WriteLine(e);
             return BadRequest("Error changing password");
+        }
+    }
+    
+    [HttpPost("AddAddress/{id}")]
+    public async Task<ActionResult> AddAddress(string id, [FromBody] Address address)
+    {
+        try
+        {
+            await _addressRepository.AddAddressToUser(id, address);
+            return Ok("Address added");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, "Error adding address");
+        }
+    }
+    
+    [HttpGet("GetAddress/{id}")]
+    public async Task<ActionResult> GetAddress(string id)
+    {
+        var address = await _addressRepository.GetAddress(id);
+        if (address == null)
+        {
+            return NotFound("Address not found");
+        }
+        return Ok(address);
+    }
+    
+    [HttpPatch("UpdateAddress/{id}")]
+    public async Task<ActionResult> UpdateAddress(string id, [FromBody] Address address)
+    {
+        try
+        {
+            await _addressRepository.UpdateAddress(id, address);
+            return Ok("Address updated");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, "Error updating address");
         }
     }
 }
