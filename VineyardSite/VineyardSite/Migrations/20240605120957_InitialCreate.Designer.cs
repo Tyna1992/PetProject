@@ -12,8 +12,8 @@ using VineyardSite.Data;
 namespace VineyardSite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240531092747_UpdateOrder")]
-    partial class UpdateOrder
+    [Migration("20240605120957_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,6 +156,46 @@ namespace VineyardSite.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("VineyardSite.Model.Address", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HouseNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("VineyardSite.Model.Cart", b =>
@@ -307,9 +347,8 @@ namespace VineyardSite.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("CartId")
                         .HasColumnType("int");
@@ -482,6 +521,17 @@ namespace VineyardSite.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("VineyardSite.Model.Address", b =>
+                {
+                    b.HasOne("VineyardSite.Model.User", "User")
+                        .WithOne("Address")
+                        .HasForeignKey("VineyardSite.Model.Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("VineyardSite.Model.Cart", b =>
                 {
                     b.HasOne("VineyardSite.Model.User", "User")
@@ -576,6 +626,9 @@ namespace VineyardSite.Migrations
 
             modelBuilder.Entity("VineyardSite.Model.User", b =>
                 {
+                    b.Navigation("Address")
+                        .IsRequired();
+
                     b.Navigation("Cart")
                         .IsRequired();
                 });

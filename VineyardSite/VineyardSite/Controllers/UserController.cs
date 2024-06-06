@@ -20,7 +20,7 @@ public class UserController : ControllerBase
     [HttpGet("GetUserDetails/{id}")]
     public async Task<ActionResult> GetUserDetails(string id)
     {
-        var user = await _userRepository.GetByUsername(id);
+        var user = await _userRepository.GetUserById(id);
         if (user == null)
         {
             return NotFound("User not found");
