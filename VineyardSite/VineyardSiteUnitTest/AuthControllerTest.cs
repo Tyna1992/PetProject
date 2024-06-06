@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -14,8 +16,8 @@ public class AuthControllerTest
     
     private const string email = "test@test.com";
     private const string username = "testUsername";
+    private const string userId = "1";
     private const string password = "password";
-    private const string address = "testAddress";
     
     [SetUp]
     public void Setup()
@@ -33,8 +35,8 @@ public class AuthControllerTest
     public async Task Register_RegistrationSucceeds_ReturnsCreated()
     {
         
-        var request = new RegistrationRequest(email, username, password, address);
-        _authServiceMock.Setup(item => item.RegisterAsync(email, username, password, address, "User"))
+        var request = new RegistrationRequest(email, username, password);
+        _authServiceMock.Setup(item => item.RegisterAsync(email, username, password, "User"))
             .ReturnsAsync(new AuthResult(true, email, username, ""));
 
         var result = await _authController.Register(request);
@@ -47,8 +49,8 @@ public class AuthControllerTest
     public async Task Register_RegistrationFails_ReturnsBadRequest()
     {
 
-        var request = new RegistrationRequest(email, username, password, address);
-        _authServiceMock.Setup(item => item.RegisterAsync(email, username, password, address, "User"))
+        var request = new RegistrationRequest(email, username, password);
+        _authServiceMock.Setup(item => item.RegisterAsync(email, username, password, "User"))
             .ReturnsAsync(new AuthResult(false, email, username, ""));
 
         var result = await _authController.Register(request);
@@ -61,7 +63,7 @@ public class AuthControllerTest
     {
         
         _authController.ModelState.AddModelError("Error", "Invalid model state");
-        var request = new RegistrationRequest(email, username, password, address);
+        var request = new RegistrationRequest(email, username, password);
         
         var result = await _authController.Register(request);
         
@@ -110,5 +112,22 @@ public class AuthControllerTest
         var result = _authController.Logout();
         
         Assert.That(result, Is.InstanceOf<OkResult>());
+    }
+
+    [Test]
+    public void WhoAmI_TokenIsValid_ReturnsOk()
+    {
+        var requestCookie = _authController.HttpContext.Request.Cookies["Authorization"];
+        var token = new JwtSecurityToken(claims: new List<Claim>
+        {
+            new("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", email),
+            new("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", username),
+            new("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", userId)
+        });
+        _authServiceMock.Setup(item => item.Verify(requestCookie)).Returns(token);
+
+        var result = _authController.WhoAmI();
+        
+        Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
     }
 }
