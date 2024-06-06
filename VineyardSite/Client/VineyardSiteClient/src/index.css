@@ -278,3 +278,7 @@ button:focus-visible {
 .modal-wine-name, .modal-wine-price{
   color: black;
 }
+
+.form-container {
+  padding-bottom: 30px;
+}
