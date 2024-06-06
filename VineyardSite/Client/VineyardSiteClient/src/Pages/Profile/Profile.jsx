@@ -5,13 +5,13 @@ import notify from "../../Utils/Notify";
 import PersonalInformation from "../../Components/Profile/PersonalInformation";
 import ProfileNavbar from "../../Components/Profile/ProfileNavbar";
 import ChangePassword from "../../Components/Profile/ChangePassword";
+import AddAddress from "../../Components/Profile/AddAddress";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
-    address: "",
     phoneNumber: "",
   });
   const [activeTab, setActiveTab] = useState("personalInformation");
@@ -19,7 +19,7 @@ const Profile = () => {
   const fetchUserDetails = async () => {
     try {
       const response = await fetch(
-        `/api/User/GetUserDetails/${user.userName}`,
+        `/api/User/GetUserDetails/${user.id}`,
         {
           method: "GET",
           headers: {
@@ -33,7 +33,6 @@ const Profile = () => {
       }
       const data = await response.json();
       setFormData({
-        address: data.address || "",
         email: data.email || "",
         phoneNumber: data.phoneNumber || "",
         userName: data.userName || "",
@@ -101,6 +100,8 @@ const Profile = () => {
         />
       )}
       {activeTab === "change-password" && <ChangePassword />}
+
+      {activeTab === "add-address" && <AddAddress />}
     </div>
   );
 };
