@@ -130,4 +130,17 @@ public class AuthControllerTest
         
         Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
     }
+
+    [Test]
+    public void WhoAmI_TokenIsInvalid_ReturnsNull()
+    {
+
+        var requestCookie = _authController.HttpContext.Request.Cookies["Authorization"];
+        _authServiceMock.Setup(x => x.Verify(requestCookie))
+            .Returns((JwtSecurityToken)null);
+
+        var result = _authController.WhoAmI();
+        
+        Assert.That(result.Value, Is.Null);
+    }
 }
