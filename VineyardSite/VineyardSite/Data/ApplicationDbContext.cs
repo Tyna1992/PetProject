@@ -14,6 +14,7 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Address> Addresses { get; set; }
     
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -24,6 +25,14 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
     {
         modelBuilder.Entity<Wine>().HasIndex(w => w.Name).IsUnique();
         modelBuilder.Entity<Order>().HasIndex(o => o.Id).IsUnique();
+
+        
+        modelBuilder.Entity<User>()
+        .HasOne(u => u.Address)
+        .WithOne(a => a.User)
+        .HasForeignKey<Address>(a => a.UserId)
+        .IsRequired();
+
         modelBuilder.Entity<User>()
             .HasOne(u => u.Cart)
             .WithOne(c => c.User)
