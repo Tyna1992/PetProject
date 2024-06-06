@@ -14,8 +14,7 @@ function RegisterUser() {
         const username = event.target.username.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
-        const address = event.target.address.value;
-        const user = {username, email, password, address};
+        const user = {username, email, password};
         
         try{
             const response = await fetch("/api/Auth/Register",{
@@ -67,9 +66,6 @@ function RegisterUser() {
                 <br></br>
                 <input type="password" name="password"></input>
                 <br></br>
-                <label>Address:</label>
-                <br></br>
-                <input type="text" name="address"></input>
                 <br></br>
                 <button type="submit">Create account</button>
                 <button type="button" onClick={() => navigate("/")}>
