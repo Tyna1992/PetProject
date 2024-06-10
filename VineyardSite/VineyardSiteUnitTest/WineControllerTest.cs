@@ -100,5 +100,18 @@ public class WineControllerTest
         Assert.That(result, Is.InstanceOf<OkResult>());
     }
 
+    [Test]
+    public async Task DeleteWine_DeleteFails_ReturnsBadRequest()
+    {
+        _wineRepositoryMock.Setup(repo => repo.DeleteWine(_testWines[0].Id))
+            .ThrowsAsync(new Exception("Test Exception"));
+
+        var result = await _wineController.DeleteWine(_testWines[0].Id);
+        
+        Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
+        var badRequestResult = result as BadRequestObjectResult;
+        Assert.That(badRequestResult.Value, Is.EqualTo("Test Exception"));
+    }
+
     
 }
