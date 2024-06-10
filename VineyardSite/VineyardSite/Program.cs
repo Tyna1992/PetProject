@@ -9,6 +9,7 @@ using VineyardSite.Data;
 using VineyardSite.Model;
 using VineyardSite.Service.Authentication;
 using VineyardSite.Service.Repositories;
+using VineyardSite.Service.Repositories.Profile;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,8 +60,7 @@ void AddServices()
     builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
     builder.Services.AddScoped<ICartRepository, CartRepository>();
     builder.Services.AddScoped<IWineSeeder, WineSeeder>();
-
-
+    builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 }
 
 void AddDbContext()

@@ -16,8 +16,8 @@ const ProfileNavbar = ({ setActiveTab, activeTab }) => {
         Change password
       </Link>
       <Link
-        onClick={() => setActiveTab("address")}
-        className={activeTab === "address" ? "activeLink" : "link"}
+        onClick={() => setActiveTab("add-address")}
+        className={activeTab === "add-address" ? "activeLink" : "link"}
       >
         Address
       </Link>

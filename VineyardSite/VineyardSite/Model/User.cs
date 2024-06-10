@@ -10,6 +10,7 @@ public class User : IdentityUser
     [JsonIgnore]
     public Cart Cart { get; set; }
     public int? CartId { get; set; }
+    [JsonIgnore]
     public Address Address { get; set; }
     
 

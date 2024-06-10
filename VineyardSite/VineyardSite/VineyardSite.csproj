@@ -22,10 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Migrations\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Remove="Migrations\20240529112459_TotalDatabaseRefactor.cs" />
       <Compile Remove="Migrations\20240529112459_TotalDatabaseRefactor.Designer.cs" />
       <Compile Remove="Migrations\ApplicationDbContextModelSnapshot.cs" />

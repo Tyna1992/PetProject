@@ -1,4 +1,6 @@
-﻿namespace VineyardSite.Model;
+﻿using System.Text.Json.Serialization;
+
+namespace VineyardSite.Model;
 
 public class Address
 {
@@ -8,8 +10,8 @@ public class Address
     public string ZipCode { get; set; }
     public string City { get; set; }
     public string Country { get; set; }
-    
-    public User User { get; set; }
+    [JsonIgnore]
+    public User? User { get; set; }
     public string UserId { get; set; }
 
 }

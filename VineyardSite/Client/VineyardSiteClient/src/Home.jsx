@@ -60,7 +60,7 @@ function Home() {
                                 <button className="homeButton" type="button">Cart</button>
                             </Link>
                         </>
-                    ) : user !== "admin" ? (
+                    ) : user.userName !== "admin" ? (
                         <>
                             <Link  to="/profile">
                                 <button className="homeButton" type="button">Profile</button>
