@@ -125,5 +125,18 @@ public class WineControllerTest
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo(_testWine));
     }
-    
+
+    [Test]
+    public async Task UpdateWine_UpdateFails_ReturnsBadRequest()
+    {
+
+        _wineRepositoryMock.Setup(repo => repo.UpdateWine(_testWines[0].Id, _testWine))
+            .ThrowsAsync(new Exception("Test Exception"));
+
+        var result = await _wineController.UpdateWine(_testWines[0].Id, _testWine);
+        
+        Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
+        var badRequestResult = result as BadRequestObjectResult;
+        Assert.That(badRequestResult.Value, Is.EqualTo("Test Exception"));
+    }
 }
