@@ -14,7 +14,7 @@ public class WineControllerTest
     private WineController _wineController;
     private Wine _testWine = new Wine
     {
-        Id = 1,
+        Id = 0,
         Name = "testName",
         Type = "testType",
         Sweetness = "testSweetness",
@@ -88,6 +88,16 @@ public class WineControllerTest
         Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
         var badRequestResult = result as BadRequestObjectResult;
         Assert.That(badRequestResult.Value, Is.EqualTo("Test Exception"));
+    }
+
+    [Test]
+    public async Task DeleteWine_DeleteSuccess_ReturnsOk()
+    {
+        _wineRepositoryMock.Setup(repo => repo.DeleteWine(_testWines[0].Id)).Returns(Task.CompletedTask);
+
+        var result = await _wineController.DeleteWine(_testWines[0].Id);
+        
+        Assert.That(result, Is.InstanceOf<OkResult>());
     }
 
     
