@@ -21,6 +21,12 @@ public class WineControllerTest
         Description = "testDescrition"
     };
     
+    private List<Wine> _testWines = new List<Wine>
+    {
+        new Wine { Id = 1, Name = "testWine1", Type = "testType1", Sweetness = "testSweetness1", Description = "testDescription1" },
+        new Wine { Id = 2, Name = "testWine2", Type = "testType2", Sweetness = "testSweetness2", Description = "testDescription2" }
+    };
+    
     [SetUp]
     public void Setup()
     {
@@ -48,7 +54,6 @@ public class WineControllerTest
     }
 
     [Test]
-
     public async Task AddWine_FailsAdded_ReturnsBadRequest()
     {
         _wineRepositoryMock.Setup(repo => repo.AddWine(It.IsAny<Wine>())).ThrowsAsync(new Exception("Test Exception"));
@@ -59,5 +64,19 @@ public class WineControllerTest
         var badRequestResult = result as BadRequestObjectResult;
         Assert.That(badRequestResult.Value, Is.EqualTo("Test Exception"));
     }
+    
+    [Test]
+    public async Task GetAllWine_Success_ReturnsOkWithWineList()
+    {
+
+        _wineRepositoryMock.Setup(repo => repo.GetAllWine()).ReturnsAsync(_testWines);
+        
+        var result = await _wineController.GetAllWine();
+        
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo(_testWines));
+    }
+    
     
 }
