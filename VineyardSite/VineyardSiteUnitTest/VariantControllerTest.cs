@@ -16,13 +16,22 @@ public class VariantControllerTest
     private VariantController _variantController;
     private ILogger<VariantController> _logger;
 
-    private Wine _testWine = new Wine
+    private static readonly Wine _testWine = new Wine
     {
-        Id = 1,
+        Id = 0,
         Name = "testName",
         Type = "testType",
         Sweetness = "testSweetness",
         Description = "testDescription"
+    };
+
+    private readonly WineVariant _testVariant = new WineVariant
+    {
+        Wine = _testWine,
+        WineId = _testWine.Id,
+        AlcoholContent = 15.0,
+        Price = 5000.0,
+        Year = 2015
     };
 
     [SetUp]
@@ -39,6 +48,27 @@ public class VariantControllerTest
                 }
             };
     }
-    
-}
 
+    [Test]
+    public async Task AddVariant_SuccessAdded_ReturnsOk()
+    {
+        _wineRepositoryMock.Setup(repo => repo.GetWineByName("testName")).ReturnsAsync(_testWine);
+        _wineVariantRepositoryMock.Setup(repo => repo.AddWineVariant(It.IsAny<WineVariant>()))
+            .Returns(Task.CompletedTask);
+        var result = await _variantController.AddVariant("testName", 5000.0, 15.0, 2015);
+
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        var actualVariant = okResult.Value as WineVariant;
+        
+        Assert.That(actualVariant, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(actualVariant.WineId, Is.EqualTo(_testWine.Id));
+            Assert.That(actualVariant.Wine, Is.EqualTo(_testWine));
+            Assert.That(actualVariant.Price, Is.EqualTo(_testVariant.Price));
+            Assert.That(actualVariant.AlcoholContent, Is.EqualTo(_testVariant.AlcoholContent));
+            Assert.That(actualVariant.Year, Is.EqualTo(_testVariant.Year));
+        });
+    }
+}
