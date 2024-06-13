@@ -15,7 +15,7 @@ public class VariantControllerTest
     private Mock<IWineVariantRepository> _wineVariantRepositoryMock;
     private Mock<IWineRepository> _wineRepositoryMock;
     private VariantController _variantController;
-    private ILogger<VariantController> _logger;
+    private Mock<ILogger<VariantController>> _loggerMock;
 
     private static readonly Wine _testWine = new Wine
     {
@@ -40,8 +40,9 @@ public class VariantControllerTest
     {
         _wineVariantRepositoryMock = new Mock<IWineVariantRepository>();
         _wineRepositoryMock = new Mock<IWineRepository>();
+        _loggerMock = new Mock<ILogger<VariantController>>();
         _variantController =
-            new VariantController(_wineVariantRepositoryMock.Object, _logger, _wineRepositoryMock.Object)
+            new VariantController(_wineVariantRepositoryMock.Object, _loggerMock.Object, _wineRepositoryMock.Object)
             {
                 ControllerContext = new ControllerContext()
                 {
@@ -107,4 +108,20 @@ public class VariantControllerTest
             Assert.That(objectResult2.Value, Is.EqualTo("Invalid year"));
         });
     }
+    
+    [Test]
+    public async Task AddVariant_ThrowsException_ReturnsStatusCode500()
+    {
+        _wineRepositoryMock.Setup(repo => repo.GetWineByName("testName"))
+            .ReturnsAsync(_testWine);
+        _wineVariantRepositoryMock.Setup(repo => repo.AddWineVariant(It.IsAny<WineVariant>()))
+            .ThrowsAsync(new Exception("Test Exception"));
+        
+        var result = await _variantController.AddVariant("testName", 5000.0, 15.0, 2015);
+        
+        Assert.That(result, Is.InstanceOf<StatusCodeResult>());
+        var statusCodeResult = result as StatusCodeResult;
+        Assert.That(statusCodeResult.StatusCode, Is.EqualTo(500));
+    }
+
 }
