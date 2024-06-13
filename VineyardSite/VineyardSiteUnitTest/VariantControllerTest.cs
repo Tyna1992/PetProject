@@ -92,17 +92,19 @@ public class VariantControllerTest
 
         var result1 = await _variantController.AddVariant("testName", 5000.0, 15.0, -1);
         var result2 = await _variantController.AddVariant("testName", 5000.0, 15.0, 3000);
-        
-        Assert.That(result1, Is.InstanceOf<ObjectResult>());
-        Assert.That(result2, Is.InstanceOf<ObjectResult>());
-
+        Assert.Multiple(() =>
+        {
+            Assert.That(result1, Is.InstanceOf<ObjectResult>());
+            Assert.That(result2, Is.InstanceOf<ObjectResult>());
+        });
         var objectResult1 = result1 as ObjectResult;
         var objectResult2 = result2 as ObjectResult;
-        
-        Assert.That(objectResult1.StatusCode, Is.EqualTo(406));
-        Assert.That(objectResult1.Value, Is.EqualTo("Invalid year"));
-        Assert.That(objectResult2.StatusCode, Is.EqualTo(406));
-        Assert.That(objectResult2.Value, Is.EqualTo("Invalid year"));
-
+        Assert.Multiple(() =>
+        {
+            Assert.That(objectResult1.StatusCode, Is.EqualTo(406));
+            Assert.That(objectResult1.Value, Is.EqualTo("Invalid year"));
+            Assert.That(objectResult2.StatusCode, Is.EqualTo(406));
+            Assert.That(objectResult2.Value, Is.EqualTo("Invalid year"));
+        });
     }
 }
