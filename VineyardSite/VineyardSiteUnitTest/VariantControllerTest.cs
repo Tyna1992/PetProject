@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -70,5 +71,17 @@ public class VariantControllerTest
             Assert.That(actualVariant.AlcoholContent, Is.EqualTo(_testVariant.AlcoholContent));
             Assert.That(actualVariant.Year, Is.EqualTo(_testVariant.Year));
         });
+    }
+
+    [Test]
+    public async Task AddVariant_WineNotFound_ReturnsNotFound()
+    {
+        _wineRepositoryMock.Setup(repo => repo.GetWineByName("NotExistingWine")).ReturnsAsync((Wine)null);
+        
+        var result = await _variantController.AddVariant("NotExistingWine", 5000.0, 15.0, 2015);
+        
+        Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
+        var notFoundResult = result as NotFoundObjectResult;
+        Assert.That(notFoundResult.Value, Is.EqualTo("No wine found with that name in catalog"));
     }
 }
