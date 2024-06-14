@@ -58,4 +58,16 @@ public class UserControllerTest
         
         Assert.That(okResult.ToString(), Is.EqualTo(expected.ToString()));
     }
+
+    [Test]
+    public async Task GetUserDetails_UserNotExists_ReturnsNotFound()
+    {
+        _userRepositoryMock.Setup(repo => repo.GetUserById(testUser.Id)).ReturnsAsync((User)null);
+
+        var result = await _userController.GetUserDetails(testUser.Id);
+        
+        Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
+        var notFoundResult = result as NotFoundObjectResult;
+        Assert.That(notFoundResult.Value, Is.EqualTo("User not found"));
+    }
 }
