@@ -16,7 +16,7 @@ public class UserControllerTest
     private Mock<IUserRepository> _userRepositoryMock;
     private Mock<IAddressRepository> _addressRepositoryMock;
     private UserController _userController;
-    
+
     private User testUser = new User
     {
         Id = "1",
@@ -25,9 +25,13 @@ public class UserControllerTest
         PhoneNumber = "123456789",
         AddressId = 1,
         Cart = new Cart { CartId = 1 },
-        Address = new Address { AddressId = 1, Street = "Test", HouseNumber = "12", City = "Testville", ZipCode = "12345", Country = "testCountry", UserId = "1"}
+        Address = new Address
+        {
+            AddressId = 1, Street = "Test", HouseNumber = "12", City = "Testville", ZipCode = "12345",
+            Country = "testCountry", UserId = "1"
+        }
     };
-    
+
     [SetUp]
     public void Setup()
     {
@@ -45,7 +49,7 @@ public class UserControllerTest
     [Test]
     public async Task GetUserDetails_UserExists_ReturnsOk()
     {
-        
+
         _userRepositoryMock.Setup(repo => repo.GetUserById(testUser.Id)).ReturnsAsync(testUser);
 
         var result = await _userController.GetUserDetails(testUser.Id);
@@ -55,7 +59,7 @@ public class UserControllerTest
         Assert.That(okResult, Is.Not.Null);
 
         var expected = new { UserName = "testUser", Email = "test@test.com", PhoneNumber = "123456789" };
-        
+
         Assert.That(okResult.ToString(), Is.EqualTo(expected.ToString()));
     }
 
@@ -65,9 +69,24 @@ public class UserControllerTest
         _userRepositoryMock.Setup(repo => repo.GetUserById(testUser.Id)).ReturnsAsync((User)null);
 
         var result = await _userController.GetUserDetails(testUser.Id);
-        
+
         Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
         var notFoundResult = result as NotFoundObjectResult;
         Assert.That(notFoundResult.Value, Is.EqualTo("User not found"));
     }
+
+    [Test]
+    public async Task UpdateUser_SuccessUpdate_ReturnsOk()
+    {
+        var userDetailResponse = new UserDetailResponse("test1@test.com", "987654321");
+        var updatedUser = new User { Id = testUser.Id, UserName = "testUser", Email = userDetailResponse.Email, PhoneNumber = userDetailResponse.PhoneNumber };
+        _userRepositoryMock.Setup(repo => repo.UpdateUser(testUser.Id, userDetailResponse)).ReturnsAsync(updatedUser);
+
+        var result = await _userController.UpdateUser(testUser.Id, userDetailResponse);
+        
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo("User updated"));
+    }
+
 }
