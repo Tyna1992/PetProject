@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json.Linq;
 using VineyardSite.Contracts;
 using VineyardSite.Controllers;
 using VineyardSite.Model;
@@ -15,6 +17,17 @@ public class UserControllerTest
     private Mock<IAddressRepository> _addressRepositoryMock;
     private UserController _userController;
     
+    private User testUser = new User
+    {
+        Id = "1",
+        UserName = "testUser",
+        Email = "test@test.com",
+        PhoneNumber = "123456789",
+        AddressId = 1,
+        Cart = new Cart { CartId = 1 },
+        Address = new Address { AddressId = 1, Street = "Test", HouseNumber = "12", City = "Testville", ZipCode = "12345", Country = "testCountry", UserId = "1"}
+    };
+    
     [SetUp]
     public void Setup()
     {
@@ -27,5 +40,22 @@ public class UserControllerTest
                 HttpContext = new DefaultHttpContext()
             }
         };
+    }
+
+    [Test]
+    public async Task GetUserDetails_UserExists_ReturnsOk()
+    {
+        
+        _userRepositoryMock.Setup(repo => repo.GetUserById(testUser.Id)).ReturnsAsync(testUser);
+
+        var result = await _userController.GetUserDetails(testUser.Id);
+
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = ((OkObjectResult)result).Value;
+        Assert.That(okResult, Is.Not.Null);
+
+        var expected = new { UserName = "testUser", Email = "test@test.com", PhoneNumber = "123456789" };
+        
+        Assert.That(okResult.ToString(), Is.EqualTo(expected.ToString()));
     }
 }
