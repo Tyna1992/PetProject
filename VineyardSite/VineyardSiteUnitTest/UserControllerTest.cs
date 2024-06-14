@@ -105,4 +105,24 @@ public class UserControllerTest
             Assert.That(objectResult.Value, Is.EqualTo("Error updating user"));
         });
     }
+    
+    [Test]
+    public async Task ChangePassword_SuccessChange_ReturnsOk()
+    {
+        var passwordChangeResponse = new PasswordChangeResponse("pass1", "newPass");
+        var updatedUser = new User
+        {
+            Id = testUser.Id,
+            UserName = "testUser",
+            Email = "test@test.com",
+            PhoneNumber = "1234566789"
+        };
+        _userRepositoryMock.Setup(repo => repo.ChangePassword(testUser.Id, passwordChangeResponse)).ReturnsAsync(updatedUser);
+
+        var result = await _userController.ChangePassword(testUser.Id, passwordChangeResponse);
+
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo("Password changed"));
+    }
 }
