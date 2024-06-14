@@ -88,5 +88,21 @@ public class UserControllerTest
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo("User updated"));
     }
+    
+    [Test]
+    public async Task UpdateUser_ThrowsException_ReturnsStatusCode500()
+    {
+        var userDetailResponse = new UserDetailResponse("test1@test.com", "987654321");
+        _userRepositoryMock.Setup(repo => repo.UpdateUser(testUser.Id, userDetailResponse)).ThrowsAsync(new Exception());
 
+        var result = await _userController.UpdateUser(testUser.Id, userDetailResponse);
+        
+        Assert.That(result, Is.InstanceOf<ObjectResult>());
+        var objectResult = result as ObjectResult;
+        Assert.Multiple(() =>
+        {
+            Assert.That(objectResult.StatusCode, Is.EqualTo(500));
+            Assert.That(objectResult.Value, Is.EqualTo("Error updating user"));
+        });
+    }
 }
