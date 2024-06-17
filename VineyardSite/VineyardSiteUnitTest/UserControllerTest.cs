@@ -49,7 +49,6 @@ public class UserControllerTest
     [Test]
     public async Task GetUserDetails_UserExists_ReturnsOk()
     {
-
         _userRepositoryMock.Setup(repo => repo.GetUserById(testUser.Id)).ReturnsAsync(testUser);
 
         var result = await _userController.GetUserDetails(testUser.Id);
@@ -79,24 +78,29 @@ public class UserControllerTest
     public async Task UpdateUser_SuccessUpdate_ReturnsOk()
     {
         var userDetailResponse = new UserDetailResponse("test1@test.com", "987654321");
-        var updatedUser = new User { Id = testUser.Id, UserName = "testUser", Email = userDetailResponse.Email, PhoneNumber = userDetailResponse.PhoneNumber };
+        var updatedUser = new User
+        {
+            Id = testUser.Id, UserName = "testUser", Email = userDetailResponse.Email,
+            PhoneNumber = userDetailResponse.PhoneNumber
+        };
         _userRepositoryMock.Setup(repo => repo.UpdateUser(testUser.Id, userDetailResponse)).ReturnsAsync(updatedUser);
 
         var result = await _userController.UpdateUser(testUser.Id, userDetailResponse);
-        
+
         Assert.That(result, Is.InstanceOf<OkObjectResult>());
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo("User updated"));
     }
-    
+
     [Test]
     public async Task UpdateUser_ThrowsException_ReturnsStatusCode500()
     {
         var userDetailResponse = new UserDetailResponse("test1@test.com", "987654321");
-        _userRepositoryMock.Setup(repo => repo.UpdateUser(testUser.Id, userDetailResponse)).ThrowsAsync(new Exception());
+        _userRepositoryMock.Setup(repo => repo.UpdateUser(testUser.Id, userDetailResponse))
+            .ThrowsAsync(new Exception());
 
         var result = await _userController.UpdateUser(testUser.Id, userDetailResponse);
-        
+
         Assert.That(result, Is.InstanceOf<ObjectResult>());
         var objectResult = result as ObjectResult;
         Assert.Multiple(() =>
@@ -105,7 +109,7 @@ public class UserControllerTest
             Assert.That(objectResult.Value, Is.EqualTo("Error updating user"));
         });
     }
-    
+
     [Test]
     public async Task ChangePassword_SuccessChange_ReturnsOk()
     {
@@ -117,7 +121,8 @@ public class UserControllerTest
             Email = "test@test.com",
             PhoneNumber = "1234566789"
         };
-        _userRepositoryMock.Setup(repo => repo.ChangePassword(testUser.Id, passwordChangeResponse)).ReturnsAsync(updatedUser);
+        _userRepositoryMock.Setup(repo => repo.ChangePassword(testUser.Id, passwordChangeResponse))
+            .ReturnsAsync(updatedUser);
 
         var result = await _userController.ChangePassword(testUser.Id, passwordChangeResponse);
 
@@ -125,18 +130,37 @@ public class UserControllerTest
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo("Password changed"));
     }
-    
+
     [Test]
     public async Task ChangePassword_FailsChange_ReturnsBadRequest()
     {
         var passwordChangeResponse = new PasswordChangeResponse("pass1", "newPass");
-        _userRepositoryMock.Setup(repo => repo.ChangePassword(testUser.Id, passwordChangeResponse)).ThrowsAsync(new Exception());
+        _userRepositoryMock.Setup(repo => repo.ChangePassword(testUser.Id, passwordChangeResponse))
+            .ThrowsAsync(new Exception());
 
         var result = await _userController.ChangePassword(testUser.Id, passwordChangeResponse);
 
         Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
         var badRequestObjectResult = result as BadRequestObjectResult;
         Assert.That(badRequestObjectResult.Value, Is.EqualTo("Error changing password"));
+    }
+
+    [Test]
+    public async Task AddAddress_SuccessAdd_ReturnsOk()
+    {
+        var testAddress = new Address()
+        {
+            AddressId = 1, Street = "Test", HouseNumber = "12", City = "Testville", ZipCode = "12345",
+            Country = "testCountry", UserId = "1"
+        };
+
+        _addressRepositoryMock.Setup(repo => repo.AddAddressToUser(testUser.Id, testAddress))
+            .Returns(Task.CompletedTask);
+
+        var result = await _userController.AddAddress(testUser.Id, testAddress);
         
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo("Address added"));
     }
 }
