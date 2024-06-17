@@ -206,4 +206,22 @@ public class UserControllerTest
         var notFoundObjectResult = result as NotFoundObjectResult;
         Assert.That(notFoundObjectResult.Value, Is.EqualTo("Address not found"));
     }
+
+    [Test]
+    public async Task UpdateAddress_SuccessUpdate_ReturnsOk()
+    {
+        var testAddress = new Address()
+        {
+            AddressId = 1, Street = "Test1", HouseNumber = "12", City = "Testville1", ZipCode = "12345",
+            Country = "testCountry", UserId = "1"
+        };
+
+        _addressRepositoryMock.Setup(repo => repo.UpdateAddress(testUser.Id, testAddress)).Returns(Task.CompletedTask);
+
+        var result = await _userController.UpdateAddress(testUser.Id, testAddress);
+        
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo("Address updated"));
+    }
 }
