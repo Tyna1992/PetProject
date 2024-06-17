@@ -194,4 +194,16 @@ public class UserControllerTest
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo(testUser.Address));
     }
+
+    [Test]
+    public async Task GetAddress_Fails_ReturnsNotFound()
+    {
+        _addressRepositoryMock.Setup(repo => repo.GetAddress(testUser.Id)).ReturnsAsync((Address)null);
+
+        var result = await _userController.GetAddress(testUser.Id);
+        
+        Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
+        var notFoundObjectResult = result as NotFoundObjectResult;
+        Assert.That(notFoundObjectResult.Value, Is.EqualTo("Address not found"));
+    }
 }
