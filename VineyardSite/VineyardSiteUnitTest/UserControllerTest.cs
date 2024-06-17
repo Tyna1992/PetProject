@@ -163,4 +163,23 @@ public class UserControllerTest
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo("Address added"));
     }
+
+    [Test]
+    public async Task AddAddress_FailsAdded_ReturnsStatusCode500()
+    {
+        var testAddress = new Address()
+        {
+            AddressId = 1, Street = "Test", HouseNumber = "12", City = "Testville", ZipCode = "12345",
+            Country = "testCountry", UserId = "1"
+        };
+        _addressRepositoryMock.Setup(repo => repo.AddAddressToUser(testUser.Id, testAddress))
+            .ThrowsAsync(new Exception());
+
+        var result = await _userController.AddAddress(testUser.Id, testAddress);
+        
+        Assert.That(result, Is.InstanceOf<ObjectResult>());
+        var objectResult = result as ObjectResult;
+        Assert.That(objectResult.Value, Is.EqualTo("Error adding address"));
+        Assert.That(objectResult.StatusCode, Is.EqualTo(500));
+    }
 }
