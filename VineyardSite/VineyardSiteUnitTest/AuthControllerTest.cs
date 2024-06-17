@@ -1,17 +1,20 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using VineyardSite.Contracts;
 using VineyardSite.Controllers;
 using VineyardSite.Service.Authentication;
+using VineyardSite.Service.EmailService;
 
 namespace VineyardSiteUnitTest;
 
 public class AuthControllerTest
 {
     private readonly Mock<IAuthService> _authServiceMock = new();
+    private readonly Mock<IEmailSender> _emailSenderMock = new();
     private AuthController _authController;
     
     private const string email = "test@test.com";
@@ -22,7 +25,7 @@ public class AuthControllerTest
     [SetUp]
     public void Setup()
     {
-        _authController = new AuthController(_authServiceMock.Object)
+        _authController = new AuthController(_authServiceMock.Object, _emailSenderMock.Object)
         {
             ControllerContext = new ControllerContext
             {
