@@ -69,7 +69,7 @@ void AddDbContext()
 {
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
-        options.UseSqlServer("Server=localhost,1433;Database=VineyardSite;User Id=sa;Password=Codecool12__;Encrypt=false;");
+        options.UseSqlServer("Server=localhost,1433;Database=VineyardSite;User Id=sa;Password=Zakuro19920120;Encrypt=false;");
     });
 
     

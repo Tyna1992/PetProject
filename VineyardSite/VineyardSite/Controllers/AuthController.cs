@@ -4,6 +4,7 @@ using VineyardSite.Contracts;
 using VineyardSite.Service.Authentication;
 using VineyardSite.Service.EmailService;
 
+
 namespace VineyardSite.Controllers;
 
 [ApiController]
@@ -36,7 +37,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        await _emailSender.SendEmailAsync(result.Email, "Registration", "You have successfully registered!");
+        await _emailSender.SendSignUpEmailAsync(result.Email, result.UserName);
         return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.UserName));
     }
     

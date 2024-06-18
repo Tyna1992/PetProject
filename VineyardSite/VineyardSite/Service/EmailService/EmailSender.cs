@@ -1,6 +1,4 @@
-﻿
-
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 
 namespace VineyardSite.Service.EmailService;
@@ -21,10 +19,23 @@ public class EmailSender : IEmailSender
             From = new MailAddress("csobancibormanufakturawebshop@gmail.com") ,
             Subject = subject,
             Body = message,
-            IsBodyHtml = false
+            IsBodyHtml = true
         };
         
         mailMessage.To.Add(email);
         return client.SendMailAsync(mailMessage);
+    }
+    
+    public async Task SendSignUpEmailAsync(string email, string username)
+    {
+        // Read the HTML file
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "Service/EmailService/EmailTemplates/SignUpEmail.html");
+        var htmlMessage = await File.ReadAllTextAsync(path);
+
+        // Replace the placeholder with the user's name
+        htmlMessage = htmlMessage.Replace("#user", username);
+
+        // Send the email
+        await SendEmailAsync(email, "Successful sign up", htmlMessage);
     }
 }
