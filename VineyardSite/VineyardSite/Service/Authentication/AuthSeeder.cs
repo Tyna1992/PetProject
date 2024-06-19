@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using VineyardSite.Model;
+using VineyardSite.Model.Address;
 
 namespace VineyardSite.Service.Authentication;
 
@@ -34,7 +35,7 @@ public class AuthSeeder
         var adminInDb = await userManager.FindByEmailAsync("admin@admin.com");
         if (adminInDb == null)
         {
-            var admin = new User { UserName = "admin", Email = "admin@admin.com", Address = new Address { City = "City", Street = "Street", ZipCode = "1000", HouseNumber = "1", Country = "Hungary" } };
+            var admin = new User { UserName = "admin", Email = "admin@admin.com", PrimaryAddress = new PrimaryAddress { City = "City", Street = "Street", ZipCode = "1000", HouseNumber = "1", Country = "Hungary" } };
             var adminCreated = await userManager.CreateAsync(admin, "admin");
 
             if (adminCreated.Succeeded)
