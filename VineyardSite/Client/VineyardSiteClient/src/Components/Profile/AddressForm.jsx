@@ -1,6 +1,7 @@
 import React from "react";
 
-const AddressForm = ({ handleSubmit, address, handleChange, haveAddress }) => {
+const AddressForm = ({handleSubmit, handleChange, address}) => {
+
   return (
     <div className="form-container">
       <div className="editModal">
@@ -10,9 +11,9 @@ const AddressForm = ({ handleSubmit, address, handleChange, haveAddress }) => {
             <input
               type="text"
               name="street"
-              value={address.street}
-              onChange={handleChange}
               required
+              onChange={handleChange}
+              value={address.street}
             />
           </div>
 
@@ -21,9 +22,9 @@ const AddressForm = ({ handleSubmit, address, handleChange, haveAddress }) => {
             <input
               type="text"
               name="houseNumber"
-              value={address.houseNumber}
-              onChange={handleChange}
               required
+              onChange={handleChange}
+              value={address.houseNumber}
             />
           </div>
 
@@ -32,9 +33,9 @@ const AddressForm = ({ handleSubmit, address, handleChange, haveAddress }) => {
             <input
               type="text"
               name="zipCode"
-              value={address.zipCode}
-              onChange={handleChange}
               required
+              onChange={handleChange}
+              value={address.zipCode}
             />
           </div>
 
@@ -43,9 +44,9 @@ const AddressForm = ({ handleSubmit, address, handleChange, haveAddress }) => {
             <input
               type="text"
               name="city"
-              value={address.city}
-              onChange={handleChange}
               required
+              onChange={handleChange}
+              value={address.city}
             />
           </div>
 
@@ -54,14 +55,14 @@ const AddressForm = ({ handleSubmit, address, handleChange, haveAddress }) => {
             <input
               type="text"
               name="country"
-              value={address.country}
-              onChange={handleChange}
               required
+              onChange={handleChange}
+              value={address.country}
             />
           </div>
 
           <button type="submit" className="button">
-            {haveAddress ? "Update" : "Submit"}
+            Submit
           </button>
         </form>
       </div>
