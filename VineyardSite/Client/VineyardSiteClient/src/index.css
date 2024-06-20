@@ -1,12 +1,12 @@
 *,
 *::before,
-*::after{
+*::after {
   margin: 0;
   padding: 0;
   border: none;
   text-decoration: none;
   
-} 
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -146,7 +146,7 @@ nav{
   display: flex;
   gap: 1rem;
   flex-wrap: nowrap;
-  padding: 0 20px;
+  padding:0 10px;
   justify-content:flex-start;
   align-items: center;
   background-color: white;  
@@ -155,11 +155,28 @@ nav{
   left: 0;
   width: 100%;
   z-index: 101;
-  height: 18%;
+  height: 48vh;
+  overflow-y: hidden;
+  
   
 
 }
+.terroir-image img{
+    width: 800px;
+    height: 500px;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.terroir-image{
+  display: flex;
+  justify-content: center;
+  
+  overflow: hidden;
+  
+}
 input{
   border: 1px solid #B7AF74;;
   border-radius: 8px;
@@ -191,12 +208,18 @@ select{
   justify-content: center;
   align-items: center;
   width: 100vw;
-  
+  border-top: 1px solid black;  
   color: #101836;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   text-align: center;
+}
+.contact{
+  border-right: 1px solid black;
+}
+.social{
+  border-right: 1px solid black;
 }
 .welcome{
   padding-left: 20px;
@@ -210,6 +233,14 @@ select{
   padding-right: 20px;
 }
 .terroir h3{
+  text-decoration: underline;
+  padding-right: 20px;
+}
+.about{
+  text-align: right;
+  padding-right: 20px;
+}
+.about h3{
   text-decoration: underline;
   padding-right: 20px;
 }
@@ -256,6 +287,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: white;
 
 }
 
