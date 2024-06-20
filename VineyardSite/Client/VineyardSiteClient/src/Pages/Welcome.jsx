@@ -2,8 +2,11 @@ import CustomSlider from '../Components/CustomSlider.jsx';
 import images from '../Components/ImageData.jsx';
 import {SocialIcon} from "react-social-icons";
 import '../index.css';
+import {useNavigate} from "react-router-dom";
+import {Nav} from "react-bootstrap";
 
 function Welcome() {
+    const navigate = useNavigate();
     return (
         <div>
 
@@ -19,7 +22,7 @@ function Welcome() {
                         excellent drainage and a favorable microclimate for viticulture</p>
                     <p>These conditions contribute to the distinctive character of the wines produced here, often marked
                         by a pronounced minerality and vibrant acidity.</p>
-                    <button>Read more</button>
+                    <button onClick={()=> navigate("/csobanc")}>Read more</button>
                 </div>
                 <div className="petnat">
                     <h3>Pét-Nat, the "ancient champagne"</h3>
@@ -31,13 +34,23 @@ function Welcome() {
                         make Champagne.</p>
                     <p>The result is a naturally sparkling wine that is often slightly cloudy, with lively bubbles and a
                         fresh, fruity character. </p>
-                    <button>Read more</button>
+                    <button >Read more</button>
                 </div>
-                <p>We look forward to welcoming you at our winery!</p>
+
+                <div className="about">
+                    <h3>About us</h3>
+                    <img
+                        src="https://scontent-vie1-1.xx.fbcdn.net/v/t1.6435-9/130721559_4093947857286012_1963910046038699308_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=wUu00KktOW0Q7kNvgFtKnJf&_nc_ht=scontent-vie1-1.xx&oh=00_AYB5a_iGakP_b_3mc9hMDmTm2egrBzWAihS3YKSD_X8qmg&oe=669B8929"></img>
+                    <p>Our family farm has been engaged in certified organic grape cultivation and natural wine-making
+                        in the Badacsony wine region for over twenty years.</p>
+                    <p>We produce wines from numerous international and Hungarian white and red grape varieties,
+                        focusing on naturalness and the highest achievable quality.</p>
+                    <button onClick={() => navigate("/about")}>Read more</button>
+                </div>
 
 
             </div>
-
+            <br></br>
 
             <footer className="footer">
 
@@ -50,6 +63,10 @@ function Welcome() {
                     <p>Follow us!</p>
                     <SocialIcon url="https://www.facebook.com/csobancibormanufaktura"/>
                     <SocialIcon url="https://www.instagram.com/csobancibormanufaktura/"/>
+                </div>
+                <div>
+                    <p>Address: Tapolca, Hosszú-hegy 1, 8297 </p>
+                    <p>Opening hours: Monday-Saturday 10:00-18:00</p>
                 </div>
 
             </footer>
