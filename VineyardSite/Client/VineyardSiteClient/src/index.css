@@ -5,7 +5,7 @@
   padding: 0;
   border: none;
   text-decoration: none;
-  overflow-x: hidden;
+  
 }
 
 :root {
@@ -21,18 +21,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.Layout {
+.Layout{
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100dvh;
-  width: 100dvw;
-  overflow-y: auto;
+  justify-content:flex-start ;
+    align-items: center;
+    height: 100dvh;
+    width: 100dvw;
 }
 
-.links {
-  display: flex;
+.links{
+  display:flex;
   gap: 1rem;
   justify-content: space-evenly;
   align-items: center;
@@ -44,21 +43,25 @@
   width: 10%;
   height: 100%;
   overflow-y: hidden;
+  
+  
 }
 
-.image img {
+.image img{
   width: 100%;
   height: 100%;
+  
 }
 
-.slider {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 50vh;
-  overflow: hidden;
-  position: relative;
+.slider{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 50vh;
+    overflow: hidden;
+    position: relative;
+    
 }
 .admin {
   display: flex;
@@ -73,17 +76,20 @@
   width: 100%; /* Ensures the wrapper takes full width of the parent */
 }
 
+
 .admin-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
-.admin-buttons {
+.admin-buttons{
   display: flex;
   gap: 1rem;
   justify-content: center;
   align-items: center;
+  
+
 }
 .webshop-container-wrapper {
   display: flex;
@@ -97,26 +103,30 @@
   gap: 2rem;
 }
 
-.table {
+
+.table{
   margin-top: 2rem;
   text-align: center;
   justify-content: center;
   align-items: center;
   display: flex;
+  
 }
 
-th,
-td {
+th,td{
   border: 1px solid black;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   text-align: center;
-  background-color: #b7af74;
+  background-color: #B7AF74;
 }
 
+
+
 .homeButton {
+
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -130,57 +140,120 @@ td {
   padding-right: 3.125rem;
   padding-left: 3.125rem;
   width: auto;
+  
 }
-nav {
+nav{
   display: flex;
   gap: 1rem;
   flex-wrap: nowrap;
-  padding: 0 20px;
-  justify-content: flex-start;
+  padding:0 10px;
+  justify-content:flex-start;
   align-items: center;
-  background-color: white;
+  background-color: white;  
   position: sticky;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 101;
-  height: 18%;
+  height: 48vh;
+  overflow-y: hidden;
+  
+  
+
+}
+.terroir-image img{
+    width: 800px;
+    height: 500px;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-input {
-  border: 1px solid #b7af74;
-  border-radius: 8px;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  max-width: fit-content;
+.terroir-image{
+  display: flex;
+  justify-content: center;
+  
+  overflow: hidden;
+  
 }
-select {
-  border: 1px solid #b7af74;
+input{
+  border: 1px solid #B7AF74;;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+
+}
+select{
+  border: 1px solid #B7AF74;;
   border-radius: 8px;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
 }
-.textarea {
-  border: 1px solid #b7af74;
+.textarea{
+  border: 1px solid #B7AF74;;
   border-radius: 8px;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
+}
+.footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  border-top: 1px solid black;  
+  color: #101836;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  text-align: center;
+}
+.contact{
+  border-right: 1px solid black;
+}
+.social{
+  border-right: 1px solid black;
+}
+.welcome{
+  padding-left: 20px;
+}
+
+.welcome h1{
+  text-align: center;
+}
+.terroir{
+  text-align: right;
+  padding-right: 20px;
+}
+.terroir h3{
+  text-decoration: underline;
+  padding-right: 20px;
+}
+.about{
+  text-align: right;
+  padding-right: 20px;
+}
+.about h3{
+  text-decoration: underline;
+  padding-right: 20px;
 }
 
 @media screen and (max-width: 1485px) {
-  nav {
+  nav{
     gap: 0;
     justify-content: flex-start;
   }
-  .homeButton {
+  .homeButton{
     padding-right: 0.5rem;
     padding-left: 0.5rem;
+  
   }
 }
 @media screen and (max-width: 768px) {
@@ -190,10 +263,14 @@ select {
   }
 
   .homeButton {
+    
     padding-right: 0.5rem;
     padding-left: 0.5rem;
   }
 }
+
+
+
 
 a {
   font-weight: 500;
@@ -210,26 +287,29 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  overflow-y: auto;
+  background-color: white;
+
 }
 
 h1 {
   font-size: 3.5em;
   line-height: 1.5;
+  
 }
 
-button {
+button{
   background-color: white;
   color: black;
-  border: 1px solid black;
-  border-radius: 8px;
-  padding: 0.6em 1.2em;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
 }
+
 
 button:hover {
   border-color: black;
   background-color: black;
-  color: white;
+    color: white;
 }
 button:focus,
 button:focus-visible {
@@ -242,7 +322,7 @@ button:focus-visible {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0,0,0,0.8);
 }
 
 .modal {
@@ -255,8 +335,7 @@ button:focus-visible {
   padding: 0;
 }
 
-.modal-wine-name,
-.modal-wine-price {
+.modal-wine-name, .modal-wine-price{
   color: black;
 }
 
