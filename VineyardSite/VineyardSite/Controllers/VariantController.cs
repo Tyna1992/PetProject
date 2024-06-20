@@ -56,4 +56,18 @@ public class VariantController : ControllerBase
         }
         
     }
+
+    [HttpGet("GetVariants/{id}")]
+    public async Task<IActionResult> GetAllVariants(int id)
+    {
+        try
+        {
+           return Ok(await _wineVariantRepository.GetWineVariantsById(id));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest();
+        }
+    }
 }
