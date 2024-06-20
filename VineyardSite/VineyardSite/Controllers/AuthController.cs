@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using VineyardSite.Contracts;
 using VineyardSite.Service.Authentication;
+using VineyardSite.Service.EmailService;
+
 
 namespace VineyardSite.Controllers;
 
@@ -10,11 +12,14 @@ namespace VineyardSite.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authenticationService;
+    private readonly IEmailSender _emailSender;
     
-    public AuthController(IAuthService authenticationService)
+    public AuthController(IAuthService authenticationService, IEmailSender emailSender)
     {
         _authenticationService = authenticationService;
+        _emailSender = emailSender;
     }
+    
     
     [HttpPost("Register")]
     public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
@@ -32,6 +37,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
+        await _emailSender.SendSignUpEmailAsync(result.Email, result.UserName);
         return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.UserName));
     }
     
