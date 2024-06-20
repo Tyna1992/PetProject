@@ -1,41 +1,26 @@
-import {useEffect, useState} from "react";
-import TextareaAutosize from 'react-textarea-autosize';
 import "../index.css";
 
-function InventoryForm({addStock}) {
-    
-
+function InventoryForm({ wineName, getVintageByName}) {
+  
+  
 
   return (
     <div>
       
       <div>
-        <form  onSubmit={addStock}>
+        <form  onSubmit={getVintageByName}>
         <label>
             Name:
         </label>
         <br/>
-        <input required type="text" name="wineName"  />
+            <select required defaultValue={"DEFAULT"} name="wineName">
+                <option value="DEFAULT" disabled>Select please</option>
+                {wineName.map((wine) => {
+                    return <option key={wine.id} value={wine.id}>{wine.name}</option>
+                })}
+            </select>
         <br/>
-        <label>
-            Year:
-        </label>
-        <br/>
-        <input required type="number" name="year"  />
-        <br/>
-        <label>
-            Alcohol:
-        </label>
-        <br/>
-        <input required type="number" name="alcohol"  />
-        <br/>
-        <label>
-            Quantity:
-        </label>
-        <br/>
-        <input required type="number" name="quantity"  />
-        <br/>
-        <button type="submit">Add</button>
+        <button type="submit">Select</button>
         <button type="button">Cancel</button>
         </form>
       </div>
