@@ -11,6 +11,8 @@ import './index.css'
 import Webshop from './Pages/Webshop.jsx'
 import Checkout from "./Pages/Checkout.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
+import Terroir from "./Pages/Terroir.jsx";
+import About from "./Pages/About.jsx";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +47,15 @@ const router = createBrowserRouter([
                 path: "/profile",
                 element: <Profile/>
             },
+            {
+                path: "/csobanc",
+                element: <Terroir/>
+            },
+            {
+                path: "/about",
+                element: <About/>
+                
+            }
             
         ]
     }
