@@ -6,6 +6,7 @@ public interface IWineVariantRepository
 {
     Task<IEnumerable<WineVariant>> GetAllWineVariants();
     Task<WineVariant> GetWineVariant(int id);
+    Task<IEnumerable<WineVariant>> GetWineVariantsById(int id);
     Task AddWineVariant(WineVariant wineVariant);
     Task DeleteWineVariant(int id);
     Task UpdateWineVariant(int id,WineVariant wineVariant);
