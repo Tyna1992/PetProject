@@ -25,12 +25,15 @@ AddAuthentication();
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
-var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthSeeder>();
-authenticationSeeder.AddRoles();
-authenticationSeeder.AddAdmin();
 
 var wineSeeder = scope.ServiceProvider.GetRequiredService<IWineSeeder>();
 await wineSeeder.SeedWine();
+
+var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthSeeder>();
+authenticationSeeder.AddRoles();
+authenticationSeeder.AddAdmin();
+authenticationSeeder.AddTestUser();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
