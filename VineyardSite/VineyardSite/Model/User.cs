@@ -13,6 +13,7 @@ public class User : IdentityUser
     [JsonIgnore]
     public Cart Cart { get; set; }
     public int? CartId { get; set; }
+    public ICollection<Order> Orders { get; set; }
     [JsonIgnore]
     public PrimaryAddress PrimaryAddress { get; set; }
     public ICollection<Address.Address> Addresses { get; set; }
