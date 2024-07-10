@@ -73,7 +73,7 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
             .IsRequired();
         modelBuilder.Entity<Order>()
             .HasOne(user => user.User)
-            .WithMany()
+            .WithMany(u => u.Orders)
             .HasForeignKey(user => user.UserId)
             .IsRequired();
         
