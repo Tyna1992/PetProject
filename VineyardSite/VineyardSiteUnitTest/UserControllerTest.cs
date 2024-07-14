@@ -270,10 +270,24 @@ public class UserControllerTest
 
         _addressRepositoryMock.Setup(repo => repo.DeleteAddress(2)).Returns(Task.CompletedTask);
         
-        var result = await _userController.DeleteAddress(1);
+        var result = await _userController.DeleteAddress(2);
         
         Assert.That(result, Is.InstanceOf<OkObjectResult>());
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo("Address deleted"));
+    }
+    
+    [Test]
+    public async Task DeleteAddress_FailsDelete_ReturnsStatusCode500()
+    {
+
+        _addressRepositoryMock.Setup(repo => repo.DeleteAddress(2)).ThrowsAsync(new Exception());
+        
+        var result = await _userController.DeleteAddress(2);
+        
+        Assert.That(result, Is.InstanceOf<ObjectResult>());
+        var badRequestResult = result as ObjectResult;
+        Assert.That(badRequestResult.Value, Is.EqualTo("Error deleting address"));
+        Assert.That(badRequestResult.StatusCode, Is.EqualTo(500));
     }
 }
