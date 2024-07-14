@@ -126,4 +126,14 @@ public class OrderControllerTest
             CollectionAssert.AreEqual(expectedResult.Items.Select(i => i.Id), actualResult.Items.Select(i => i.Id));
         }
 
+        [Test]
+        public async Task PlaceOrder_OrderFails_ReturnsBadRequest()
+        {
+                _orderRepositoryMock.Setup(repo => repo.AddOrder(_testOrderRequest.UserId, _testOrderRequest))
+                        .ThrowsAsync(new Exception("Order creation failed"));
+                
+                var result = await _orderController.PlaceOrder(_testOrderRequest);
+                
+                Assert.That(result, Is.InstanceOf<BadRequestResult>());
+        }
 }
