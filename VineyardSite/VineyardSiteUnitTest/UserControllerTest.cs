@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using VineyardSite.Contracts;
 using VineyardSite.Controllers;
 using VineyardSite.Model;
+using VineyardSite.Model.Address;
 using VineyardSite.Service.Repositories;
 using VineyardSite.Service.Repositories.Profile;
 
@@ -25,10 +26,29 @@ public class UserControllerTest
         PhoneNumber = "123456789",
         AddressId = 1,
         Cart = new Cart { CartId = 1 },
-        Address = new Address
+        PrimaryAddress = new PrimaryAddress
         {
-            AddressId = 1, Street = "Test", HouseNumber = "12", City = "Testville", ZipCode = "12345",
+            PrimaryAddressId = 1, Street = "Test", HouseNumber = "12", City = "Testville", ZipCode = "12345",
             Country = "testCountry", UserId = "1"
+        },
+        Addresses = new List<Address>()
+        {
+            new Address()
+            {
+                AddressId = 1, Street = "Test2", HouseNumber = "11", City = "Testville2", ZipCode = "12345",
+                Country = "testCountry", UserId = "1"
+            },
+            new Address
+            {
+                AddressId = 1,
+                Street = "Test",
+                HouseNumber = "12",
+                City = "Testville",
+                ZipCode = "12345",
+                Country = "testCountry",
+                UserId = "1"
+            }
+            
         }
     };
 
@@ -186,19 +206,19 @@ public class UserControllerTest
     [Test]
     public async Task GetAddress_Success_ReturnsOk()
     {
-        _addressRepositoryMock.Setup(repo => repo.GetAddress(testUser.Id)).ReturnsAsync(testUser.Address);
+        _addressRepositoryMock.Setup(repo => repo.GetPrimaryAddress(testUser.Id)).ReturnsAsync(testUser.PrimaryAddress);
 
         var result = await _userController.GetAddress(testUser.Id);
         
         Assert.That(result, Is.InstanceOf<OkObjectResult>());
         var okResult = result as OkObjectResult;
-        Assert.That(okResult.Value, Is.EqualTo(testUser.Address));
+        Assert.That(okResult.Value, Is.EqualTo(testUser.PrimaryAddress));
     }
 
     [Test]
     public async Task GetAddress_Fails_ReturnsNotFound()
     {
-        _addressRepositoryMock.Setup(repo => repo.GetAddress(testUser.Id)).ReturnsAsync((Address)null);
+        _addressRepositoryMock.Setup(repo => repo.GetPrimaryAddress(testUser.Id)).ReturnsAsync((PrimaryAddress)null);
 
         var result = await _userController.GetAddress(testUser.Id);
         
@@ -216,9 +236,9 @@ public class UserControllerTest
             Country = "testCountry", UserId = "1"
         };
 
-        _addressRepositoryMock.Setup(repo => repo.UpdateAddress(testUser.Id, testAddress)).Returns(Task.CompletedTask);
+        _addressRepositoryMock.Setup(repo => repo.UpdateAddress(testAddress.AddressId, testAddress)).Returns(Task.CompletedTask);
 
-        var result = await _userController.UpdateAddress(testUser.Id, testAddress);
+        var result = await _userController.UpdateAddress(testAddress.AddressId, testAddress);
         
         Assert.That(result, Is.InstanceOf<OkObjectResult>());
         var okResult = result as OkObjectResult;
@@ -234,9 +254,9 @@ public class UserControllerTest
             Country = "testCountry", UserId = "1"
         };
 
-        _addressRepositoryMock.Setup(repo => repo.UpdateAddress(testUser.Id, testAddress)).ThrowsAsync(new Exception());
+        _addressRepositoryMock.Setup(repo => repo.UpdateAddress(testAddress.AddressId, testAddress)).ThrowsAsync(new Exception());
 
-        var result = await _userController.UpdateAddress(testUser.Id, testAddress);
+        var result = await _userController.UpdateAddress(testAddress.AddressId, testAddress);
         
         Assert.That(result, Is.InstanceOf<ObjectResult>());
         var objectResult = result as ObjectResult;
