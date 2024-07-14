@@ -303,4 +303,28 @@ public class UserControllerTest
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo(testUser.Addresses));
     }
+    
+    [Test]
+    public async Task GetAllAddress_Fails_ReturnsNotFound()
+    {
+     User user = new User
+    {
+        Id = "1",
+        UserName = "testUser",
+        Email = "test@test.com",
+        PhoneNumber = "123456789",
+        AddressId = 1,
+        Cart = new Cart { CartId = 1 },
+        
+    };
+        
+        _addressRepositoryMock.Setup(repo => repo.GetAllAddress(user.Id)).ReturnsAsync(user.Addresses);
+
+        var result = await _userController.GetAllAddress(user.Id);
+        
+        Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
+        var notFoundObjectResult = result as NotFoundObjectResult;
+        Assert.That(notFoundObjectResult.Value, Is.EqualTo("Addresses not found"));
+        Assert.That(notFoundObjectResult.StatusCode, Is.EqualTo(404));
+    }
 }
