@@ -124,4 +124,15 @@ public class VariantControllerTest
         Assert.That(statusCodeResult.StatusCode, Is.EqualTo(500));
     }
 
+    [Test]
+    public async Task GetAllVariants_Success_ReturnsOk()
+    {
+        _wineVariantRepositoryMock.Setup(repo => repo.GetWineVariantsById(_testWine.Id)).ReturnsAsync(new List<WineVariant>() { _testVariant});
+
+        var result = await _variantController.GetAllVariants(_testWine.Id);
+        
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo(new List<WineVariant>() {_testVariant}));
+    }
 }
