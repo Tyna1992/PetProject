@@ -151,5 +151,20 @@ public class CartControllerTest
         Assert.That(objectResult.StatusCode, Is.EqualTo(500));
         Assert.That(objectResult.Value, Is.EqualTo("Error updating item quantity"));
     }
+    
+    [Test]
+    public async Task GetCart_Success_ReturnsOk()
+    {
+        var cartItems = new List<CartItem> { _testCartItem };
+
+        _userRepositoryMock.Setup(repo => repo.GetByUsername(_testUser.UserName)).ReturnsAsync(_testUser);
+        _cartItemRepositoryMock.Setup(repo => repo.GetCartItemsAsync(_testUser.Id)).ReturnsAsync(cartItems);
+
+        var result = await _cartController.GetCart(_testUser.UserName);
+
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo(cartItems));
+    }
 }
     
