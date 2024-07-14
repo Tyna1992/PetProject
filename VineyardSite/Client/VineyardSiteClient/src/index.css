@@ -1,12 +1,12 @@
 *,
 *::before,
-*::after{
+*::after {
   margin: 0;
   padding: 0;
   border: none;
   text-decoration: none;
-  overflow-x: hidden;
-} 
+
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -25,9 +25,10 @@
   display: flex;
   flex-direction: column;
   justify-content:flex-start ;
-    align-items: center;
-    height: 100dvh;
-    width: 100dvw;
+  align-items: center;
+  height: 100dvh;
+  width: 100dvw;
+  overflow-x: hidden;
 }
 
 .links{
@@ -43,25 +44,25 @@
   width: 10%;
   height: 100%;
   overflow-y: hidden;
-  
-  
+
+
 }
 
 .image img{
   width: 100%;
   height: 100%;
-  
+
 }
 
 .slider{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 50vh;
-    overflow: hidden;
-    position: relative;
-    
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 50vh;
+  overflow: hidden;
+  position: relative;
+
 }
 .admin {
   display: flex;
@@ -88,7 +89,7 @@
   gap: 1rem;
   justify-content: center;
   align-items: center;
-  
+
 
 }
 .webshop-container-wrapper {
@@ -110,7 +111,7 @@
   justify-content: center;
   align-items: center;
   display: flex;
-  
+
 }
 
 th,td{
@@ -140,16 +141,16 @@ th,td{
   padding-right: 3.125rem;
   padding-left: 3.125rem;
   width: auto;
-  
+
 }
 nav{
   display: flex;
   gap: 1rem;
   flex-wrap: nowrap;
-  padding: 0 20px;
+  padding:0 10px;
   justify-content:flex-start;
   align-items: center;
-  background-color: white;  
+  background-color: white;
   position: sticky;
   top: 0;
   left: 0;
@@ -158,8 +159,25 @@ nav{
   height: 18%;
   
 
+
+
+}
+.terroir-image img{
+  width: 800px;
+  height: 500px;
+  overflow-y: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.terroir-image{
+  display: flex;
+  justify-content: center;
+
+  overflow: hidden;
+
+}
 input{
   border: 1px solid #B7AF74;;
   border-radius: 8px;
@@ -185,6 +203,48 @@ select{
   font-weight: 500;
   font-family: inherit;
 }
+.footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  border-top: 1px solid black;
+  color: #101836;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  text-align: center;
+}
+.contact{
+  border-right: 1px solid black;
+}
+.social{
+  border-right: 1px solid black;
+}
+.welcome{
+  padding-left: 20px;
+}
+
+.welcome h1{
+  text-align: center;
+}
+.terroir{
+  text-align: right;
+  padding-right: 20px;
+}
+.terroir h3{
+  text-decoration: underline;
+  padding-right: 20px;
+}
+.about{
+  text-align: right;
+  padding-right: 20px;
+}
+.about h3{
+  text-decoration: underline;
+  padding-right: 20px;
+}
 
 @media screen and (max-width: 1485px) {
   nav{
@@ -194,7 +254,7 @@ select{
   .homeButton{
     padding-right: 0.5rem;
     padding-left: 0.5rem;
-  
+
   }
 }
 @media screen and (max-width: 768px) {
@@ -204,7 +264,7 @@ select{
   }
 
   .homeButton {
-    
+
     padding-right: 0.5rem;
     padding-left: 0.5rem;
   }
@@ -228,28 +288,29 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: white;
 
 }
 
 h1 {
   font-size: 3.5em;
   line-height: 1.5;
-  
+
 }
 
 button{
   background-color: white;
   color: black;
-    border: 1px solid black;
-    border-radius: 8px;
-    padding: 0.6em 1.2em;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
 }
 
 
 button:hover {
   border-color: black;
   background-color: black;
-    color: white;
+  color: white;
 }
 button:focus,
 button:focus-visible {

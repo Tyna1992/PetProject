@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VineyardSite.Contracts;
 using VineyardSite.Model;
+using VineyardSite.Model.Address;
 using VineyardSite.Service.Repositories;
 using VineyardSite.Service.Repositories.Profile;
 
@@ -82,10 +83,10 @@ public class UserController : ControllerBase
         }
     }
     
-    [HttpGet("GetAddress/{id}")]
+    [HttpGet("GetPrimaryAddress/{id}")]
     public async Task<ActionResult> GetAddress(string id)
     {
-        var address = await _addressRepository.GetAddress(id);
+        var address = await _addressRepository.GetPrimaryAddress(id);
         if (address == null)
         {
             return NotFound("Address not found");
@@ -94,7 +95,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPatch("UpdateAddress/{id}")]
-    public async Task<ActionResult> UpdateAddress(string id, [FromBody] Address address)
+    public async Task<ActionResult> UpdateAddress(int id, [FromBody] Address address)
     {
         try
         {
@@ -106,5 +107,31 @@ public class UserController : ControllerBase
             Console.WriteLine(e);
             return StatusCode(500, "Error updating address");
         }
+    }
+    
+    [HttpDelete("DeleteAddress/{id}")]
+    public async Task<ActionResult> DeleteAddress(int id)
+    {
+        try
+        {
+            await _addressRepository.DeleteAddress(id);
+            return Ok("Address deleted");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, "Error deleting address");
+        }
+    }
+    
+    [HttpGet("GetAllAddress/{userId}")]
+    public async Task<ActionResult> GetAllAddress(string userId)
+    {
+        var addresses = await _addressRepository.GetAllAddress(userId);
+        if (addresses == null)
+        {
+            return NotFound("Addresses not found");
+        }
+        return Ok(addresses);
     }
 }

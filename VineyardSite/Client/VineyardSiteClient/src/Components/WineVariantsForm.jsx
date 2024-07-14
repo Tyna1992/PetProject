@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import TextareaAutosize from 'react-textarea-autosize';
 import "../index.css";
 
-function WineVariantsForm({addVinatge}) {
+function WineVariantsForm({addVinatge, wineName}) {
 
     const [hideForm, setHideForm] = useState(true);
     return(
@@ -14,7 +14,13 @@ function WineVariantsForm({addVinatge}) {
                         Name:
                     </label>
                     <br/>
-                    <input required type="text" name="name"></input>
+                    <select required defaultValue={"DEFAULT"} name="name">
+                        <option value="DEFAULT" disabled>Select please</option>
+                        {wineName.map(wine => {
+                            return <option key={wine.id} value={wine.name}>{wine.name}</option>
+                        })}
+
+                    </select>
                     <br/>
                     <label>
                         Price:

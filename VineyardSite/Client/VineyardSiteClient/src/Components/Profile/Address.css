@@ -1,0 +1,84 @@
+.title {
+  display: inline;
+}
+
+.address-card {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 15px;
+}
+
+.address-card .card-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.address-card .card-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.address-card .card-text {
+  margin: 0;
+  color: #777;
+}
+
+.address-card .card-link {
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.address-card .card-link:hover {
+  text-decoration: underline;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    z-index: 1;
+    height: 100vh;
+}
+
+.modal-dialog {
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.add-addresses {
+  margin-bottom: 20px;
+}
+
+.addresses-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}

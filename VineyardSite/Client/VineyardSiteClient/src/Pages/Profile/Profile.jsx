@@ -5,7 +5,7 @@ import notify from "../../Utils/Notify";
 import PersonalInformation from "../../Components/Profile/PersonalInformation";
 import ProfileNavbar from "../../Components/Profile/ProfileNavbar";
 import ChangePassword from "../../Components/Profile/ChangePassword";
-import AddAddress from "../../Components/Profile/AddAddress";
+import Address from "../../Components/Profile/Address";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -101,7 +101,7 @@ const Profile = () => {
       )}
       {activeTab === "change-password" && <ChangePassword />}
 
-      {activeTab === "add-address" && <AddAddress />}
+      {activeTab === "add-address" && <Address />}
     </div>
   );
 };

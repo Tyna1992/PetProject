@@ -1,9 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-namespace VineyardSite.Model;
+namespace VineyardSite.Model.Address;
 
 public class Address
 {
+    [Key]
     public int AddressId { get; set; }
     public string Street { get; set; }
     public string HouseNumber { get; set; }
@@ -13,5 +15,4 @@ public class Address
     [JsonIgnore]
     public User? User { get; set; }
     public string UserId { get; set; }
-
 }

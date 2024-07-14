@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using VineyardSite.Data;
 using VineyardSite.Model;
 using VineyardSite.Service.Authentication;
+using VineyardSite.Service.EmailService;
 using VineyardSite.Service.Repositories;
 using VineyardSite.Service.Repositories.Profile;
 
@@ -61,13 +62,14 @@ void AddServices()
     builder.Services.AddScoped<ICartRepository, CartRepository>();
     builder.Services.AddScoped<IWineSeeder, WineSeeder>();
     builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+    builder.Services.AddTransient<IEmailSender, EmailSender>();
 }
 
 void AddDbContext()
 {
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
-        options.UseSqlServer("Server=localhost,1433;Database=VineyardSite;User Id=sa;Password=Codecool12__;Encrypt=false;");
+        options.UseSqlServer("Server=localhost,1433;Database=VineyardSite;User Id=sa;Password=Zakuro19920120;Encrypt=false;");
     });
 
     

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VineyardSite.Model;
+using VineyardSite.Model.Address;
 
 namespace VineyardSite.Data;
 
@@ -14,6 +15,7 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<PrimaryAddress> PrimaryAddress { get; set; }
     public DbSet<Address> Addresses { get; set; }
     
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -28,11 +30,17 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
 
         
         modelBuilder.Entity<User>()
-        .HasOne(u => u.Address)
+        .HasOne(u => u.PrimaryAddress)
         .WithOne(a => a.User)
-        .HasForeignKey<Address>(a => a.UserId)
+        .HasForeignKey<PrimaryAddress>(a => a.UserId)
         .IsRequired();
-
+        
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Addresses)
+            .WithOne(a => a.User)
+            .HasForeignKey(a => a.UserId)
+            .IsRequired();
+        
         modelBuilder.Entity<User>()
             .HasOne(u => u.Cart)
             .WithOne(c => c.User)
