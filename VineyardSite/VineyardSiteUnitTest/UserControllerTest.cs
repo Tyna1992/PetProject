@@ -290,4 +290,17 @@ public class UserControllerTest
         Assert.That(badRequestResult.Value, Is.EqualTo("Error deleting address"));
         Assert.That(badRequestResult.StatusCode, Is.EqualTo(500));
     }
+
+
+    [Test]
+    public async Task GetAllAddress_Success_ReturnsOk()
+    {
+        _addressRepositoryMock.Setup(repo => repo.GetAllAddress(testUser.Id)).ReturnsAsync(testUser.Addresses);
+
+        var result = await _userController.GetAllAddress(testUser.Id);
+        
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo(testUser.Addresses));
+    }
 }
