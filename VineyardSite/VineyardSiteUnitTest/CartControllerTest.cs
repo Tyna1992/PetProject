@@ -166,5 +166,18 @@ public class CartControllerTest
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo(cartItems));
     }
+    
+    [Test]
+    public async Task GetCart_EmptyCart_ReturnsOk()
+    {
+        _userRepositoryMock.Setup(repo => repo.GetByUsername(_testUser.UserName)).ReturnsAsync(_testUser);
+        _cartItemRepositoryMock.Setup(repo => repo.GetCartItemsAsync(_testUser.Id)).ReturnsAsync(new List<CartItem>());
+
+        var result = await _cartController.GetCart(_testUser.UserName);
+
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo("Cart is empty"));
+    }
 }
     
