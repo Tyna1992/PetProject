@@ -86,4 +86,18 @@ public class CartControllerTest
         var okResult = result as OkObjectResult;
         Assert.That(okResult.Value, Is.EqualTo("Item added to cart"));
     }
+    
+    [Test]
+    public async Task AddCartItem_Fails_ReturnsStatusCode500()
+    {
+        _userRepositoryMock.Setup(repo => repo.GetByUsername(_testUser.UserName)).ReturnsAsync(_testUser);
+        _cartItemRepositoryMock.Setup(repo => repo.AddCartItemAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).ThrowsAsync(new Exception("Error adding item to cart"));
+
+        var result = await _cartController.AddCartItem(_testCartItem.WineVariantId, _testCartItem.Quantity, _testUser.UserName);
+
+        Assert.That(result, Is.InstanceOf<ObjectResult>());
+        var objectResult = result as ObjectResult;
+        Assert.AreEqual(500, objectResult.StatusCode);
+        Assert.AreEqual("Error adding item to cart", objectResult.Value);
+    }
 }
