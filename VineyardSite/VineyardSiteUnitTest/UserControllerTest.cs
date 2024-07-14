@@ -35,7 +35,7 @@ public class UserControllerTest
         {
             new Address()
             {
-                AddressId = 1, Street = "Test2", HouseNumber = "11", City = "Testville2", ZipCode = "12345",
+                AddressId = 2, Street = "Test2", HouseNumber = "11", City = "Testville2", ZipCode = "12345",
                 Country = "testCountry", UserId = "1"
             },
             new Address
@@ -262,5 +262,18 @@ public class UserControllerTest
         var objectResult = result as ObjectResult;
         Assert.That(objectResult.Value, Is.EqualTo("Error updating address"));
         Assert.That(objectResult.StatusCode, Is.EqualTo(500));
+    }
+
+    [Test]
+    public async Task DeleteAddress_SuccessDelete_ReturnsOk()
+    {
+
+        _addressRepositoryMock.Setup(repo => repo.DeleteAddress(2)).Returns(Task.CompletedTask);
+        
+        var result = await _userController.DeleteAddress(1);
+        
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo("Address deleted"));
     }
 }
