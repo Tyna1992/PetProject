@@ -97,8 +97,8 @@ public class CartControllerTest
 
         Assert.That(result, Is.InstanceOf<ObjectResult>());
         var objectResult = result as ObjectResult;
-        Assert.AreEqual(500, objectResult.StatusCode);
-        Assert.AreEqual("Error adding item to cart", objectResult.Value);
+        Assert.That(objectResult.StatusCode, Is.EqualTo(500));
+        Assert.That(objectResult.Value, Is.EqualTo("Error adding item to cart"));
     }
     
     [Test]
@@ -110,7 +110,7 @@ public class CartControllerTest
 
         Assert.That(result, Is.InstanceOf<OkObjectResult>());
         var okResult = result as OkObjectResult;
-        Assert.AreEqual("Item removed from cart", okResult.Value);
+        Assert.That(okResult.Value, Is.EqualTo("Item removed from cart"));
     }
     
     [Test]
@@ -122,8 +122,10 @@ public class CartControllerTest
 
         Assert.That(result, Is.InstanceOf<ObjectResult>());
         var objectResult = result as ObjectResult;
-        Assert.AreEqual(500, objectResult.StatusCode);
-        Assert.AreEqual("Error removing item from cart", objectResult.Value);
+        Assert.That(objectResult.StatusCode, Is.EqualTo(500));
+        Assert.That(objectResult.Value, Is.EqualTo("Error removing item from cart"));
     }
+    
+    
 }
     
