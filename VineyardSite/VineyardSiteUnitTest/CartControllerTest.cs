@@ -100,4 +100,15 @@ public class CartControllerTest
         Assert.AreEqual(500, objectResult.StatusCode);
         Assert.AreEqual("Error adding item to cart", objectResult.Value);
     }
-}
+    
+    [Test]
+    public async Task RemoveCartItem_Success_ReturnsOk()
+    {
+        _cartItemRepositoryMock.Setup(repo => repo.RemoveCartItemAsync(_testCartItem.Id)).Returns(Task.CompletedTask);
+
+        var result = await _cartController.RemoveCartItem(_testCartItem.Id);
+
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.AreEqual("Item removed from cart", okResult.Value);
+    }}
