@@ -126,6 +126,17 @@ public class CartControllerTest
         Assert.That(objectResult.Value, Is.EqualTo("Error removing item from cart"));
     }
     
-    
+    [Test]
+    public async Task UpdateQuantity_Success_ReturnsOk()
+    {
+        _cartItemRepositoryMock.Setup(repo => repo.GetCartItemAsync(_testCartItem.Id)).ReturnsAsync(_testCartItem);
+        _cartItemRepositoryMock.Setup(repo => repo.UpdateCartItemAsync(_testCartItem)).Returns(Task.CompletedTask);
+
+        var result = await _cartController.UpdateQuantity(_testCartItem.Id, 5);
+
+        Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        var okResult = result as OkObjectResult;
+        Assert.That(okResult.Value, Is.EqualTo("Item quantity updated"));
+    }
 }
     
