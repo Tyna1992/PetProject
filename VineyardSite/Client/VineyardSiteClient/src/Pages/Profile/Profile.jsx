@@ -6,6 +6,7 @@ import PersonalInformation from "../../Components/Profile/PersonalInformation";
 import ProfileNavbar from "../../Components/Profile/ProfileNavbar";
 import ChangePassword from "../../Components/Profile/ChangePassword";
 import Address from "../../Components/Profile/Address";
+import Orders from "../../Components/Profile/Orders";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -102,6 +103,10 @@ const Profile = () => {
       {activeTab === "change-password" && <ChangePassword />}
 
       {activeTab === "add-address" && <Address />}
+
+      {activeTab === "payment-methods" }
+
+      {activeTab === "orders" && <Orders />}
     </div>
   );
 };
