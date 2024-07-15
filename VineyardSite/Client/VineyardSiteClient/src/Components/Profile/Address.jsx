@@ -70,7 +70,7 @@ const Address = () => {
           city: "",
           country: "",
         });
-        getAllAddresses(); // Frissítjük a címek listáját a hozzáadás után
+        getAllAddresses();
       } else {
         notify("Failed to add address", "error");
         throw new Error("Failed to add address");
@@ -106,7 +106,7 @@ const Address = () => {
           city: "",
           country: "",
         });
-        getAllAddresses(); // Frissítjük a címek listáját a módosítás után
+        getAllAddresses();
       } else {
         notify("Failed to update address", "error");
         throw new Error("Failed to update address");

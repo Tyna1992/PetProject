@@ -61,7 +61,6 @@ const ChangePassword = () => {
     <>
       <div className="profile-container">
         <div className="editModal">
-          <h3>Change Password</h3>
           <form onSubmit={handleSubmit}>
             <label>
               Old Password:

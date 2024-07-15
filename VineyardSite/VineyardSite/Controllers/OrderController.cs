@@ -50,6 +50,21 @@ public class OrderController : ControllerBase
         }
         
     }
+
+    [HttpGet("GetOrdersByUserId/{userId}")]
+    public async Task<IActionResult> GetOrdersByUserId(string userId)
+    {
+        try
+        {
+            var orders = await _orderRepository.GetOrdersByUserId(userId);
+            return Ok(orders);
+        }
+        catch(Exception e)
+        {
+            _logger.LogError(e.Message);
+            return BadRequest();
+        }
+    }
     
     
        
