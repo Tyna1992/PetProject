@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using VineyardSite.Data;
 using VineyardSite.Model;
 
@@ -100,5 +101,10 @@ public class OrderRepository : IOrderRepository
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
         }
+    }
+    
+    public async Task<ICollection<Order>> GetOrdersByUserId(string userId)
+    {
+        return await _context.Orders.Where(order => order.UserId == userId).ToListAsync();
     }
 }
