@@ -13,6 +13,7 @@ import Checkout from "./Pages/Checkout.jsx";
 import Profile from "./Pages/Profile/Profile.jsx";
 import Terroir from "./Pages/Terroir.jsx";
 import About from "./Pages/About.jsx";
+import WineTasting from "./Pages/WineTasting.jsx";
 
 const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
                 path: "/about",
                 element: <About/>
                 
+            },
+            {
+                path: "/winetasting",
+                element: <WineTasting/>
             }
             
         ]
