@@ -245,7 +245,24 @@ select{
   text-decoration: underline;
   padding-right: 20px;
 }
+.winetasting{
+  margin-top: 20px;
+  text-align: center;
+}
+.winetasting-image{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
 
+.form-container {
+  display: flex;
+  align-items: center; 
+  text-align: center;
+  justify-content: center;
+  gap: 1rem;
+  
+}
 @media screen and (max-width: 1485px) {
   nav{
     gap: 0;
@@ -288,7 +305,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: white;
+  background-color: #ffffff;
 
 }
 
@@ -326,14 +343,14 @@ button:focus-visible {
   background: rgba(0,0,0,0.8);
 }
 
-.modal {
+.wine-modal {
   position: relative;
   max-width: 480px;
   height: 400px;
   margin: 300px auto;
-  background-color: #ffff;
   border-radius: 10px;
   padding: 0;
+  background-color: white;
 }
 
 .modal-wine-name, .modal-wine-price{
