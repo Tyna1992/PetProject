@@ -6,6 +6,7 @@ import WineForm from "../Components/WineForm";
 import WineVariantsForm from "../Components/WineVariantsForm";
 import InventoryForm from "../Components/InventoryForm";
 import InventoryDetailsForm from "../Components/InventoryDetailsForm.jsx";
+import OrderTable from "../Components/OrderTable.jsx";
 
 function Admin() {
     const [showInventory, setShowInventory] = useState(false);
@@ -14,6 +15,7 @@ function Admin() {
     const [hideInventoryForm, setHideInventoryForm] = useState(false);
     const [wineName, setWineName] = useState([]);
     const [wineVintage, setWineVintage] = useState([]);
+    const [showOrders, setShowOrders] = useState(false)
     
     const handleClick = () => {
         setShowInventory(!showInventory);
@@ -29,6 +31,10 @@ function Admin() {
 
     const handleClickInventoryForm = () => {
         setHideInventoryForm(!hideInventoryForm);
+    }
+    
+    const handleClickOrders = () => {
+        setShowOrders(!showOrders)
     }
 
 
@@ -205,6 +211,7 @@ function Admin() {
             <button type="button" onClick={handleClickInventoryForm}>{hideInventoryForm ? "Close inventory-form" : "Add vintage to the inventory"}</button>
             <button onClick={handleClick}>{showInventory ? 'Hide' : 'Show'} Inventory
                 </button>
+            <button onClick={handleClickOrders}> {showOrders? 'Hide' : 'Show'} Orders</button>    
             </div>
             <div className="admin-container-wrapper">
             <div className="admin-container">
@@ -219,6 +226,9 @@ function Admin() {
             </div>
             <div className="table">
             {showInventory && <InventoryTable />}
+            </div>
+            <div className="order-table">
+                {showOrders && <OrderTable/>}
             </div>
             
         </div>
