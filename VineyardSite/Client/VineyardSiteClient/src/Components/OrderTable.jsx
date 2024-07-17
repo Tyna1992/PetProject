@@ -33,13 +33,14 @@ function OrderTable() {
             <tr>
                 <th>#</th>
                 <th>Order ID</th>
+                <th>Email</th>
                 <th>Address</th>
+                <th>Delivery Type</th>
                 <th>Order Date</th>
                 <th>Payment Type</th>
-                <th>Payment Status</th>
+                <th>Order Status</th>
                 <th>Total Price</th>
                 <th>Edit</th>
-                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -48,16 +49,15 @@ function OrderTable() {
                     <tr key={i}>
                         <th>{i + 1}</th>
                         <td>{order.id}</td>
+                        <td>{order.email}</td>
                         <td>{order.address}</td>
+                        <td>{order.deliveryType}</td>
                         <td>{order.date}</td>
                         <td>{order.paymentType}</td>
                         <td>{order.status}</td>
                         <td>{order.totalPrice}</td>
                         <td>
                             <button>Edit</button>
-                        </td>
-                        <td>
-                            <button>Delete</button>
                         </td>
                     </tr>
                 )
