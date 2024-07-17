@@ -3,8 +3,7 @@ import images from '../Components/ImageData.jsx';
 import {SocialIcon} from "react-social-icons";
 import '../index.css';
 import {useNavigate} from "react-router-dom";
-import {Nav} from "react-bootstrap";
-import image from "../Images/396531034_806251134838922_7515098092766762834_n.jpg";
+
 
 function Welcome() {
     const navigate = useNavigate();
