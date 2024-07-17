@@ -65,7 +65,20 @@ public class OrderController : ControllerBase
             return BadRequest();
         }
     }
-    
+
+    [HttpGet("GetOrders")]
+    public async Task<IActionResult> GetAllOrders()
+    {
+        try
+        {
+            var orders = await _orderRepository.GetAllOrders();
+            return Ok(orders);
+        }
+        catch (Exception e)
+        {
+            return BadRequest();
+        }
+    }
     
        
 }
