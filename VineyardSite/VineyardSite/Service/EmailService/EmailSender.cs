@@ -5,15 +5,15 @@ namespace VineyardSite.Service.EmailService;
 
 public class EmailSender : IEmailSender
 {
+    private readonly SmtpClient _client = new("smtp.gmail.com", 587)
+    {
+        EnableSsl = true,
+        UseDefaultCredentials = false,
+        Credentials = new NetworkCredential("csobancibormanufakturawebshop@gmail.com", "bhwv pgtz mmjb rzkv")
+    };
+
     public Task SendEmailAsync(string email, string subject, string message)
     {
-        var client = new SmtpClient("smtp.gmail.com", 587)
-        {
-            EnableSsl = true,
-            UseDefaultCredentials = false,
-            Credentials = new NetworkCredential("csobancibormanufakturawebshop@gmail.com", "bhwv pgtz mmjb rzkv")
-
-        };
         var mailMessage = new MailMessage
         {
             From = new MailAddress("csobancibormanufakturawebshop@gmail.com") ,
@@ -23,7 +23,7 @@ public class EmailSender : IEmailSender
         };
         
         mailMessage.To.Add(email);
-        return client.SendMailAsync(mailMessage);
+        return _client.SendMailAsync(mailMessage);
     }
     
     public async Task SendSignUpEmailAsync(string email, string username)
@@ -37,5 +37,20 @@ public class EmailSender : IEmailSender
 
         // Send the email
         await SendEmailAsync(email, "Successful sign up", htmlMessage);
+    }
+
+    public Task SendUserEmailAsync(string email, string subject, string userName, string message)
+    {
+        var mailMessage = new MailMessage
+        {
+            From = new MailAddress(email),
+            Subject = subject,
+            Body = $"User Name: {userName}\n\nUser Message:\n\n{message}",
+            IsBodyHtml = false
+        };
+        
+        mailMessage.To.Add("csobancibormanufakturawebshop@gmail.com");
+        mailMessage.ReplyToList.Add(new MailAddress(email));
+        return _client.SendMailAsync(mailMessage);
     }
 }
