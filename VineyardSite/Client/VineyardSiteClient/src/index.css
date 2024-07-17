@@ -29,6 +29,7 @@
   height: 100dvh;
   width: 100dvw;
   overflow-x: hidden;
+  background-color: black;
 }
 
 .links{
@@ -178,6 +179,7 @@ nav{
   overflow: hidden;
 
 }
+
 input{
   border: 1px solid #B7AF74;;
   border-radius: 8px;
@@ -187,6 +189,16 @@ input{
   font-family: inherit;
 
 }
+
+textarea{
+  border: 1px solid #B7AF74;;
+  border-radius: 8px;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+}
+
 select{
   border: 1px solid #B7AF74;;
   border-radius: 8px;
