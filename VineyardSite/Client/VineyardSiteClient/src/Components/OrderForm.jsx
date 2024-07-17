@@ -1,43 +1,69 @@
 import "../index.css";
-import { useContext } from "react";
-import { UserContext } from "./UserContext.jsx";
+import {useContext, useEffect, useState} from "react";
+import {UserContext} from "./UserContext.jsx";
 import notify from "../Utils/Notify";
 
 function OrderForm() {
     const {user, setUser} = useContext(UserContext);
+    const [address, setAddress] = useState([]);
 
-async function sendOrder(event)
-{
-    event.preventDefault();
-    const payment = event.target.payment.value;
-    const delivery = event.target.delivery.value;
-    const notes = event.target.notes.value; 
-    const userId = user.id;
-    console.log(user);
+    async function sendOrder(event) {
+        event.preventDefault();
+        const payment = event.target.payment.value;
+        const delivery = event.target.delivery.value;
+        const notes = event.target.notes.value;
+        const userAddress = event.target.address.value;
+        const userId = user.id;
+        console.log(user);
 
-    try {
-        const response= await fetch("/api/Order/AddOrder", {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                UserId: userId,
-                PaymentType: payment,
-                DeliveryType: delivery,
-                Notes: notes
+        try {
+            const response = await fetch("/api/Order/AddOrder", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    UserId: userId,
+                    PaymentType: payment,
+                    DeliveryType: delivery,
+                    Notes: notes,
+                    Address: userAddress
+                })
             })
-            })
-            if(response.ok)
-            {
+            if (response.ok) {
                 notify("Order sent", "success")
             }
-    } catch (error) {
-        notify("Error sending order", "error")
+        } catch (error) {
+            notify("Error sending order", "error")
+        }
     }
-}
 
+    async function GetUserAddress() {
+        try {
+            const response = await fetch(`api/User/GetAllAddress/${user.id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+            if (!response.ok) {
+                throw new Error("Failed to fetch user address");
+            }
+            const data = await response.json();
+            setAddress(data);
+            console.log(address);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    useEffect(() => {
+        if (user && user.id) {
+            GetUserAddress();
+        }
+    }, [user]);
     return (
         <div className="orderForm">
             <div>
@@ -62,6 +88,16 @@ async function sendOrder(event)
                         <option value="GLS-point">GLS parcel point</option>
                         <option value="GLS-home">GLS Home delivery</option>
                         <option value="GLS-machine">GLS parcel machine</option>
+                    </select>
+                    <br/>
+                    <label>
+                        Address:
+                    </label>
+                    <br/>
+                    <select name="address">
+                        {address.map((item)=>{
+                           return <option key={item.addressId} value={item}>{item.city}, {item.street}</option>
+                        })}
                     </select>
                     <br/>
                     <label>
