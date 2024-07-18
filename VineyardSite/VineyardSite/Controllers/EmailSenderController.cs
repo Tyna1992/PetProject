@@ -17,25 +17,13 @@ public class EmailSenderController : ControllerBase
         _emailSender = emailSender;
     }
 
-    [HttpPost("sendEmail")]
-    public async Task<IActionResult> SendUserEmail([FromBody] UserEmailRequest request)
+    [HttpPost("sendContactEmail")]
+    public async Task<IActionResult> SendUserEmail([FromBody] UserContactEmailRequest request)
     {
         try
         {
-            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-            Console.WriteLine(userEmail);
-            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
-            Console.WriteLine(userName);
+            await _emailSender.SendUserEmailAsync(request.Email, request.Name, request.Subject, request.Message);
             
-            if (userEmail != null && userName != null)
-            {
-                await _emailSender.SendUserEmailAsync(userEmail, request.Subject, userName, request.Message);
-            }
-            else
-            {
-                return BadRequest("User email or name not found.");
-            }
-
             return Ok("Email sent successfully.");
         }
         catch (Exception e)
