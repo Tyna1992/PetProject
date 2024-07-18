@@ -10,4 +10,5 @@ public interface IOrderRepository
     Task<ICollection<Order>> GetOrdersByUserId(string userId);
     
     Task DeleteOrder(string id);
+    Task UpdateOrder(string id, string status);
 }

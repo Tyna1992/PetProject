@@ -107,4 +107,15 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders.Where(order => order.UserId == userId).ToListAsync();
     }
+
+    public async Task UpdateOrder(string id, string status)
+    {
+        var orderToUpdate = await _context.Orders.FirstOrDefaultAsync(o => o.Id.ToString() == id);
+        if (orderToUpdate != null)
+        {
+            orderToUpdate.Status = status;
+            _context.Orders.Update(orderToUpdate);
+            await _context.SaveChangesAsync();
+        }
+    }
 }
