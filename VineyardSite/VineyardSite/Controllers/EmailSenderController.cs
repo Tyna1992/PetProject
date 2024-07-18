@@ -44,4 +44,18 @@ public class EmailSenderController : ControllerBase
         }
     }
     
+    [HttpPost("sendRequestEmail")]
+    public async Task<IActionResult> SendRequestEmail([FromBody] UserEmailRequest request)
+    {
+        try
+        {
+            await _emailSender.SendRequestEmailAsync(request.Email, request.Subject, request.Name, request.Phone, (int)request.People, request.Date, request.Message);
+
+            return Ok("Email sent successfully.");
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }
