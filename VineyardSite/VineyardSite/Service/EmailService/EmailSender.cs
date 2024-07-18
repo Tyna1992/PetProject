@@ -39,13 +39,13 @@ public class EmailSender : IEmailSender
         await SendEmailAsync(email, "Successful sign up", htmlMessage);
     }
 
-    public Task SendUserEmailAsync(string email, string subject, string userName, string message)
+    public Task SendUserEmailAsync(string email, string userName, string subject, string message)
     {
         var mailMessage = new MailMessage
         {
             From = new MailAddress(email),
             Subject = subject,
-            Body = $"User Name: {userName}\n\nUser Message:\n\n{message}",
+            Body = $"User Name: {userName}\nUser's email: {email}\nUser Message:\n{message}",
             IsBodyHtml = false
         };
         
@@ -77,5 +77,10 @@ public class EmailSender : IEmailSender
         mailMessage.To.Add("csobancibormanufakturawebshop@gmail.com");
         mailMessage.ReplyToList.Add(new MailAddress(email));
         await _client.SendMailAsync(mailMessage);
+    }
+    
+    public async Task SendRequestEmailAsync(string email, string subject, string name, string message)
+    {
+        await SendRequestEmailAsync(email, subject, name, string.Empty, 0, string.Empty, message);
     }
 }
