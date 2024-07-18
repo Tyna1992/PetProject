@@ -5,6 +5,8 @@ import "./ContactForm.css";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
+    email: "",
+    name: "",
     subject: "",
     message: "",
   });
@@ -16,7 +18,7 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/EmailSender/sendEmail", {
+      const response = await fetch("/api/EmailSender/sendContactEmail", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,6 +28,8 @@ const ContactForm = () => {
       if (response.ok) {
         notify("Email sent successfully!", "success");
         setFormData({
+          email: "",
+          name: "",
           subject: "",
           message: "",
         });
@@ -42,6 +46,22 @@ const ContactForm = () => {
     <form onSubmit={handleSubmit}>
       <div className="contact-form">
         <h2>Contact us</h2>
+        <label>Email:</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <label>Name:</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
         <label>Subject:</label>
         <input
           type="text"
