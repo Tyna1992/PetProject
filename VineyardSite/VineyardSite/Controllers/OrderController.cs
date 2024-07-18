@@ -12,7 +12,6 @@ public class OrderController : ControllerBase
     private readonly IOrderRepository _orderRepository;
     private readonly IUserRepository _userRepository;
     private readonly IWineRepository _wineRepository;
-    private ILogger<OrderController> _logger;
     
     public OrderController(IOrderRepository orderRepository, IUserRepository userRepository, IWineRepository wineRepository)
     {
@@ -45,7 +44,6 @@ public class OrderController : ControllerBase
         }
         catch (Exception e)
         {
-            // _logger.LogError(e.Message);
             return BadRequest();
         }
         
@@ -61,7 +59,6 @@ public class OrderController : ControllerBase
         }
         catch(Exception e)
         {
-            _logger.LogError(e.Message);
             return BadRequest();
         }
     }
@@ -76,6 +73,21 @@ public class OrderController : ControllerBase
         }
         catch (Exception e)
         {
+            return BadRequest();
+        }
+    }
+
+    [HttpPatch("UpdateOrder/{id}/{status}")]
+    public async Task<IActionResult> UpdateOrder(string id, string status)
+    {
+        try
+        {
+            await _orderRepository.UpdateOrder(id, status);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
             return BadRequest();
         }
     }
