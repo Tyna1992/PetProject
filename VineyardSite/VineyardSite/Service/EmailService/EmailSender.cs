@@ -53,4 +53,29 @@ public class EmailSender : IEmailSender
         mailMessage.ReplyToList.Add(new MailAddress(email));
         return _client.SendMailAsync(mailMessage);
     }
+    
+    public async Task SendRequestEmailAsync(string email, string subject, string name, string phone, int people, string date, string message)
+    {
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "Service/EmailService/EmailTemplates/WineTastingOfferRequest.html");
+        var htmlMessage = await File.ReadAllTextAsync(path);
+        
+        htmlMessage = htmlMessage.Replace("#user", name);
+        htmlMessage = htmlMessage.Replace("#name", name);
+        htmlMessage = htmlMessage.Replace("#phone", phone);
+        htmlMessage = htmlMessage.Replace("#participants", people.ToString());
+        htmlMessage = htmlMessage.Replace("#date", date);
+        htmlMessage = htmlMessage.Replace("#details", message);
+        
+        var mailMessage = new MailMessage
+        {
+            From = new MailAddress(email),
+            Subject = subject,
+            Body = htmlMessage,
+            IsBodyHtml = true
+        };
+        
+        mailMessage.To.Add("csobancibormanufakturawebshop@gmail.com");
+        mailMessage.ReplyToList.Add(new MailAddress(email));
+        await _client.SendMailAsync(mailMessage);
+    }
 }
