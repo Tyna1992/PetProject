@@ -1,24 +1,43 @@
 import { Component } from '@angular/core';
-import { FormControl,ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RegisterService } from './register.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  username = new FormControl('');
-  email = new FormControl('');
-  password = new FormControl('');
+  registerForm: FormGroup;
+  errorMessage: string = '';
+
+  constructor(
+    private fb: FormBuilder,
+    private registerService: RegisterService
+  ) {
+    this.registerForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4)]]
+    });
+  }
 
   onSubmit() {
-    const loginData = {
-      username: this.username.value,
-      email: this.email.value,
-      password: this.password.value
+    if (this.registerForm.valid) {
+      const { email, username, password } = this.registerForm.value;
+
+      this.registerService.register(email, username, password).subscribe({
+        next: (response) => {
+          console.log('Registration successful!', response);
+        },
+        error: (error) => {
+          console.error('Error during registration:', error);
+          this.errorMessage = 'Registration failed. Please try again.';
+        }
+      });
     }
-    console.log('Form Submitted', loginData);
   }
 }
