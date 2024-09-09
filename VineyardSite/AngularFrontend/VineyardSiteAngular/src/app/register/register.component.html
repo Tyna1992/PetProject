@@ -1,14 +1,33 @@
-<div class="register-form">
-    <form (ngSubmit)="onSubmit()">
-        <label for="username">Username: </label>
-        <input id="username" type="text" [formControl]="username">
-        <br/>
+<div class="register-container">
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div>
         <label for="email">Email:</label>
-        <input id="email" type="email">
-        <br/>
-        <label for="password">Password: </label>
-        <input id="password" type="password" [formControl]="password">
-        <br/>
-        <button type="submit">Login</button>
+        <input id="email" type="email" formControlName="email" />
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          Please enter a valid email.
+        </div>
+      </div>
+  
+      <div>
+        <label for="username">Username:</label>
+        <input id="username" type="text" formControlName="username" />
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+          Username is required.
+        </div>
+      </div>
+  
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" type="password" formControlName="password" />
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     </form>
-</div>
+  </div>
+  
