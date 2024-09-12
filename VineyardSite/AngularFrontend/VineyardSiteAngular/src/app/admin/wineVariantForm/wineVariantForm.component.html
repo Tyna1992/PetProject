@@ -1,0 +1,43 @@
+<h2>Add wine vintage:</h2>
+<div class="vintageForm">
+  <form [formGroup]="wineVariantForm" (ngSubmit)="onSubmit()">
+    <label for="Name">Wine Name:</label>
+    <br />
+    <select id="Name" formControlName="Name" required *ngIf="wineName.length > 0">
+      <option value="" disabled>Select a wine</option>
+      <option *ngFor="let wine of wineName" [value]="wine.Id">
+        {{ wine.Name }}
+      </option>
+    </select>
+    <div *ngIf="wineVariantForm.get('Name')?.invalid && wineVariantForm.get('Name')?.touched">
+      Wine selection is required
+    </div>
+    <div *ngIf="wineName.length === 0">Loading wines...</div>
+    <br/>
+    <label for="Price">Price:</label>
+    <br />
+    <input id="Price" type="number" formControlName="Price" required />
+    <div *ngIf="wineVariantForm.get('Price')?.invalid && wineVariantForm.get('Price')?.touched">
+      Price is required
+    </div>
+    <br />
+
+    <label for="Alcohol">Alcohol:</label>
+    <br />
+    <input id="Alcohol" type="number" formControlName="Alcohol" required />
+    <div *ngIf="wineVariantForm.get('Alcohol')?.invalid && wineVariantForm.get('Alcohol')?.touched">
+      Alcohol content is required
+    </div>
+    <br />
+
+    <label for="Year">Year:</label>
+    <br />
+    <input id="Year" type="number" formControlName="Year" required />
+    <div *ngIf="wineVariantForm.get('Year')?.invalid && wineVariantForm.get('Year')?.touched">
+      Year is required
+    </div>
+    <br />
+
+    <button type="submit" [disabled]="wineVariantForm.invalid">Add Wine Variant</button>
+  </form>
+</div>
