@@ -1,0 +1,15 @@
+<h2>Select wine to add inventory:</h2>
+<div>
+  <form [formGroup]="inventoryForm" (ngSubmit)="onSelectWine()">
+    <label for="Name">Name:</label>
+    <br />
+    <select id="Name" formControlName="Name" required>
+      <option value="" disabled>Select please</option>
+      <option *ngFor="let wine of wineName" [value]="wine.Id">
+        {{ wine.Name }}
+      </option>
+    </select>
+    <br />
+    <button type="submit" [disabled]="inventoryForm.invalid">Select</button>
+  </form>
+</div>
