@@ -26,7 +26,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
-          console.log('u are logged in')
+          alert("Logged in");
         },
         error: (err) => {
           this.errorMessage = 'Invalid username or password';

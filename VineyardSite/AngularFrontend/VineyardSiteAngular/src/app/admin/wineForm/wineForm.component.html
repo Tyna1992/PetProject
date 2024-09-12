@@ -1,0 +1,59 @@
+<h2>Add wine:</h2>
+<div class="wineForm">
+  <form [formGroup]="wineForm" (ngSubmit)="onSubmit()">
+    <label for="Name">Name:</label>
+    <br />
+    <input type="text" id="Name" formControlName="Name" required />
+    <div *ngIf="wineForm.get('Name')?.invalid && wineForm.get('Name')?.touched">
+      Name is required
+    </div>
+    <br />
+
+    <label for="Type">Type:</label>
+    <br />
+    <select id="Type" formControlName="Type" required>
+      <option value="" disabled>Select please</option>
+      <option value="Red">Red</option>
+      <option value="White">White</option>
+      <option value="Rose">Rose</option>
+      <option value="Petnat">Pét-Nat</option>
+      <option value="Non-alcohol">Non-Alcoholic</option>
+    </select>
+    <div *ngIf="wineForm.get('Type')?.invalid && wineForm.get('Type')?.touched">
+      Type is required
+    </div>
+    <br />
+
+    <label for="Sweetness">Sweetness:</label>
+    <br />
+    <select id="Sweetness" formControlName="Sweetness" required>
+      <option value="" disabled>Select please</option>
+      <option value="Dry">Dry</option>
+      <option value="Semi-dry">Semi-Dry</option>
+      <option value="Sweet">Sweet</option>
+      <option value="Semi-sweet">Semi-Sweet</option>
+      <option value="Non-alcohol">Non-Alcoholic</option>
+    </select>
+    <div
+      *ngIf="wineForm.get('Sweetness')?.invalid && wineForm.get('Sweetness')?.touched">
+      Sweetness is required
+    </div>
+    <br />
+
+    <label for="Description">Description:</label>
+    <br />
+    <textarea
+      id="Description"
+      class="textarea"
+      formControlName="Description"
+      required
+    ></textarea>
+    <div
+      *ngIf="wineForm.get('Description')?.invalid && wineForm.get('Description')?.touched">
+      Description is required
+    </div>
+    <br />
+
+    <button type="submit" [disabled]="wineForm.invalid">Add</button>
+  </form>
+</div>
