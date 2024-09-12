@@ -1,0 +1,39 @@
+<div *ngIf="wineVintage.length > 0">
+  <h2>Select wine vintage to add inventory: </h2>
+  <label for="wineName">Name:</label>
+  <br />
+  <select id="wineName" disabled>
+    <option [value]="wineVintage[0].wine.name">
+      {{ wineVintage[0].wine.name }}
+    </option>
+  </select>
+  <br />
+
+  <form [formGroup]="detailsForm" (ngSubmit)="onAddStock()">
+    <label for="Year">Year:</label>
+    <br />
+    <select id="Year" formControlName="Year" required>
+      <option value="" disabled>Select please</option>
+      <option
+        *ngFor="let wine of wineVintage"
+        [value]="wine.year + ' ' + wine.alcoholContent"
+      >
+        {{ wine.year }} ({{ wine.alcoholContent }}%)
+      </option>
+    </select>
+    <br />
+
+    <label for="Quantity">Quantity:</label>
+    <br />
+    <input
+      id="Quantity"
+      type="number"
+      formControlName="Quantity"
+      required
+      min="1"
+    />
+    <br />
+
+    <button type="submit" [disabled]="detailsForm.invalid">Submit</button>
+  </form>
+</div>
