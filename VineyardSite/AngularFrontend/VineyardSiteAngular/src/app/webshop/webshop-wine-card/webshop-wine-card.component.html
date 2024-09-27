@@ -1,0 +1,19 @@
+<div class="{{ wine.name }}-{{ wine.year }}">
+  <img
+    src="https://media.nedigital.sg/fairprice/fpol/media/images/product/XL/10905268_XL1_20230510.jpg"
+    alt="wine image"
+    width="200px"
+    height="200px"
+  />
+  <h3>{{ wine.Name }} - {{ wine.Year }}</h3>
+  <h3>{{ wine.Price }} HUF</h3>
+  <button (click)="addToCart()">Add to cart</button>
+  <button (click)="handleMoreDetails()">More details</button>
+
+  <app-wine-modal
+    *ngIf="showModal"
+    [data]="wine"
+    [userData]="user"
+    (closeModal)="closeModal()"
+  ></app-wine-modal>
+</div>
