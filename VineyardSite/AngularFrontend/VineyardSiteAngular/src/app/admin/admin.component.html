@@ -1,7 +1,14 @@
 <h1>Admin Site</h1>
 
-<app-admin-wine-form></app-admin-wine-form>
-<app-admin-wineVariant-form></app-admin-wineVariant-form>
-<app-inventory-form></app-inventory-form>
+<div class="admin-buttons">
+    <button (click)="showComponent('wineForm')">Wine Form</button>
+    <button (click)="showComponent('wineVariantForm')">Wine Variant Form</button>
+    <button (click)="showComponent('inventoryForm')">Inventory Form</button>
+    <button (click)="showComponent('inventory')">Inventory</button>
+</div>
+
+<app-admin-wine-form *ngIf="selectedComponent === 'wineForm'"></app-admin-wine-form>
+<app-admin-wineVariant-form *ngIf="selectedComponent === 'wineVariantForm'"></app-admin-wineVariant-form>
+<app-inventory-form *ngIf="selectedComponent === 'inventoryForm'"></app-inventory-form>
 <app-inventory-details-form></app-inventory-details-form>
-<app-inventory></app-inventory>
+<app-inventory *ngIf="selectedComponent === 'inventory'"></app-inventory>
