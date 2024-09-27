@@ -1,1 +1,11 @@
-<p>webshop works!</p>
+<div class="webshop">
+    <div class="webshop-container-wrapper">
+      <div class="webshop-container">
+        <app-webshop-wine-card
+          *ngFor="let item of inventory"
+          [wine]="item">
+        </app-webshop-wine-card>
+      </div>
+    </div>
+  </div>
+  

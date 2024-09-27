@@ -1,0 +1,9 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="close()">&times;</span>
+    <h3>{{ data.Name }} - {{ data.Year }}</h3>
+    <p>Price: {{ data.Price }} HUF</p>
+    <p>Details: {{ data.Description }}</p>
+    <button (click)="addToCart()">Add to cart</button>
+  </div>
+</div>
