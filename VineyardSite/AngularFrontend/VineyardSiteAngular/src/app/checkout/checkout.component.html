@@ -1,1 +1,13 @@
-<p>checkout works!</p>
+<div>
+    <h1>Cart</h1>
+    <button (click)="handleLoad()">Load cart</button>
+    <div *ngIf="cartItems.length > 0; else emptyCart">
+        <div *ngFor="let item of cartItems; let index = index">
+            <h3>{{ item.wineVersion.wine.name }} - {{ item.quantity }} - {{ item.wineVersion.price * item.quantity }} HUF</h3>
+        </div>
+    </div>
+    <ng-template #emptyCart>
+        <h3>Your cart is empty.</h3>
+    </ng-template>
+    <h3>Total: {{ totalPrice }} HUF</h3>
+</div>
