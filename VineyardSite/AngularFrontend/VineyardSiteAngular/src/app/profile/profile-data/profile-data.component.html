@@ -1,0 +1,98 @@
+<div>
+  <button (click)="loadPrimaryAddress()">Load Address</button>
+
+  <div class="no-primary" *ngIf="primaryAddress === false">
+    <h2>No primary address found</h2>
+    <button (click)="openPrimaryForm()" *ngIf="!primaryFormOpen">
+      Add Primary address
+    </button>
+
+    <div class="primary-addressForm" *ngIf="primaryFormOpen">
+          <form [formGroup]="primaryForm" (ngSubmit)="onPrimarySubmit()">
+            <div class="form-group">
+              <label for="street">Street</label>
+              <input
+                id="street"
+                type="text"
+                formControlName="street"
+                required
+              />
+              <div *ngIf="primaryForm.get('street')?.invalid && primaryForm.get('street')?.touched">
+                Street is required
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <label for="houseNumber">House Number</label>
+              <input
+                id="houseNumber"
+                type="text"
+                formControlName="houseNumber"
+                required
+              />
+              <div *ngIf="primaryForm.get('houseNumber')?.invalid && primaryForm.get('houseNumber')?.touched">
+                House number is required
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <label for="zipCode">Zip Code</label>
+              <input
+                id="zipCode"
+                type="text"
+                formControlName="zipCode"
+                required
+              />
+              <div *ngIf="primaryForm.get('zipCode')?.invalid && primaryForm.get('zipCode')?.touched">
+                Zip code is required
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <label for="city">City</label>
+              <input
+                id="city"
+                type="text"
+                formControlName="city"
+                required
+              />
+              <div *ngIf="primaryForm.get('city')?.invalid && primaryForm.get('city')?.touched">
+                City is required
+              </div>
+            </div>
+      
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input
+                id="country"
+                type="text"
+                formControlName="country"
+                required
+              />
+              <div *ngIf="primaryForm.get('country')?.invalid && primaryForm.get('country')?.touched">
+                Country is required
+              </div>
+            </div>
+      
+            <button type="submit" class="button" [disabled]="primaryForm.invalid">
+              Submit
+            </button>
+          </form>
+    </div>
+  </div>
+
+  <div
+    class="primary-address"
+    *ngIf="primaryAddress && primaryAddress !== false"
+  >
+    <h2>Your Primary Address</h2>
+    <p>Street: {{ primaryAddress.street }}</p>
+    <p>House number: {{ primaryAddress.houseNumber }}</p>
+    <p>Zip code: {{ primaryAddress.zipCode }}</p>
+    <p>City: {{ primaryAddress.city }}</p>
+    <p>Country: {{ primaryAddress.country }}</p>
+  </div>
+  <app-order
+    [user]="user"
+  ></app-order>
+</div>
