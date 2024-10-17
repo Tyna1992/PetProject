@@ -1,13 +1,76 @@
 <div class="Layout">
-    <nav class="navbar">
-        <button routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">Home</button>
-        <button routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Register</button>
-        <button routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</button>
-        <button routerLink="/webshop" routerLinkActive="active" ariaCurrentWhenActive="page">Webshop</button>
-        <button routerLink="/winetasting" routerLinkActive="active" ariaCurrentWhenActive="page">Wine tasting</button>
-        <button routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">About</button>
-        <button routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">Contact</button>
-        <button routerLink="/checkout" routerLinkActive="active" ariaCurrentWhenActive="page">Checkout</button>
-    </nav>
+  <nav class="navbar">
+    <button
+      routerLink="/"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Home
+    </button>
+    <button
+      routerLink="/webshop"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Webshop
+    </button>
+    <button
+      routerLink="/winetasting"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Wine Tasting
+    </button>
+    <button
+      routerLink="/about"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      About
+    </button>
+    <button
+      routerLink="/contact"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Contact
+    </button>
+    <button
+      routerLink="/checkout"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Checkout
+    </button>
+
+
+    <ng-container *ngIf="isLoggedIn$ | async; else loggedOut">
+      <button
+        routerLink="/profile"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+      >
+        Profile
+      </button>
+    </ng-container>
+
+    <ng-template #loggedOut>
+      <button
+        routerLink="/register"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+      >
+        Register
+      </button>
+      <button
+        routerLink="/login"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+      >
+        Login
+      </button>
+    </ng-template>
+  </nav>
 </div>
+
 <router-outlet></router-outlet>
