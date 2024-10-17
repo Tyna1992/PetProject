@@ -1,0 +1,13 @@
+<div class="order-component">
+    <button (click)="loadOrders()">Load Orders</button>
+    <div class="user-orders" *ngIf="orderShow">
+        <h2>Orders:</h2>
+        <div class="orders" *ngFor="let order of orders">
+            <p>Order number: {{order.id}}</p>
+            <p>Address: {{order.address}}</p>
+            <p>Delivery type: {{order.deliveryType}}</p>
+            <p>Price: {{order.totalPrice}} HUF</p>
+            <p>Status: {{order.status}}</p>
+        </div>
+    </div>
+</div>
