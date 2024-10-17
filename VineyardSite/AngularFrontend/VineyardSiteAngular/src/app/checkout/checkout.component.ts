@@ -1,23 +1,44 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ICartItem } from '../Models/CartItem';
+import { RouterModule } from '@angular/router';
 import { CartService } from './cart.service';
-import { ICart } from '../Models/Cart';
 import { UserService } from '../userService/user.service';
+import { OrderService } from '../orderService/order.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css'] // fixed typo from styleUrl to styleUrls
+  styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent {
-  cartItems: any[] = []; // Changed to cartItems to match ICart interface
+  cartItems: any[] = [];
   user: any;
   totalPrice: number = 0;
+  addressForm: FormGroup;
+  orderForm: FormGroup;
+  orderReq: any;
+  public showOrder = false;
+  address: any[] =[];
 
-  constructor(private cartService: CartService, private userService: UserService) {}
+  constructor(private fb: FormBuilder, private cartService: CartService, private userService: UserService, private orderService: OrderService) {
+    this.addressForm = this.fb.group({
+      street: ['', Validators.required],
+      houseNumber: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required]
+    });
+
+    this.orderForm = this.fb.group({
+      Address: ['', Validators.required],
+      DeliveryType: ['', Validators.required],
+      Payment: ['', Validators.required],
+      Notes: ['']
+    })
+  }
 
   ngOnInit(): void {
     this.userService.whoAmI().subscribe(
@@ -38,10 +59,6 @@ export class CheckoutComponent {
 
   }
 
-  handleLoad() {
-    console.log(this.cartItems)
-  }
-
   loadCart() {
 
     if (!this.user || !this.user.userName) {
@@ -57,5 +74,59 @@ export class CheckoutComponent {
         console.error('Failed to load cart:', error);
       }
     );
+  }
+
+  onOrder() {
+    this.userService.getAddress(this.user.id).subscribe(
+      (resp) => {
+        this.address = resp || false;
+      },
+      (error) => {
+        console.error('Failed to get address:', error);
+      }
+    )
+    this.showOrder = true;
+    
+  }
+
+  sendOrder() {
+    if (this.orderForm.valid) {
+      this.orderReq = {
+        UserId: this.user.id,
+        DeliveryType: this.orderForm.value.DeliveryType,
+        PaymentType: this.orderForm.value.Payment,
+        Notes: this.orderForm.value.Notes
+      }
+
+      this.orderService.sendOrder(this.orderReq).subscribe(
+        (resp) => {
+          console.log(resp)
+        }, 
+        (error) => {
+          console.error('Failed to send order', error);
+        }
+      )
+    }
+  }
+  onOrderSubmit() {
+    if (this.addressForm.valid) {
+      this.address[0] = {
+        Street: this.addressForm.value.street,
+        HouseNumber: this.addressForm.value.houseNumber,
+        ZipCode: this.addressForm.value.zipCode,
+        City: this.addressForm.value.city,
+        Country: this.addressForm.value.country,
+        UserId: this.user.id
+      }
+      this.userService.addPrimaryAddress(this.user.id,this.address[0]).subscribe(
+        (resp) => {
+          console.log("Primary address successfully added:", resp);
+          this.addressForm.reset();
+          this.showOrder = false;
+        }, (error) => {
+          console.error(error);
+        }
+      )
+    }
   }
 }
